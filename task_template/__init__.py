@@ -1,0 +1,1 @@
+"""Bundled editable task template."""

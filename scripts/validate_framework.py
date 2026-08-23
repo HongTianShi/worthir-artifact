@@ -45,15 +45,14 @@ def main() -> None:
         if args.output
         else root / "reproduced" / "framework" / "validation.json"
     )
+    installed_bundle = (root / "core.py").is_file()
     required = [
-        "README.md",
-        "docs/ADAPT_TO_NEW_TASK.md",
         "contracts/quickstart_contract.json",
         "contracts/route_registry.json",
         "quickstart/participant/legal_state.csv",
         "quickstart/participant/example_actions.json",
         "quickstart/evaluator/hidden_ledger.csv",
-        "src/worthir_eval/core.py",
+        "core.py" if installed_bundle else "src/worthir_eval/core.py",
         "task_template/contracts/task_contract.json",
         "scripts/init_task.py",
         "scripts/build_trec_task.py",
@@ -62,8 +61,6 @@ def main() -> None:
         "scripts/actions_from_csv.py",
         "scripts/compare_policies.py",
         "scripts/score_actions.py",
-        "worthir.py",
-        "setup_environment.py",
         "examples/trec_walkthrough/source/qrels.tsv",
         "examples/trec_walkthrough/source/routes.csv",
         "examples/custom_task/source/task.json",

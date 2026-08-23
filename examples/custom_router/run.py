@@ -10,12 +10,18 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DESTINATION = ROOT / "reproduced" / "custom_task"
-CHOICES = ROOT / "reproduced" / "custom_router_choices.csv"
+OUTPUT_ROOT = ROOT if (ROOT / "paper_results").is_dir() else Path.cwd()
+DESTINATION = OUTPUT_ROOT / "reproduced" / "custom_task"
+CHOICES = OUTPUT_ROOT / "reproduced" / "custom_router_choices.csv"
 
 
 def run(*arguments: str) -> None:
-    completed = subprocess.run([sys.executable, str(ROOT / "worthir.py"), *arguments])
+    launcher = (
+        [sys.executable, str(ROOT / "worthir.py")]
+        if (ROOT / "worthir.py").is_file()
+        else [sys.executable, "-m", "worthir"]
+    )
+    completed = subprocess.run([*launcher, *arguments])
     if completed.returncode:
         raise SystemExit(completed.returncode)
 
