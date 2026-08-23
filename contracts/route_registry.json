@@ -3,19 +3,19 @@
   "routes": [
     {
       "label": "在 BM25 后停止",
-      "parent_route_id": null,
+      "prerequisites": [],
       "route_id": "bm25"
     },
     {
       "label": "稠密候选融合",
-      "parent_route_id": "bm25",
+      "prerequisites": ["bm25"],
       "route_id": "dense"
     },
     {
       "label": "交叉编码器重排前 20 个候选",
-      "parent_route_id": "dense",
+      "prerequisites": ["dense"],
       "route_id": "ce20"
     }
   ],
-  "schema_version": "worthir-route-registry-v1.0"
+  "schema_version": "worthir-route-registry-v1.1"
 }
