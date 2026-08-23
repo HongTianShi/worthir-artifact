@@ -3,19 +3,19 @@
   "routes": [
     {
       "label": "Stop after BM25",
-      "parent_route_id": null,
+      "prerequisites": [],
       "route_id": "bm25"
     },
     {
       "label": "Dense candidate fusion",
-      "parent_route_id": "bm25",
+      "prerequisites": ["bm25"],
       "route_id": "dense"
     },
     {
       "label": "Cross-encoder rerank top 20",
-      "parent_route_id": "dense",
+      "prerequisites": ["dense"],
       "route_id": "ce20"
     }
   ],
-  "schema_version": "worthir-route-registry-v1.0"
+  "schema_version": "worthir-route-registry-v1.1"
 }
