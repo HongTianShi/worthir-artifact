@@ -1,0 +1,91 @@
+{
+  "contract_id": "worthir-canonical-task-contract-v1.0",
+  "decision_unit": "query",
+  "evaluation": {
+    "bootstrap": {
+      "confidence_level": 0.95,
+      "method": "query-level percentile bootstrap",
+      "resamples": 10000,
+      "seed_2019": 20262745,
+      "seed_2020": 20262746
+    },
+    "primary_cost_profile": "C_op",
+    "primary_lambda": 0.08,
+    "quality_metric": "NDCG@10",
+    "regret": "max_registered_route_utility - selected_route_utility",
+    "secondary_cost_profiles": [
+      "C_lat",
+      "C_mem"
+    ],
+    "sensitivity_lambdas": [
+      0.0,
+      0.04,
+      0.08,
+      0.16,
+      0.32
+    ],
+    "test_reporting": "per_year_no_confirmatory_pooling",
+    "unjudged_document_handling": "nonrelevant",
+    "utility": "raw_ndcg_at_10 - lambda * selected_cost"
+  },
+  "evaluation_object": "pre-purchase selection of one compiled retrieval route",
+  "failure_policy": {
+    "adverse_or_null_result": "retain",
+    "approximate_source_substitution": "abort",
+    "held_out_leakage": "abort_release",
+    "missing_or_extra_query": "reject_before_scoring",
+    "semantic_spec_change": "new_version_required",
+    "stale_contract": "reject_before_scoring",
+    "unknown_or_missing_route": "reject_before_scoring"
+  },
+  "partitions": {
+    "development": {
+      "complete_menu_outcomes_public": true,
+      "dataset_id": "msmarco-passage/dev/small",
+      "legal_state_public": true,
+      "queries": 6980
+    },
+    "test": {
+      "2019": {
+        "complete_menu_outcomes_public": false,
+        "dataset_id": "msmarco-passage/trec-dl-2019/judged",
+        "legal_state_public": true,
+        "queries": 43
+      },
+      "2020": {
+        "complete_menu_outcomes_public": false,
+        "dataset_id": "msmarco-passage/trec-dl-2020/judged",
+        "legal_state_public": true,
+        "queries": 54
+      }
+    }
+  },
+  "public_private_boundary": {
+    "private_test": [
+      "qrels",
+      "paid-route rankings or scores",
+      "route outcomes",
+      "utility",
+      "regret",
+      "oracle route"
+    ],
+    "public_test": [
+      "query membership",
+      "query text",
+      "query-only descriptors",
+      "legal BM25 IDs and scores",
+      "route registry",
+      "cost contract"
+    ]
+  },
+  "query_key": "query_uid",
+  "route_key": "route_id",
+  "route_order": [
+    "stop_bm25",
+    "dense_fusion",
+    "late_interaction",
+    "cross_encoder"
+  ],
+  "status": "frozen_for_implementation",
+  "task_id": "worthir-trecdl-multistage-v1.0"
+}
