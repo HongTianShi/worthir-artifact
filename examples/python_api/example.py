@@ -5,6 +5,11 @@ import json
 import sys
 from pathlib import Path
 
+REPOSITORY = Path(__file__).resolve().parents[2]
+SOURCE = REPOSITORY / "src"
+if SOURCE.is_dir():
+    sys.path.insert(0, str(SOURCE))
+
 from worthir_eval import inspect_task, load_and_score
 
 task = Path(sys.argv[1])
