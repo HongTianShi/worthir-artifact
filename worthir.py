@@ -17,6 +17,9 @@ if not (ROOT / "scripts").is_dir():
     import worthir_eval
 
     ROOT = Path(worthir_eval.__file__).resolve().parent
+    from worthir_eval.scripts.launcher import launcher_command
+else:
+    from scripts.launcher import launcher_command
 OUTPUT_ROOT = ROOT if (ROOT / "paper_results").is_dir() else Path.cwd()
 
 if sys.platform == "win32":
@@ -165,7 +168,7 @@ def main() -> None:
                 args.cost_availability,
             ],
         )
-        launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
+        launcher = launcher_command(ROOT)
         print(f'下一步：{launcher} compare "{args.task_dir}"')
     elif args.command == "build-custom":
         _run(
@@ -177,7 +180,7 @@ def main() -> None:
                 args.policy_id,
             ],
         )
-        launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
+        launcher = launcher_command(ROOT)
         print(f'下一步：{launcher} validate-task "{args.task_dir}"')
     elif args.command == "validate-task":
         command = [str(args.task_dir)]

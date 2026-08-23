@@ -6,8 +6,12 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
-import sys
 from pathlib import Path
+
+try:
+    from .launcher import installed_mode, launcher_command
+except ImportError:  # 直接运行脚本。
+    from launcher import installed_mode, launcher_command
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,9 +58,9 @@ def initialize_task(output: Path, task_id: str) -> Path:
         "请将其他 WorthIR 动作 JSON 文件放在这里。`worthir compare` 会评估全部文件。\n",
         encoding="utf-8",
     )
-    installed_command = not (ROOT / "paper_results").is_dir()
-    powershell_launcher = "worthir" if installed_command else ".\\worthir.cmd"
-    posix_launcher = "worthir" if installed_command else "./worthir"
+    installed_command = installed_mode(ROOT)
+    powershell_launcher = launcher_command(ROOT, "powershell")
+    posix_launcher = launcher_command(ROOT, "posix")
     context = "可从任意目录运行" if installed_command else "请从 WorthIR 仓库根目录运行"
     (output / "README.md").write_text(
         f"# {task_id}\n\n该目录是一个可运行的 WorthIR 任务。\n\n"
@@ -83,12 +87,7 @@ def main() -> None:
     except ValueError as exc:
         parser.error(str(exc))
     print(f"已创建：{output}")
-    installed_command = not (ROOT / "paper_results").is_dir()
-    launcher = (
-        "worthir"
-        if installed_command
-        else (".\\worthir.cmd" if sys.platform == "win32" else "./worthir")
-    )
+    launcher = launcher_command(ROOT)
     print(f"下一步：{launcher} validate-task \"{output}\"")
 
 

@@ -12,6 +12,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+try:
+    from .launcher import launcher_command
+except ImportError:  # 直接运行脚本。
+    from launcher import launcher_command
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -461,15 +466,17 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
         cost_note = "固定公开成本位于 `contracts/route_registry.json`。\n\n"
     else:
         cost_note = "成本在路线执行后由评价器测量。\n\n"
+    powershell_launcher = launcher_command(ROOT, "powershell")
+    posix_launcher = launcher_command(ROOT, "posix")
     (output / "README.md").write_text(
         f"# {task_id}\n\n"
         f"成本可见时点：`{availability}`。{cost_note}"
         f"评分前先校验完整任务：\n\n"
-        f"```powershell\n.\\worthir.cmd validate-task {task_argument}\n```\n\n"
-        f"```bash\n./worthir validate-task {task_argument}\n```\n\n"
+        f"```powershell\n{powershell_launcher} validate-task {task_argument}\n```\n\n"
+        f"```bash\n{posix_launcher} validate-task {task_argument}\n```\n\n"
         f"然后将默认策略与每条固定路线比较：\n\n"
-        f"```powershell\n.\\worthir.cmd compare {task_argument}\n```\n\n"
-        f"```bash\n./worthir compare {task_argument}\n```\n",
+        f"```powershell\n{powershell_launcher} compare {task_argument}\n```\n\n"
+        f"```bash\n{posix_launcher} compare {task_argument}\n```\n",
         encoding="utf-8",
     )
     return output
