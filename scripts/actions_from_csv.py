@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ActionError(RuntimeError):
-    """Raised when route choices do not match a task."""
+    """路线选择与任务不匹配时抛出。"""
 
 
 def convert_actions(task: Path, source: Path, output: Path, policy_id: str) -> Path:
@@ -23,15 +23,25 @@ def convert_actions(task: Path, source: Path, output: Path, policy_id: str) -> P
     task = task.resolve()
     contract_path = task / "contracts" / "task_contract.json"
     registry_path = task / "contracts" / "route_registry.json"
-    ledger_path = task / "evaluator" / "ledger.csv"
+    legal_state_path = task / "participant" / "legal_state.csv"
     try:
         contract = json.loads(contract_path.read_text(encoding="utf-8"))
         registry = json.loads(registry_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ActionError(f"无法读取任务契约或路线注册表：{exc}") from exc
     route_ids = {row["route_id"] for row in registry.get("routes", [])}
-    with ledger_path.open("r", encoding="utf-8", newline="") as stream:
-        query_ids = {row["query_uid"] for row in csv.DictReader(stream)}
+    try:
+        with legal_state_path.open("r", encoding="utf-8-sig", newline="") as stream:
+            reader = csv.DictReader(stream)
+            if not reader.fieldnames or reader.fieldnames[0] != "query_uid":
+                raise ActionError("legal_state.csv 必须以 query_uid 列开头")
+            legal_rows = list(reader)
+    except OSError as exc:
+        raise ActionError(f"无法读取参与方合法状态：{exc}") from exc
+    query_id_list = [row["query_uid"] for row in legal_rows]
+    if len(query_id_list) != len(set(query_id_list)):
+        raise ActionError("legal_state.csv 中存在重复 query_uid")
+    query_ids = set(query_id_list)
     try:
         with source.open("r", encoding="utf-8-sig", newline="") as stream:
             reader = csv.DictReader(stream)
