@@ -1,0 +1,5 @@
+query_uid,query_text,base_score_margin
+q1,solar panel recycling,2.8
+q2,rare disease treatment,0.4
+q3,river restoration methods,1.1
+q4,historic bridge design,3.2
