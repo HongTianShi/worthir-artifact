@@ -1,0 +1,51 @@
+{
+  "action_columns": [
+    "query_uid",
+    "view",
+    "view_index",
+    "declared_cost",
+    "view_is_summary",
+    "view_is_one_hop",
+    "view_is_two_hop",
+    "view_is_full_context",
+    "view_is_ce",
+    "view_is_graph",
+    "view_is_two_hop_profile",
+    "view_is_contextual",
+    "view_is_ce_profile",
+    "onehop_coverage_if_one_hop",
+    "edge_count_if_one_hop",
+    "twohop_coverage_if_two_hop",
+    "twohop_paths_if_two_hop",
+    "mean_doc_len_if_contextual",
+    "std_doc_len_if_contextual"
+  ],
+  "forbidden_lineage": [
+    "answers, support titles, qrels, evaluator judgments",
+    "paid-view rankings or scores",
+    "per-view effectiveness, utility, regret, or oracle fields",
+    "learner predictions, selected learner, or selected action"
+  ],
+  "projection_rule": "positive allowlist from frozen record leaves",
+  "query_columns": [
+    "query_uid",
+    "source_query_id",
+    "outer_fold",
+    "question",
+    "question_len",
+    "n_context",
+    "summary_score_top",
+    "summary_score_margin",
+    "summary_score_entropy",
+    "anchor_count",
+    "edge_count",
+    "graph_density",
+    "onehop_coverage",
+    "twohop_paths",
+    "twohop_coverage",
+    "mean_doc_len",
+    "std_doc_len",
+    "max_doc_len"
+  ],
+  "schema_version": "worthir-structured-v2-legal-schema-v1.1"
+}
