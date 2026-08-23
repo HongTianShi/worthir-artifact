@@ -1,0 +1,140 @@
+{
+  "checks": {
+    "G0_integrity": {
+      "cardinality_ok": true,
+      "index_ok": true,
+      "layer_equal": true,
+      "legal_feature_ok": true,
+      "passed": true,
+      "split_ok": true
+    },
+    "G1_menu_heterogeneity": {
+      "passed": true,
+      "quality_oracle_shares": {
+        "V0": 0.21393600882636873,
+        "V1": 0.23786374293200938,
+        "V2": 0.30592332092125224,
+        "V3": 0.24227692732036957
+      },
+      "routes_quality_share_ge_05": 4,
+      "routes_utility_share_ge_10": 2,
+      "top1_disagreement": 0.6822507240380637,
+      "utility_oracle_shares": {
+        "V0": 0.5179975175837815,
+        "V1": 0.07654116673562267,
+        "V2": 0.3247827885808854,
+        "V3": 0.08067852709971038
+      }
+    },
+    "G2_decision_headroom": {
+      "passed": true,
+      "raw_headroom_ci95": [
+        0.10930886414909531,
+        0.12300871661437138
+      ],
+      "raw_headroom_mean": 0.11608107906663649,
+      "utility_headroom_ci95": [
+        0.11691013774546224,
+        0.13072477809899044
+      ],
+      "utility_headroom_mean": 0.12374530161836586
+    },
+    "G3_non_saturation": {
+      "hop_headroom": {
+        "2hop": {
+          "count": 1252,
+          "mean": 0.12673072455956302
+        },
+        "3hop1": {
+          "count": 568,
+          "mean": 0.11324101151295274
+        },
+        "3hop2": {
+          "count": 192,
+          "mean": 0.11209186207406983
+        },
+        "4hop1": {
+          "count": 246,
+          "mean": 0.13024622609250228
+        },
+        "4hop2": {
+          "count": 64,
+          "mean": 0.19447065425073273
+        },
+        "4hop3": {
+          "count": 95,
+          "mean": 0.10627685594353986
+        }
+      },
+      "hop_strata_headroom_ge_04": 6,
+      "passed": true,
+      "route_means": {
+        "V0": {
+          "ndcg_at_4": 0.4836737993150661,
+          "operator_cost": 0.0,
+          "utility": 0.4836737993150661
+        },
+        "V1": {
+          "ndcg_at_4": 0.49071408772639097,
+          "operator_cost": 0.025705429172232223,
+          "utility": 0.4886576533926124
+        },
+        "V2": {
+          "ndcg_at_4": 0.527635902279076,
+          "operator_cost": 0.2774962345763053,
+          "utility": 0.5054362035129716
+        },
+        "V3": {
+          "ndcg_at_4": 0.4972440903040913,
+          "operator_cost": 1.0,
+          "utility": 0.41724409030409126
+        }
+      },
+      "strongest_fixed_ndcg": 0.527635902279076
+    },
+    "G4_recoverable_signal": {
+      "adaptive_gain_ci95": [
+        0.006425285801896747,
+        0.02146065819755154
+      ],
+      "adaptive_gain_mean": 0.013970010684624702,
+      "adaptive_route_share": {
+        "V0": 0.22093504344228382,
+        "V1": 0.2606537029375259,
+        "V2": 0.497310715763343,
+        "V3": 0.021100537856847332
+      },
+      "fixed_dev_route": "V2",
+      "fixed_tih_route": "V2",
+      "passed": true,
+      "recoverability": 0.11289326141616775,
+      "selected_model": "extra_trees"
+    },
+    "G5_target_controls": {
+      "passed": true,
+      "real_V2_minus_shuffled_ci95": [
+        0.3392020584057485,
+        0.36792196457351134
+      ],
+      "real_V2_minus_shuffled_mean": 0.353731757236477,
+      "real_V3_minus_wrong_decomposition_ci95": [
+        0.06773263067459327,
+        0.0858209360527379
+      ],
+      "real_V3_minus_wrong_decomposition_mean": 0.07685345571043185
+    }
+  },
+  "created_utc": "2026-07-30T03:23:56.243546+00:00",
+  "decision": "FULL PASS",
+  "reference_summary": {
+    "A_dev_test_utility": 0.5194062141975964,
+    "F_TIH": "V2",
+    "F_TIH_test_utility": 0.5054362035129716,
+    "F_dev": "V2",
+    "F_dev_test_ndcg": 0.527635902279076,
+    "F_dev_test_utility": 0.5054362035129716,
+    "O_TIH_test_ndcg": 0.6437169813457125,
+    "O_TIH_test_utility": 0.6291815051313374
+  },
+  "result_id": "musique-worthir-admission-gate-v1.0"
+}
