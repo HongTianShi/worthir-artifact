@@ -1,0 +1,6 @@
+regime,split_protocol,splits,mean_f_dev_test_utility,mean_f_tih_test_utility,mean_oracle_test_utility,mean_f_tih_inflation,max_f_tih_inflation,dev_selected_fixed_counts,test_best_fixed_counts,f_dev_equals_f_tih_share
+dense_standard_qrels,learner_sweep_original,20,0.3486277940219843,0.3486277940219843,0.424072900509387,0.0,0.0,"{""full"": 20}","{""full"": 20}",1.0
+2wiki_structured_2k,learner_sweep_original,20,0.8997112457534346,0.9011163992975848,0.9523985269269948,0.00140515354415,0.0039708901116688,"{""one_hop"": 13, ""two_hop"": 7}","{""one_hop"": 11, ""two_hop"": 9}",0.4
+2wiki_hyperlink_10k,learner_sweep_original,10,0.7929000444575318,0.7937038760211246,0.8849458200983156,0.0008038315635927,0.004547629791753,"{""hyperlink_1hop"": 9, ""hyperlink_2hop"": 1}","{""hyperlink_1hop"": 8, ""hyperlink_2hop"": 2}",0.7
+2wiki_structured_2k,phase7_cross_regime_master,5,0.8955106857577887,0.8980876333979468,0.95171057892135,0.0025769476401581,0.0040451028185772,"{""one_hop"": 4, ""two_hop"": 1}","{""one_hop"": 2, ""two_hop"": 3}",0.2
+2wiki_hyperlink_10k,phase7_cross_regime_master,5,0.7960960263670309,0.7961128053955262,0.8844114986871293,1.6779028495395032e-05,8.389514247697516e-05,"{""hyperlink_1hop"": 5}","{""hyperlink_1hop"": 4, ""hyperlink_2hop"": 1}",0.8
