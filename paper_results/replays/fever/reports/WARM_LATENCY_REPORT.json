@@ -1,0 +1,35 @@
+{
+  "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "route_summary": {
+    "bi200": {
+      "mean_ms": 256.88665660500476,
+      "median_ms": 255.91785950001622,
+      "p95_ms": 285.9141299999919
+    },
+    "bm25": {
+      "mean_ms": 38.81054447000224,
+      "median_ms": 22.042833500051984,
+      "p95_ms": 140.84002554999404
+    },
+    "ce100": {
+      "mean_ms": 262.6172915700022,
+      "median_ms": 261.62992450002776,
+      "p95_ms": 278.12719994996655
+    },
+    "ce20": {
+      "mean_ms": 49.21916329999532,
+      "median_ms": 52.60624999993979,
+      "p95_ms": 57.25849124989963
+    },
+    "hybrid": {
+      "mean_ms": 303.4980110349994,
+      "median_ms": 303.3581215000254,
+      "p95_ms": 337.93856500004154
+    }
+  },
+  "sample_rule": "registered 200-query pilot sample",
+  "sample_size": 200,
+  "schema_version": "worthir-fever-warm-latency-v1.0",
+  "seed": 20260730,
+  "torch": "2.9.0+cu126"
+}
