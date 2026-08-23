@@ -75,13 +75,17 @@ def main() -> None:
             str(ROOT),
             "--output",
             str(report),
+            "--work-dir",
+            str(output),
         ]
     )
     result = json.loads(report.read_text(encoding="utf-8"))
     if result.get("status") != "PASS":
         raise SystemExit(f"Validation failed; see {report}")
     print("PASS: WorthIR paper results reproduced")
-    print(f"Report: {report}")
+    print(f"Paper figures and tables: {output / 'paper'}")
+    print(f"RQ2--RQ5 summaries: {output / 'rqs'}")
+    print(f"Validation report: {report}")
 
 
 if __name__ == "__main__":
