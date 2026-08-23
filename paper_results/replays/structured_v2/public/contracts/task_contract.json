@@ -1,0 +1,19 @@
+{
+  "decision": "one registered evidence view per query before outcomes",
+  "feature_tier": "B1_context",
+  "frozen_lock_id": "c1-support-component-2c4a1d5191dc7839c7fc",
+  "inference": "Paired intervals resample all 1,636 support-title connected components with fold selections and submitted actions frozen.",
+  "legal_feature_matrix_shape": [
+    10000,
+    30
+  ],
+  "population": 2000,
+  "privacy_boundary": "The public IDs and questions remain joinable to the source 2Wiki dataset. The contract enforces evaluator timing and direct field separation; it is not cryptographic secrecy for public data.",
+  "raw_quality": "binary support-title NDCG@4 after stable first-occurrence normalized-title deduplication within stored top-4; no backfill",
+  "reference_estimand": "A_OOF: each query is scored once by a legal policy fitted without its support-title component and selected on a disjoint development fold. This is a cross-fitted procedure estimate, not one final deployed policy.",
+  "schema_version": "worthir-task-contract-v1.2",
+  "submission_schema_id": "worthir-structured-v2-submission-v1.1",
+  "surface_id": "worthir-structured-v2-scoring-surface-v1.2",
+  "task_id": "worthir-2wiki-structured-v2.0",
+  "training_provenance": "Action-vector scoring does not certify supervised fold isolation; ordinary submissions are marked training_provenance_unverified."
+}
