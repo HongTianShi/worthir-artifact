@@ -1,0 +1,7 @@
+{
+  "bundle_id": "musique-worthir-v1",
+  "queries": 2417,
+  "routes": ["V0", "V1", "V2", "V3"],
+  "scorer": "scripts/score_action_file.py",
+  "cost_profiles": ["relative_v1", "common_devmean_v1"]
+}
