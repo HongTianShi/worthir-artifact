@@ -1,0 +1,18 @@
+{
+  "environment_id": "worthir-canonical-build-environment-v1.0",
+  "python": "3.13.13",
+  "platform_family": "Windows",
+  "packages": {
+    "joblib": "1.5.3",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "24.0.0",
+    "ruff": "0.12.4",
+    "scikit-learn": "1.6.1"
+  },
+  "runtime_minimums": "requirements.txt",
+  "reference_baseline_requirements": "requirements-baselines.txt",
+  "exact_reproduction_lock": "requirements-lock.txt",
+  "retrieval_inference_reexecuted_during_canonical_packaging": false
+}
+
