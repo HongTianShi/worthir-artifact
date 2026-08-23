@@ -269,6 +269,7 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `paper_results/analyses/rq4_robustness/data/cost_preference_summary.csv` | Analysis table | cost preference summary: released RQ4 diagnostic result used by the paper analysis. |
+| `paper_results/analyses/rq4_robustness/data/cost_preference_curves.csv` | Figure source | Dense cost-preference curves and marked intervals used to redraw Figure 5. |
 | `paper_results/analyses/rq4_robustness/data/fever_candidate_dependence.csv` | Analysis table | fever candidate dependence: released RQ4 diagnostic result used by the paper analysis. |
 | `paper_results/analyses/rq4_robustness/data/model_and_fold_summary.csv` | Analysis table | model and fold summary: released RQ4 diagnostic result used by the paper analysis. |
 | `paper_results/analyses/rq4_robustness/data/README.md` | Analysis guide | Explains the RQ4 diagnostic data. |
@@ -298,6 +299,7 @@ merely because it is publicly released.
 | `paper_results/paper_reproduction/figures/cost_quality_inversion_data.csv` | Paper input | cost quality inversion data: compact values consumed by a figure or table builder. |
 | `paper_results/paper_reproduction/figures/hero_example_2019.json` | Paper input | hero example 2019: compact values consumed by a figure or table builder. |
 | `paper_results/paper_reproduction/figures/make_cost_quality_inversion.py` | Figure builder | make cost quality inversion: recreates a released WorthIR paper figure. |
+| `paper_results/paper_reproduction/figures/make_figures_4_7.py` | Figure builder | Redraws the opportunity, sensitivity, reranking-localization, and latency figures from released tables. |
 | `paper_results/paper_reproduction/figures/make_recoverability_bridge.py` | Figure builder | make recoverability bridge: recreates a released WorthIR paper figure. |
 | `paper_results/paper_reproduction/figures/make_worthir_contract.py` | Figure builder | make worthir contract: recreates a released WorthIR paper figure. |
 | `paper_results/paper_reproduction/figures/README.md` | Figure-builder guide | Maps figure scripts to compact inputs. |
