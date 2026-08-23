@@ -1,0 +1,10 @@
+{
+  "construct": "dimensionless cumulative operator accounting",
+  "lambda": 0.08,
+  "profile_id": "2wiki-hyper-v1-op",
+  "schema_version": "worthir-cost-contract-v1.0",
+  "state_construction_charged": false,
+  "state_cost_scope_note": "The contract conditions on a hash-frozen precomputed graph/path sketch; offline 7GB corpus materialization is not charged.",
+  "task_id": "worthir-2wiki-hyperlink10k-v1.0",
+  "utility": "raw_quality - lambda * cumulative_declared_cost"
+}
