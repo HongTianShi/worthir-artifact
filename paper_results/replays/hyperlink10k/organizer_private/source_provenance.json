@@ -1,0 +1,9 @@
+{
+  "candidate_fingerprint_source": "official first-10k train rows plus frozen seed/1-hop/2-hop caches",
+  "lineage_note": "The exact row cache was emitted by exact_cache_materializer.py, which imports frozen_hyperlink_source.py. Both hashes are required.",
+  "no_7gb_corpus_rescan": true,
+  "no_model_execution": true,
+  "schema_version": "worthir-hyperlink10k-source-provenance-v1.0",
+  "surface_id": "worthir-hyperlink10k-scoring-surface-v1.0",
+  "task_id": "worthir-2wiki-hyperlink10k-v1.0"
+}
