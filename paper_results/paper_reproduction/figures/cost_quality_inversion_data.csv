@@ -1,0 +1,9 @@
+view,cumulative_cost,raw_ndcg_at_10,utility_lambda_0p08,source
+summary,0.00,0.019013017416000366,0.019013017416000366,compression_evidence_ladder
+binary,0.08,0.2874201834201813,0.2810201834201813,compression_evidence_ladder
+IVF-PQ,0.20,0.2552923262119293,0.2392923262119293,compression_evidence_ladder
+trunc-96,0.26,0.28133732080459595,0.26053732080459595,compression_evidence_ladder
+int8 dense,0.30,0.3609873950481415,0.3369873950481415,compression_evidence_ladder
+trunc-192,0.40,0.3336598873138428,0.3016598873138428,compression_evidence_ladder
+full dense,0.58,0.3635552227497101,0.3171552227497101,compression_evidence_ladder
+cross-encoder,1.03,0.3761163055896759,0.2937163055896759,compression_evidence_ladder
