@@ -296,6 +296,7 @@ def main() -> None:
                 "route_id": "dominated",
                 "label": "Dominated injected route",
                 "prerequisites": ["ce20"],
+                "cost": 0.9,
             }
         )
         dominated_rows = copy.deepcopy(base_rows)
@@ -340,6 +341,7 @@ def main() -> None:
                 "route_id": "dense_copy",
                 "label": "Redundant dense route",
                 "prerequisites": ["dense"],
+                "cost": 0.2,
             }
         )
         duplicate_view_rows = copy.deepcopy(base_rows)
@@ -385,6 +387,21 @@ def main() -> None:
         not leaked,
         f"forbidden participant columns={leaked}",
     )
+
+    with tempfile.TemporaryDirectory() as directory:
+        temp = Path(directory)
+        mismatched_registry = copy.deepcopy(base_registry)
+        mismatched_registry["routes"][1]["cost"] = 0.21
+        contract_path, action_path, _ = bind(
+            temp, base_contract, mismatched_registry, base_actions
+        )
+        ledger_path = temp / "ledger.csv"
+        write_csv(ledger_path, base_rows)
+        expect_rejection(
+            "I20_PUBLIC_COST_MISMATCH_REJECTED",
+            lambda: load_and_score(contract_path, ledger_path, action_path),
+            "public cost mismatch",
+        )
 
     failed = [probe for probe in probes if probe["status"] != "pass"]
     report = {

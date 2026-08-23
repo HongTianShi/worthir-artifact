@@ -51,6 +51,8 @@ def main() -> None:
         f"  query-route outcomes: {summary['query_route_rows']}\n"
         f"  effectiveness measure: {metric}\n"
         f"  cost mode: {cost_mode}\n"
+        f"  cost availability: {summary['cost_availability']}\n"
+        f"  public cost source: {summary['public_cost_source']}\n"
         f"  prerequisite edges: {summary['prerequisite_edges']}\n"
         f"  fixed reference: {summary['development_selected_fixed_route']}"
     )
