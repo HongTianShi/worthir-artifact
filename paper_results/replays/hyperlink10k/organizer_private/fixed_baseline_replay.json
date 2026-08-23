@@ -1,0 +1,77 @@
+{
+  "lambda": 0.08,
+  "schema_version": "worthir-hyperlink10k-fixed-replay-v1.0",
+  "seeds": {
+    "17": {
+      "counts": {
+        "dev_or_calibration": 2000,
+        "test": 2001,
+        "train": 5999
+      },
+      "f_dev_test_utility": 0.8001183512670196,
+      "f_dev_view": "hyperlink_1hop",
+      "f_tih_view": "hyperlink_1hop",
+      "oracle_test_utility": 0.8863706024559916,
+      "quality_dev_test_utility": 0.7964943718983888,
+      "quality_dev_view": "hyperlink_2hop",
+      "quality_to_utility_delta": 0.003623979368630792
+    },
+    "23": {
+      "counts": {
+        "dev_or_calibration": 2000,
+        "test": 2001,
+        "train": 5999
+      },
+      "f_dev_test_utility": 0.8006600358473219,
+      "f_dev_view": "hyperlink_1hop",
+      "f_tih_view": "hyperlink_1hop",
+      "oracle_test_utility": 0.8902522111016106,
+      "quality_dev_test_utility": 0.8000550888871836,
+      "quality_dev_view": "hyperlink_2hop",
+      "quality_to_utility_delta": 0.0006049469601383528
+    },
+    "31": {
+      "counts": {
+        "dev_or_calibration": 2000,
+        "test": 2001,
+        "train": 5999
+      },
+      "f_dev_test_utility": 0.798633437334591,
+      "f_dev_view": "hyperlink_1hop",
+      "f_tih_view": "hyperlink_1hop",
+      "oracle_test_utility": 0.8843053534269593,
+      "quality_dev_test_utility": 0.7955058733792588,
+      "quality_dev_view": "hyperlink_2hop",
+      "quality_to_utility_delta": 0.003127563955332202
+    },
+    "43": {
+      "counts": {
+        "dev_or_calibration": 2000,
+        "test": 2001,
+        "train": 5999
+      },
+      "f_dev_test_utility": 0.7962094185215206,
+      "f_dev_view": "hyperlink_1hop",
+      "f_tih_view": "hyperlink_1hop",
+      "oracle_test_utility": 0.8827365420769345,
+      "quality_dev_test_utility": 0.7886485422535809,
+      "quality_dev_view": "hyperlink_2hop",
+      "quality_to_utility_delta": 0.007560876267939665
+    },
+    "59": {
+      "counts": {
+        "dev_or_calibration": 2000,
+        "test": 2001,
+        "train": 5999
+      },
+      "f_dev_test_utility": 0.7848588888647274,
+      "f_dev_view": "hyperlink_1hop",
+      "f_tih_view": "hyperlink_2hop",
+      "oracle_test_utility": 0.8783927843741508,
+      "quality_dev_test_utility": 0.7849427840072013,
+      "quality_dev_view": "hyperlink_2hop",
+      "quality_to_utility_delta": -8.389514247386654e-05
+    }
+  },
+  "task_id": "worthir-2wiki-hyperlink10k-v1.0"
+}
