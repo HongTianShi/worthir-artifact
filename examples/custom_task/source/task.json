@@ -8,7 +8,7 @@
   },
   "cost_profile": {
     "profile_id": "measured-seconds-v1",
-    "provenance": "warm single-query execution time",
+    "provenance": "expected execution time estimated on an independent calibration set and available before route selection",
     "lambda": 0.15,
     "availability": "known_at_commitment"
   },

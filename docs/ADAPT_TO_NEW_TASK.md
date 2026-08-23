@@ -32,7 +32,7 @@ preference used in `utility = effectiveness - lambda * cost`:
   },
   "cost_profile": {
     "profile_id": "latency-seconds-v1",
-    "provenance": "warm single-query measurements",
+    "provenance": "expected execution time estimated on an independent calibration set",
     "lambda": 0.15,
     "availability": "known_at_commitment"
   },
