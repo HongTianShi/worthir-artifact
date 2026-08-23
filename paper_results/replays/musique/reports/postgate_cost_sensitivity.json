@@ -1,0 +1,86 @@
+{
+  "analysis_id": "musique-worthir-postgate-cost-sensitivity-v1.0",
+  "created_utc": "2026-07-30T03:42:30.567601+00:00",
+  "status": "post-gate frozen-action sensitivity",
+  "action_vector": "A_dev trained and selected only at lambda=.08",
+  "rows": [
+    {
+      "lambda": 0.0,
+      "F_dev": "V2",
+      "F_TIH": "V2",
+      "delta_utility": 0.00494644845169808,
+      "delta_utility_ci95": [
+        -0.0026009904025402295,
+        0.012403219553869905
+      ],
+      "delta_raw_quality": 0.00494644845169808,
+      "delta_operator_cost": -0.11279452791158276,
+      "recoverability": 0.04261201301254759
+    },
+    {
+      "lambda": 0.02,
+      "F_dev": "V2",
+      "F_TIH": "V2",
+      "delta_utility": 0.007202339009929736,
+      "delta_utility_ci95": [
+        -0.00035561836473118247,
+        0.014632615231026526
+      ],
+      "delta_raw_quality": 0.00494644845169808,
+      "delta_operator_cost": -0.11279452791158276,
+      "recoverability": 0.06111910279416814
+    },
+    {
+      "lambda": 0.04,
+      "F_dev": "V2",
+      "F_TIH": "V2",
+      "delta_utility": 0.009458229568161388,
+      "delta_utility_ci95": [
+        0.0019185297272703613,
+        0.01691881867670762
+      ],
+      "delta_raw_quality": 0.00494644845169808,
+      "delta_operator_cost": -0.11279452791158276,
+      "recoverability": 0.07904328641763728
+    },
+    {
+      "lambda": 0.08,
+      "F_dev": "V2",
+      "F_TIH": "V2",
+      "delta_utility": 0.013970010684624702,
+      "delta_utility_ci95": [
+        0.006425285801896747,
+        0.02146065819755154
+      ],
+      "delta_raw_quality": 0.00494644845169808,
+      "delta_operator_cost": -0.11279452791158276,
+      "recoverability": 0.11289326141616775
+    },
+    {
+      "lambda": 0.16,
+      "F_dev": "V2",
+      "F_TIH": "V1",
+      "delta_utility": 0.02299357291755132,
+      "delta_utility_ci95": [
+        0.01540481425411035,
+        0.030550394603954877
+      ],
+      "delta_raw_quality": 0.00494644845169808,
+      "delta_operator_cost": -0.11279452791158276,
+      "recoverability": 0.1729610359415465
+    },
+    {
+      "lambda": 0.32,
+      "F_dev": "V0",
+      "F_TIH": "V0",
+      "delta_utility": -0.003795994717003197,
+      "delta_utility_ci95": [
+        -0.013326338916505672,
+        0.005627926963005715
+      ],
+      "delta_raw_quality": 0.04890855141570802,
+      "delta_operator_cost": 0.16470170666472253,
+      "recoverability": -0.03423105993464202
+    }
+  ]
+}
