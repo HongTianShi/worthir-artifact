@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python: ["3.10", "3.13"]
     steps:
       - uses: actions/checkout@v6
@@ -22,6 +22,8 @@ jobs:
         run: .\worthir.cmd demo
       - if: runner.os != 'Windows'
         run: ./worthir demo
+      - if: matrix.python == '3.13'
+        run: python worthir.py demo-custom
 
   paper-results:
     runs-on: ubuntu-latest
