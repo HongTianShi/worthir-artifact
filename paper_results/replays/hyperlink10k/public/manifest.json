@@ -1,0 +1,7 @@
+{
+  "layer": "participant_public",
+  "release_normalization": "logical provenance labels",
+  "schema_version": "worthir-surface-manifest-v1.0",
+  "surface_id": "worthir-hyperlink10k-scoring-surface-v1.0",
+  "task_id": "worthir-2wiki-hyperlink10k-v1.0"
+}
