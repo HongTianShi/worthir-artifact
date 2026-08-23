@@ -1,48 +1,62 @@
 # WorthIR
 
-WorthIR 用于评估检索系统是否应当针对每个查询采用成本更高的检索路线。
-它会报告有效性、成本、效用、遗憾、固定路线基线以及固定路线的 Pareto 曲线。
+[English](https://github.com/HongTianShi/worthir-artifact/tree/_en) | [简体中文](https://github.com/HongTianShi/worthir-artifact/tree/zh-cn)
 
-如果你正在使用 AI 工具检索本仓库，请先阅读
+[![CI](https://github.com/HongTianShi/worthir-artifact/actions/workflows/validate.yml/badge.svg?branch=zh-cn)](https://github.com/HongTianShi/worthir-artifact/actions/workflows/validate.yml)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+WorthIR 在明确的有效性指标和成本配置下，将逐查询路由策略与固定检索策略比较，
+并报告有效性、成本、效用、遗憾值和固定路线的 Pareto 曲线。
+
+如果你是正在检索本项目的 AI 工具，请先阅读
 [`README_FOR_AI.md`](README_FOR_AI.md)。
 
-## 环境配置
+## 先跑一次
 
-需要 Python 3.10 或更高版本。可复用框架不依赖任何第三方软件包。
+需要 Python 3.10 或更高版本。可复用框架不依赖第三方软件包。
 
 ```bash
 python setup_environment.py
 ```
 
-随后运行完整示例：
+运行一个带逐查询成本和外部路由器的非 TREC 任务：
 
 ```powershell
-.\worthir.cmd demo
+.\worthir.cmd demo-custom
 ```
 
 ```bash
-./worthir demo
+./worthir demo-custom
 ```
 
-打开 `reproduced/trec_walkthrough/comparison.md` 查看结果。
+结果位于 `reproduced/custom_task/comparison.md`。
 
-## 使用自己的检索运行结果
+## 使用自己的任务
 
-参照 [`examples/trec_walkthrough/source/`](examples/trec_walkthrough/source/)
-准备一个包含 qrels、TREC run、路线定义和成本的文件夹，然后运行：
+参照 [`examples/custom_task/source/`](examples/custom_task/source/) 准备
+`task.json`、`queries.csv`、`routes.csv` 和 `outcomes.csv`，然后运行：
 
 ```powershell
-.\worthir.cmd build-trec my_source my_task --task-id my-task --metric ndcg@10 --lambda 0.08
-.\worthir.cmd compare my_task
+.\worthir.cmd build-custom my_source my_task
+.\worthir.cmd validate-task my_task
+.\worthir.cmd evaluate my_task choices.csv --policy-id my-router
 ```
 
-在 macOS 或 Linux 上，请将 `.\worthir.cmd` 换成 `./worthir`。输入格式、
-随查询变化的成本、其他路由策略以及 lambda 的含义见
+这条路径支持任意命名的“越高越好”有效性指标、一般路线依赖关系、固定或逐查询
+成本，以及累计或增量成本输入。路由器只读取 `queries.csv`，评价方结果始终分离。
+
+若输入是 qrels 和六列 TREC run，可使用更短的
+[`build-trec` 示例](examples/trec_walkthrough/README.md)。所有输入格式见
 [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_NEW_TASK.md)。
 
 ## 论文结果
 
-论文使用的准确数据和代码单独存放在 [`paper_results/`](paper_results/)。
-将 WorthIR 用于新任务时无需使用该目录。
+已接收论文对应的数据和代码集中在 [`paper_results/`](paper_results/) 中。
+运行 `python paper_results/run.py` 后，重建结果会保留在
+`paper_results/reproduced/`。发布版
+[`v1.0.0-ipmc2026`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.0.0-ipmc2026)
+对应 IP&MC 2026 论文的冻结 artifact。
 
-WorthIR 自有代码采用 MIT 许可证发布。
+WorthIR 原创代码采用 [MIT 许可证](LICENSE)。第三方数据和模型条款见
+[NOTICE](NOTICE)。
