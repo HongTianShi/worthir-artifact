@@ -1,0 +1,49 @@
+{
+  "comparisons": {
+    "candidate_pool_fingerprints.parquet": {
+      "passed": true,
+      "rows": 22355
+    },
+    "controls_private.parquet": {
+      "passed": true,
+      "rows": 7251
+    },
+    "execution_manifest_semantics": {
+      "passed": true
+    },
+    "policy_state.parquet": {
+      "passed": true,
+      "rows": 22355
+    },
+    "query_index.parquet": {
+      "passed": true,
+      "rows": 22355
+    },
+    "rankings_private.npz": {
+      "arrays": [
+        "candidate_count",
+        "rank_V0",
+        "rank_V1",
+        "rank_V2",
+        "rank_V3"
+      ],
+      "passed": true
+    },
+    "route_outcomes_private.parquet": {
+      "passed": true,
+      "rows": 89420
+    }
+  },
+  "created_utc": "2026-07-30T03:26:37.022041+00:00",
+  "materializer_exit_code": 0,
+  "passed": true,
+  "result_id": "musique-worthir-reproducibility-v1.0",
+  "runtime_exclusion": "route_runtime.parquet is a diagnostic wall-clock measurement and is intentionally excluded from semantic equality",
+  "stdout_tail": [
+    "outcomes 20000/22355",
+    "outcomes 21000/22355",
+    "outcomes 22000/22355",
+    "outcomes 22355/22355",
+    "{\"rows\": 89420, \"controls\": 7251}"
+  ]
+}
