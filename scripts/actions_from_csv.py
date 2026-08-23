@@ -23,15 +23,25 @@ def convert_actions(task: Path, source: Path, output: Path, policy_id: str) -> P
     task = task.resolve()
     contract_path = task / "contracts" / "task_contract.json"
     registry_path = task / "contracts" / "route_registry.json"
-    ledger_path = task / "evaluator" / "ledger.csv"
+    legal_state_path = task / "participant" / "legal_state.csv"
     try:
         contract = json.loads(contract_path.read_text(encoding="utf-8"))
         registry = json.loads(registry_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ActionError(f"cannot read task contract or route registry: {exc}") from exc
     route_ids = {row["route_id"] for row in registry.get("routes", [])}
-    with ledger_path.open("r", encoding="utf-8", newline="") as stream:
-        query_ids = {row["query_uid"] for row in csv.DictReader(stream)}
+    try:
+        with legal_state_path.open("r", encoding="utf-8-sig", newline="") as stream:
+            reader = csv.DictReader(stream)
+            if not reader.fieldnames or reader.fieldnames[0] != "query_uid":
+                raise ActionError("legal_state.csv must start with query_uid")
+            legal_rows = list(reader)
+    except OSError as exc:
+        raise ActionError(f"cannot read participant legal state: {exc}") from exc
+    query_id_list = [row["query_uid"] for row in legal_rows]
+    if len(query_id_list) != len(set(query_id_list)):
+        raise ActionError("legal_state.csv repeats a query_uid")
+    query_ids = set(query_id_list)
     try:
         with source.open("r", encoding="utf-8-sig", newline="") as stream:
             reader = csv.DictReader(stream)
