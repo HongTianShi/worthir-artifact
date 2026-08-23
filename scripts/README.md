@@ -3,6 +3,8 @@
 Most users should call `worthir.py` through `worthir.cmd` or `./worthir`.
 
 - `build_trec_task.py`: convert qrels, TREC runs, and costs into a task.
+- `build_custom_task.py`: build a task from generic query, route, outcome, and cost tables.
+- `validate_task.py`: check the complete task before any policy is scored.
 - `actions_from_csv.py`: bind a query--route choice CSV to a task.
 - `compare_policies.py`: score policies and fixed routes and write reports.
 - `score_actions.py`: score one action file.
