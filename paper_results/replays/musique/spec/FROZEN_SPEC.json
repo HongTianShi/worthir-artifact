@@ -1,0 +1,44 @@
+{
+  "spec_id": "musique-worthir-admission-v1.0",
+  "source": "external://huggingface/bdsaglam/musique",
+  "active_unit": "unique answerable source ID",
+  "splits": {
+    "train": 15950,
+    "dev": 3988,
+    "test": 2417,
+    "test_source": "official validation"
+  },
+  "routes": ["V0", "V1", "V2", "V3"],
+  "primary_metric": "paragraph_id_ndcg_at_4",
+  "secondary_metrics": ["paragraph_id_recall_at_4", "paragraph_id_f1_at_4", "support_title_recall_at_4"],
+  "primary_cost": "per_query_normalized_operator_work",
+  "lambda": 0.08,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260730,
+  "learners": {
+    "rf": {"n_estimators": 300, "min_samples_leaf": 4, "random_state": 20260730},
+    "extra_trees": {"n_estimators": 400, "min_samples_leaf": 3, "random_state": 20260730},
+    "hist_gradient_boosting": {"max_iter": 200, "learning_rate": 0.05, "random_state": 20260730}
+  },
+  "gate_thresholds": {
+    "quality_oracle_min_routes": 3,
+    "quality_oracle_min_share": 0.05,
+    "utility_oracle_min_routes": 2,
+    "utility_oracle_min_share": 0.10,
+    "top1_disagreement_min": 0.20,
+    "utility_headroom_mean_min": 0.06,
+    "utility_headroom_ci_lower_min": 0.04,
+    "raw_headroom_mean_min": 0.08,
+    "fixed_ndcg_saturation_max": 0.85,
+    "hop_strata_headroom_min": 0.04,
+    "hop_strata_required": 4,
+    "adaptive_gain_mean_min": 0.01,
+    "adaptive_gain_ci_lower_min": 0.0,
+    "adaptive_recovery_min": 0.10,
+    "paragraph_shuffle_gap_mean_min": 0.20,
+    "paragraph_shuffle_gap_ci_lower_min": 0.15,
+    "wrong_decomposition_gap_mean_min": 0.03,
+    "wrong_decomposition_gap_ci_lower_min": 0.02
+  },
+  "official_validation_route_outcomes_inspected_before_freeze": false
+}
