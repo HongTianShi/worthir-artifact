@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import sys
 from pathlib import Path
 
 
@@ -52,8 +53,10 @@ def initialize_task(output: Path, task_id: str) -> Path:
     (output / "README.md").write_text(
         f"# {task_id}\n\n该目录是一个可运行的 WorthIR 任务。\n\n"
         "从 WorthIR 仓库根目录运行：\n\n"
-        f"```bash\npython worthir.py score \"{output}\"\n"
-        f"python worthir.py compare \"{output}\"\n```\n",
+        f"```powershell\n.\\worthir.cmd validate-task \"{output}\"\n"
+        f".\\worthir.cmd compare \"{output}\"\n```\n\n"
+        f"```bash\n./worthir validate-task \"{output}\"\n"
+        f"./worthir compare \"{output}\"\n```\n",
         encoding="utf-8",
     )
     return output
@@ -72,7 +75,8 @@ def main() -> None:
     except ValueError as exc:
         parser.error(str(exc))
     print(f"已创建：{output}")
-    print(f"下一步：python worthir.py compare \"{output}\"")
+    launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
+    print(f"下一步：{launcher} validate-task \"{output}\"")
 
 
 if __name__ == "__main__":
