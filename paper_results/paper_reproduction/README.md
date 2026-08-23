@@ -14,6 +14,5 @@ python scripts/reproduce_paper.py --output-dir reproduced/paper
 - Table 3 validates gain and recovered-headroom identities.
 - Table 4 is reaggregated from the matched-budget query-level audit.
 
-The validation checks source hashes, plotted coordinates, table arithmetic,
-row counts, and generated-file presence. PDF byte hashes may vary across font
-and plotting backends.
+The validation checks plotted coordinates, table arithmetic, row counts, and
+generated-file presence.
