@@ -1,0 +1,5 @@
+task,difficulty_opportunity_rank_correlation,difficult_queries_without_positive_route_margin,easier_queries_with_positive_route_margin,queries_with_positive_route_margin
+FEVER,0.7643940000,0.1033600000,0.0096760000,0.4250680000
+MuSiQue,0.5350590000,0.1568060000,0.1315680000,0.4820020000
+2Wiki-Structured,0.8367080000,0.0345000000,0.1085000000,0.6145000000
+TREC-DL pooled,0.6744180000,0.0309280000,0.4226800000,0.8969070000
