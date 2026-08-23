@@ -358,27 +358,34 @@ def write_summary(output: Path, rq2: pd.DataFrame) -> None:
         ["task", "policy", "mean_utility", "delta_utility_vs_fixed"],
     ]
     lines = [
-        "# Reproduced RQ readouts",
+        "# 重建的 RQ 结果",
         "",
-        "This run scores the released action vectors against the released route ledgers and checks the compact post-hoc analysis tables. It does not rerun retrieval models.",
+        "本次运行根据发布的路线 ledger 对发布的动作向量评分，并检查精简的事后分析表；不会重新运行检索模型。",
         "",
-        "## RQ2: shared-evaluator policy comparison",
+        "## RQ2：同一评价器下的策略比较",
         "",
-        "| Task | Policy | Mean utility | Delta vs fixed |",
+        "| 任务 | 策略 | 平均效用 | 相对固定策略差值 |",
         "| --- | --- | ---: | ---: |",
     ]
+    policy_names = {
+        "fixed": "固定策略",
+        "qpp": "QPP",
+        "native_adaptive": "任务专用自适应策略",
+        "uniform_random_analytic": "均匀随机",
+    }
     for row in focus.itertuples(index=False):
         lines.append(
-            f"| {row.task} | {row.policy} | {row.mean_utility:.6f} | {row.delta_utility_vs_fixed:+.6f} |"
+            f"| {row.task} | {policy_names.get(row.policy, row.policy)} | "
+            f"{row.mean_utility:.6f} | {row.delta_utility_vs_fixed:+.6f} |"
         )
     lines.extend(
         [
             "",
             "## RQ3--RQ5",
             "",
-            "The run also checks that RQ3 utility contributions sum to each task's headline gain, that the released RQ4 perturbation counts and intervals match the reported summaries, and that the RQ5 prediction, operation-control, and relevant-document-depth readouts are present.",
+            "本次运行还会检查：RQ3 的效用贡献之和是否等于各任务的总体增益；RQ4 发布的扰动次数和区间是否与汇总一致；RQ5 的预测、操作控制和相关文档深度结果是否齐全。",
             "",
-            "See the copied CSV files in this directory for the compact numerical readouts.",
+            "精简数值结果见本目录中复制生成的 CSV 文件。",
         ]
     )
     (output / "RQ_READOUTS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
