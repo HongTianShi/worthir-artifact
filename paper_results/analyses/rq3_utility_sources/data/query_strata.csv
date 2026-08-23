@@ -1,0 +1,13 @@
+task,queries,query_stratum,stratum_queries,stratum_share,mean_utility_gain_within_stratum,utility_gain_contribution_per_query,headline_utility_gain
+TREC-DL pooled,97,no_effectiveness_gain,9,0.0927835052,0.0000000000,0.0000000000,0.0000000000
+TREC-DL pooled,97,effectiveness_gain_not_worth_cost,1,0.0103092784,0.0000000000,0.0000000000,0.0000000000
+TREC-DL pooled,97,cost_effective_acquisition,87,0.8969072165,0.0000000000,0.0000000000,0.0000000000
+FEVER,13332,no_effectiveness_gain,7647,0.5735823582,0.0218873946,0.0125542234,0.0111413721
+FEVER,13332,effectiveness_gain_not_worth_cost,18,0.0013501350,0.0282645192,0.0000381609,0.0111413721
+FEVER,13332,cost_effective_acquisition,5667,0.4250675068,-0.0034136042,-0.0014510122,0.0111413721
+MuSiQue,2417,no_effectiveness_gain,1235,0.5109640050,0.0850989215,0.0434824858,0.0139700107
+MuSiQue,2417,effectiveness_gain_not_worth_cost,17,0.0070335126,0.0545497600,0.0003836764,0.0139700107
+MuSiQue,2417,cost_effective_acquisition,1165,0.4820024824,-0.0620248911,-0.0298961515,0.0139700107
+2Wiki-Structured,2000,no_effectiveness_gain,760,0.3800000000,0.0514773888,0.0195614077,0.0265665731
+2Wiki-Structured,2000,effectiveness_gain_not_worth_cost,11,0.0055000000,0.0833447667,0.0004583962,0.0265665731
+2Wiki-Structured,2000,cost_effective_acquisition,1229,0.6145000000,0.0106538148,0.0065467692,0.0265665731
