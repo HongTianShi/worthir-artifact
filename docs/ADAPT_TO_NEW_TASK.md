@@ -1,140 +1,149 @@
-# Apply WorthIR to a retrieval task
+# Apply WorthIR to a new task
 
-The shortest path starts from standard qrels and TREC run files. Run every
-command from the repository root.
+Run commands from the repository root. Use the generic adapter unless your data
+already consists of qrels and TREC run files.
 
-## 1. Create the source folder
+## Generic task
+
+Create one source directory:
 
 ```text
 my_source/
-  qrels.tsv
+  task.json
+  queries.csv
   routes.csv
-  queries.csv              optional
-  costs.csv                optional
+  outcomes.csv
   policy_choices.csv       optional
-  runs/
-    base.trec
-    advanced.trec
 ```
 
-`qrels.tsv` accepts the usual four-column TREC form:
+### 1. Name the measure and cost profile
 
-```text
-query_id 0 document_id relevance
+`task.json` declares a higher-is-better effectiveness measure and the cost
+preference used in `utility = effectiveness - lambda * cost`:
+
+```json
+{
+  "task_id": "my-task-v1",
+  "metric": {
+    "name": "answer_coverage",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "higher_is_better": true
+  },
+  "cost_profile": {
+    "profile_id": "latency-seconds-v1",
+    "provenance": "warm single-query measurements",
+    "lambda": 0.15
+  },
+  "development_selected_fixed_route": "standard"
+}
 ```
 
-Three-column `query_id document_id relevance` rows are also accepted.
+The measure need not be NDCG or a TREC measure. WorthIR consumes the numerical
+outcome supplied for each query and route.
 
-Each run is a six-column TREC run:
+### 2. Separate router input from evaluator outcomes
 
-```text
-query_id Q0 document_id rank score run_name
-```
-
-`routes.csv` has exactly these columns:
+`queries.csv` contains only fields available when the router chooses a route.
+Its first column must be `query_uid`:
 
 ```csv
-route_id,label,parent_route_id,run_file,cost,development_selected
-base,BM25,,runs/base.trec,0.00,false
-advanced,Cross-encoder,base,runs/advanced.trec,0.75,true
+query_uid,question_length,domain
+q1,12,sports
+q2,31,science
 ```
 
-Exactly one route must be marked `development_selected`. This is the strong
-fixed reference selected without using evaluation outcomes. `parent_route_id`
-records required preceding work. Costs are cumulative: a child route cannot
-cost less than its parent.
-
-If every query has the same route cost, the `cost` column is enough. For
-measured query-dependent latency or work, add `costs.csv` with one row for every
-query--route pair:
+`outcomes.csv` is evaluator-only and must contain every query--route pair:
 
 ```csv
-query_uid,route_id,cost
-q1,base,12.4
-q1,advanced,48.7
+query_uid,route_id,effectiveness
+q1,standard,0.81
+q1,extended,0.89
+q2,standard,0.64
+q2,extended,0.91
 ```
 
-When present, `costs.csv` replaces the constant route costs. See
-[`COST_AND_LAMBDA.md`](COST_AND_LAMBDA.md) before choosing the scale and lambda.
+Do not use this file to train or execute a held-out router unless the task's
+data split explicitly makes those rows development data.
 
-`queries.csv` is participant-visible state. Its first column must be
-`query_uid`, and it must contain each qrels query once. Put only information
-available before route selection in this file. If it is omitted, WorthIR writes
-a one-column query list.
+### 3. Define routes and costs
 
-`policy_choices.csv` is optional and has two columns:
+Prerequisites are semicolon-separated route IDs. Exactly one route is the fixed
+reference selected on development data.
+
+If cumulative costs are already known:
+
+```csv
+route_id,label,prerequisites,cost,development_selected
+standard,Standard route,,0.10,true
+extended,Extended route,standard,0.40,false
+```
+
+If routes are components in a dependency graph, use `incremental_cost` instead:
+
+```csv
+route_id,label,prerequisites,incremental_cost,development_selected
+lexical,Lexical search,,0.03,false
+semantic,Semantic search,,0.12,true
+combined,Combined review,lexical;semantic,0.08,false
+```
+
+WorthIR sums each route's transitive prerequisite closure once. To make costs
+query-dependent, add the same `cost` or `incremental_cost` column to
+`outcomes.csv` and provide a value for every pair. Do not mix the two cost modes.
+
+### 4. Build and validate
+
+```powershell
+.\worthir.cmd build-custom my_source my_task
+.\worthir.cmd validate-task my_task
+```
+
+```bash
+./worthir build-custom my_source my_task
+./worthir validate-task my_task
+```
+
+Validation reports query and route counts, missing combinations, dependency
+problems, cumulative-cost violations, and whether costs vary by query.
+
+### 5. Run a router and compare it
+
+The router reads `my_task/participant/legal_state.csv` and writes:
 
 ```csv
 query_uid,selected_route_id
-q1,base
-q2,advanced
+q1,standard
+q2,extended
 ```
 
-If it is absent, the generated default policy selects the development-selected
-fixed route for every query. If it is present, give the policy a meaningful
-name with `--policy-id` when building the task.
-
-## 2. Build and inspect the task
+Bind and compare those decisions in one command:
 
 ```powershell
-.\worthir.cmd build-trec my_source my_task --task-id my-retrieval-task-v1 --metric ndcg@10 --lambda 0.08 --policy-id my-router
+.\worthir.cmd evaluate my_task choices.csv --policy-id my-router
 ```
 
-Use `./worthir` on macOS or Linux. The built task contains:
+See [`examples/custom_router/`](../examples/custom_router/) for a complete
+router that never reads the evaluator ledger.
 
-```text
-my_task/
-  contracts/task_contract.json
-  contracts/route_registry.json
-  participant/legal_state.csv
-  participant/actions.json
-  participant/policies/
-  evaluator/ledger.csv
-```
+## TREC adapter
 
-The adapter computes NDCG@K for every qrels query and every registered run.
-Inspect a few ledger rows before proceeding. Relevance judgments and the ledger
-are evaluator-side data; a routing policy must not use them.
-
-## 3. Add routing policies
-
-Export each policy's held-out choices as a CSV containing `query_uid` and
-`selected_route_id`, then bind it to the task:
+For qrels and six-column TREC runs, follow
+[`examples/trec_walkthrough/`](../examples/trec_walkthrough/). Its `routes.csv`
+adds a `run_file` column, and `build-trec` computes NDCG@K before creating the
+same task structure:
 
 ```powershell
-.\worthir.cmd actions my_task choices.csv --policy-id my-router
+.\worthir.cmd build-trec my_source my_task --task-id my-task-v1 --metric ndcg@10 --lambda 0.08
+.\worthir.cmd validate-task my_task
 ```
 
-The resulting JSON is written to `my_task/participant/policies/my-router.json`.
-The command rejects missing queries, duplicates, and unknown routes.
+The optional TREC `costs.csv` supplies cumulative query-dependent costs with
+columns `query_uid,route_id,cost`.
 
-## 4. Compare policies
+## Outputs
 
-```powershell
-.\worthir.cmd compare my_task
-```
-
-This scores the default action file, every JSON file in
-`participant/policies/`, and every registered fixed route. It writes:
-
-- `comparison.md`: readable task summary;
-- `comparison.csv`: policy and fixed-route means;
-- `fixed_routes.csv`: fixed-route points and Pareto membership;
-- `comparison.json`: complete machine-readable output.
-
-See [`OUTPUTS.md`](OUTPUTS.md) for interpretation. These files contain
+`compare` and `evaluate` write a readable `comparison.md`, machine-readable
+CSV and JSON, and `fixed_routes.csv` with Pareto membership. These are
 descriptive query means. Statistical intervals require a task-appropriate
-resampling design and are not invented by the generic tool.
-
-## Manual route
-
-For non-TREC effectiveness measures, create an editable task and replace the
-example ledger with one complete query--route matrix:
-
-```powershell
-.\worthir.cmd init my_task --task-id my-task-v1
-.\worthir.cmd score my_task
-```
-
-The ledger columns are `query_uid,route_id,effectiveness,cost`. Effectiveness
-must be higher-is-better and lie within the bounds in the task contract.
+resampling design; the generic tool does not invent one.
