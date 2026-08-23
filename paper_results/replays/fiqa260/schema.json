@@ -1,0 +1,715 @@
+{
+  "bundle_version": "fiqa8_intersection_260_v1",
+  "identifier_only_fields": [
+    "query_uid"
+  ],
+  "join_key": "query_uid",
+  "legal_field_lineage": {
+    "query_emb_head_00": {
+      "phase5_legal_feature_name": "query_emb_head_00",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_00",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_01": {
+      "phase5_legal_feature_name": "query_emb_head_01",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_01",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_02": {
+      "phase5_legal_feature_name": "query_emb_head_02",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_02",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_03": {
+      "phase5_legal_feature_name": "query_emb_head_03",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_03",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_04": {
+      "phase5_legal_feature_name": "query_emb_head_04",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_04",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_05": {
+      "phase5_legal_feature_name": "query_emb_head_05",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_05",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_06": {
+      "phase5_legal_feature_name": "query_emb_head_06",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_06",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_07": {
+      "phase5_legal_feature_name": "query_emb_head_07",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_07",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_08": {
+      "phase5_legal_feature_name": "query_emb_head_08",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_08",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_09": {
+      "phase5_legal_feature_name": "query_emb_head_09",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_09",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_10": {
+      "phase5_legal_feature_name": "query_emb_head_10",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_10",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_11": {
+      "phase5_legal_feature_name": "query_emb_head_11",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_11",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_12": {
+      "phase5_legal_feature_name": "query_emb_head_12",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_12",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_13": {
+      "phase5_legal_feature_name": "query_emb_head_13",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_13",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_14": {
+      "phase5_legal_feature_name": "query_emb_head_14",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_14",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_head_15": {
+      "phase5_legal_feature_name": "query_emb_head_15",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_head_15",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_max": {
+      "phase5_legal_feature_name": "query_emb_max",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_max",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_mean": {
+      "phase5_legal_feature_name": "query_emb_mean",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_mean",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_min": {
+      "phase5_legal_feature_name": "query_emb_min",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_min",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_positive_fraction": {
+      "phase5_legal_feature_name": "query_emb_positive_fraction",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_positive_fraction",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_emb_std": {
+      "phase5_legal_feature_name": "query_emb_std",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::query_emb_std",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "frozen_query_embedding",
+      "source_operation": "query-side embedding coordinate or aggregate available before acquisition"
+    },
+    "query_uid": {
+      "predictor_eligible": false,
+      "role": "identifier_only",
+      "source_layer": "stable_query_identifier"
+    },
+    "summary_entropy_top10": {
+      "phase5_legal_feature_name": "summary_entropy_top10",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::summary_entropy_top10",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "summary_base_scores",
+      "source_operation": "summary base top-10 score sketch available at purchase time"
+    },
+    "summary_margin": {
+      "phase5_legal_feature_name": "summary_margin",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::summary_margin",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "summary_base_scores",
+      "source_operation": "summary base top-10 score sketch available at purchase time"
+    },
+    "summary_mean_top10": {
+      "phase5_legal_feature_name": "summary_mean_top10",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::summary_mean_top10",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "summary_base_scores",
+      "source_operation": "summary base top-10 score sketch available at purchase time"
+    },
+    "summary_span_top10": {
+      "phase5_legal_feature_name": "summary_span_top10",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::summary_span_top10",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "summary_base_scores",
+      "source_operation": "summary base top-10 score sketch available at purchase time"
+    },
+    "summary_std_top10": {
+      "phase5_legal_feature_name": "summary_std_top10",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::summary_std_top10",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "summary_base_scores",
+      "source_operation": "summary base top-10 score sketch available at purchase time"
+    },
+    "summary_top1": {
+      "phase5_legal_feature_name": "summary_top1",
+      "phase5_legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+      "phase5_reference": "regimes.dense3.legal_feature_names::summary_top1",
+      "phase5_regime": "dense3",
+      "predictor_eligible": true,
+      "purchase_time_visible": true,
+      "source_layer": "summary_base_scores",
+      "source_operation": "summary base top-10 score sketch available at purchase time"
+    }
+  },
+  "legal_projection_version": "m2s-wsdm-legal-projection-v1.0",
+  "predictor_fields": [
+    "query_emb_head_00",
+    "query_emb_head_01",
+    "query_emb_head_02",
+    "query_emb_head_03",
+    "query_emb_head_04",
+    "query_emb_head_05",
+    "query_emb_head_06",
+    "query_emb_head_07",
+    "query_emb_head_08",
+    "query_emb_head_09",
+    "query_emb_head_10",
+    "query_emb_head_11",
+    "query_emb_head_12",
+    "query_emb_head_13",
+    "query_emb_head_14",
+    "query_emb_head_15",
+    "query_emb_mean",
+    "query_emb_std",
+    "query_emb_min",
+    "query_emb_max",
+    "query_emb_positive_fraction",
+    "summary_top1",
+    "summary_margin",
+    "summary_mean_top10",
+    "summary_std_top10",
+    "summary_span_top10",
+    "summary_entropy_top10"
+  ],
+  "schema_version": "m2s-wsdm-fiqa8-layered-schema-v1.0",
+  "separation_contract": {
+    "audit_tables": [
+      "execution_fingerprints.parquet",
+      "candidate_pool_fingerprints.parquet"
+    ],
+    "evaluator_label_table": "raw_quality_labels.parquet",
+    "identifier_only_table": "query_membership.parquet",
+    "predictor_table": "legal_state.parquet",
+    "private_candidate_ids": "evaluator-side private file outside bundle; never predictor input"
+  },
+  "tables": {
+    "candidate_pool_fingerprints.parquet": {
+      "fields": [
+        {
+          "arrow_type": "string",
+          "name": "query_uid",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "view",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "parent_view",
+          "nullable": true
+        },
+        {
+          "arrow_type": "int64",
+          "name": "candidate_count",
+          "nullable": true
+        },
+        {
+          "arrow_type": "int64",
+          "name": "parent_candidate_count",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "pool_relationship",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "candidate_source",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "fingerprint_generation_version",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "candidate_pool_fingerprint",
+          "nullable": true
+        }
+      ],
+      "primary_key": [
+        "query_uid",
+        "view"
+      ],
+      "role": "evaluator-side audit hashes; never predictor input"
+    },
+    "execution_fingerprints.parquet": {
+      "fields": [
+        {
+          "arrow_type": "string",
+          "name": "query_uid",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "view",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "parent_view",
+          "nullable": true
+        },
+        {
+          "arrow_type": "int64",
+          "name": "candidate_k",
+          "nullable": true
+        },
+        {
+          "arrow_type": "int64",
+          "name": "evaluation_cutoff",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "execution_fingerprint",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "execution_spec_schema_version",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "execution_spec_json",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "authoritative_contract_fingerprint",
+          "nullable": true
+        },
+        {
+          "arrow_type": "string",
+          "name": "repair_runtime_fingerprint",
+          "nullable": true
+        }
+      ],
+      "primary_key": [
+        "query_uid",
+        "view"
+      ],
+      "role": "audit/provenance metadata"
+    },
+    "legal_state.parquet": {
+      "fields": [
+        {
+          "arrow_type": "string",
+          "name": "query_uid",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_00",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_01",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_02",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_03",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_04",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_05",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_06",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_07",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_08",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_09",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_10",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_11",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_12",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_13",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_14",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_head_15",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_mean",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_std",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_min",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_max",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "query_emb_positive_fraction",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "summary_top1",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "summary_margin",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "summary_mean_top10",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "summary_std_top10",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "summary_span_top10",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "summary_entropy_top10",
+          "nullable": true
+        }
+      ],
+      "primary_key": [
+        "query_uid"
+      ],
+      "role": "predictor-side legal purchase-time state"
+    },
+    "query_membership.parquet": {
+      "fields": [
+        {
+          "arrow_type": "string",
+          "name": "query_uid",
+          "nullable": false
+        },
+        {
+          "arrow_type": "string",
+          "name": "dataset_id",
+          "nullable": false
+        },
+        {
+          "arrow_type": "string",
+          "name": "original_query_id",
+          "nullable": false
+        },
+        {
+          "arrow_type": "string",
+          "name": "dataset_split",
+          "nullable": false
+        },
+        {
+          "arrow_type": "bool",
+          "name": "ce_boundary_membership",
+          "nullable": false
+        },
+        {
+          "arrow_type": "string",
+          "name": "ce_router_split",
+          "nullable": false
+        },
+        {
+          "arrow_type": "int32",
+          "name": "ce_boundary_csv_row_index",
+          "nullable": false
+        },
+        {
+          "arrow_type": "int32",
+          "name": "upstream_query_index",
+          "nullable": false
+        },
+        {
+          "arrow_type": "int32",
+          "name": "source_query_jsonl_row_index",
+          "nullable": false
+        },
+        {
+          "arrow_type": "int32",
+          "name": "source_filtered_query_row_index",
+          "nullable": false
+        },
+        {
+          "arrow_type": "string",
+          "name": "provenance_key",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "query_uid"
+      ],
+      "role": "identifier/join/audit only"
+    },
+    "raw_quality_labels.parquet": {
+      "fields": [
+        {
+          "arrow_type": "string",
+          "name": "query_uid",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_summary",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_binary",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_pq",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_int8",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_hnsw16",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_hnsw64",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_full",
+          "nullable": true
+        },
+        {
+          "arrow_type": "double",
+          "name": "raw_quality_ce",
+          "nullable": true
+        }
+      ],
+      "primary_key": [
+        "query_uid"
+      ],
+      "role": "evaluator-side raw outcomes; never predictor input"
+    }
+  },
+  "view_key": "view",
+  "views_in_order": [
+    "summary",
+    "binary",
+    "pq",
+    "int8",
+    "hnsw16",
+    "hnsw64",
+    "full",
+    "ce"
+  ]
+}
