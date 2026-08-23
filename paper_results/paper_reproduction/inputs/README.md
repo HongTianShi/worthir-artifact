@@ -12,3 +12,11 @@
 The former exploratory TREC task-health JSON used naive first-argmax tie
 handling and is intentionally excluded. It must not be used for the paper's
 13/43 and 14/54 disagreement counts.
+These compact inputs rebuild Tables 3 and 4 without rerunning retrieval.
+`table3_recoverability.csv` contains the reported task-level recovery values;
+`table4_query_level.parquet` is reaggregated at query level and checked against
+`table4_expected.csv`.
+
+Run `python paper_results/run.py` and open
+`paper_results/reproduced/paper/`. See `paper_results/PAPER_MAP.md` for the
+paper-to-file mapping and the reproduction level of each result.
