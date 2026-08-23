@@ -1,0 +1,9 @@
+{
+  "failure_policy": "retain null or adverse results without changing features, thresholds, or hyperparameters",
+  "held_out_outcomes_accessed_by_training_script": false,
+  "lock_id": "worthir-canonical-reference-baseline-prefit-lock-v1.0",
+  "new_method_claim": false,
+  "status": "frozen_before_baseline_fit",
+  "task_id": "worthir-trecdl-multistage-v1.0",
+  "test_conditioned_selection": false
+}
