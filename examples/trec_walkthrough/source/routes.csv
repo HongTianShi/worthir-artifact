@@ -1,0 +1,4 @@
+route_id,label,parent_route_id,run_file,cost,development_selected
+base,BM25,,runs/base.trec,0.00,false
+prf,查询扩展,base,runs/prf.trec,0.25,true
+rerank,交叉编码器重排,prf,runs/rerank.trec,0.75,false
