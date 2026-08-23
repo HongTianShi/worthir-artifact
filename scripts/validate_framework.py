@@ -57,6 +57,8 @@ def main() -> None:
         "task_template/contracts/task_contract.json",
         "scripts/init_task.py",
         "scripts/build_trec_task.py",
+        "scripts/build_custom_task.py",
+        "scripts/validate_task.py",
         "scripts/actions_from_csv.py",
         "scripts/compare_policies.py",
         "scripts/score_actions.py",
@@ -64,10 +66,12 @@ def main() -> None:
         "setup_environment.py",
         "examples/trec_walkthrough/source/qrels.tsv",
         "examples/trec_walkthrough/source/routes.csv",
+        "examples/custom_task/source/task.json",
+        "examples/custom_router/router.py",
     ]
     missing = [path for path in required if not (root / path).is_file()]
     if missing:
-        raise RuntimeError(f"required framework files missing: {missing}")
+        raise RuntimeError(f"缺少必要的框架文件：{missing}")
 
     with tempfile.TemporaryDirectory(prefix="worthir-framework-") as temp:
         work = Path(temp)
@@ -130,6 +134,38 @@ def main() -> None:
                 str(root / "scripts" / "compare_policies.py"),
                 str(work / "trec_task"),
             ],
+            [
+                sys.executable,
+                str(root / "scripts" / "build_custom_task.py"),
+                str(root / "examples" / "custom_task" / "source"),
+                str(work / "custom_task"),
+            ],
+            [
+                sys.executable,
+                str(root / "scripts" / "validate_task.py"),
+                str(work / "custom_task"),
+            ],
+            [
+                sys.executable,
+                str(root / "examples" / "custom_router" / "router.py"),
+                str(work / "custom_task" / "participant" / "legal_state.csv"),
+                str(work / "custom_choices.csv"),
+            ],
+            [
+                sys.executable,
+                str(root / "scripts" / "actions_from_csv.py"),
+                "--task-dir",
+                str(work / "custom_task"),
+                "--input",
+                str(work / "custom_choices.csv"),
+                "--policy-id",
+                "validation-custom-router",
+            ],
+            [
+                sys.executable,
+                str(root / "scripts" / "compare_policies.py"),
+                str(work / "custom_task"),
+            ],
         ]
         started = time.perf_counter()
         results = []
@@ -141,7 +177,7 @@ def main() -> None:
 
     status = (
         "PASS"
-        if len(results) == 7
+        if len(results) == 12
         and all(result["returncode"] == 0 for result in results)
         else "FAIL"
     )
