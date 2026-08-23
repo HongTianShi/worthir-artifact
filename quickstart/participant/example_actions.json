@@ -1,0 +1,31 @@
+{
+  "schema_version": "worthir-action-file-v1.0",
+  "contract_id": "worthir-quickstart-v1",
+  "policy_id": "example-legal-policy",
+  "decisions": [
+    {
+      "query_uid": "q01",
+      "selected_route_id": "bm25"
+    },
+    {
+      "query_uid": "q02",
+      "selected_route_id": "dense"
+    },
+    {
+      "query_uid": "q03",
+      "selected_route_id": "ce20"
+    },
+    {
+      "query_uid": "q04",
+      "selected_route_id": "ce20"
+    },
+    {
+      "query_uid": "q05",
+      "selected_route_id": "bm25"
+    },
+    {
+      "query_uid": "q06",
+      "selected_route_id": "ce20"
+    }
+  ]
+}
