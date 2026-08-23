@@ -1,0 +1,141 @@
+{
+  "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "frontiers": {
+    "mean": {
+      "dominated_routes": [
+        {
+          "dominated_by": [
+            "bm25",
+            "ce20"
+          ],
+          "route": "bi200"
+        },
+        {
+          "dominated_by": [
+            "ce20",
+            "ce100"
+          ],
+          "route": "hybrid"
+        }
+      ],
+      "frontier_routes": [
+        "bm25",
+        "ce20",
+        "ce100"
+      ]
+    },
+    "median": {
+      "dominated_routes": [
+        {
+          "dominated_by": [
+            "bm25",
+            "ce20"
+          ],
+          "route": "bi200"
+        },
+        {
+          "dominated_by": [
+            "ce20",
+            "ce100"
+          ],
+          "route": "hybrid"
+        }
+      ],
+      "frontier_routes": [
+        "bm25",
+        "ce20",
+        "ce100"
+      ]
+    },
+    "p95": {
+      "dominated_routes": [
+        {
+          "dominated_by": [
+            "bm25",
+            "ce20",
+            "ce100"
+          ],
+          "route": "bi200"
+        },
+        {
+          "dominated_by": [
+            "ce20",
+            "ce100"
+          ],
+          "route": "hybrid"
+        }
+      ],
+      "frontier_routes": [
+        "bm25",
+        "ce20",
+        "ce100"
+      ]
+    }
+  },
+  "interpretation": "Descriptive secondary hardware profile. Cumulative latency adds the common BM25 parent to each paid operator. No scalar latency utility or universal hardware claim is made.",
+  "routes": {
+    "bi200": {
+      "base_bm25_mean_ms": 38.81054447000224,
+      "base_bm25_median_ms": 22.042833500051984,
+      "base_bm25_p95_ms": 140.84002554999404,
+      "cumulative_mean_ms": 295.697201075007,
+      "cumulative_median_ms": 277.9606930000682,
+      "cumulative_p95_ms": 426.75415554998597,
+      "paid_mean_ms": 256.88665660500476,
+      "paid_median_ms": 255.91785950001622,
+      "paid_p95_ms": 285.9141299999919,
+      "raw_ndcg_10": 0.6132530868113275
+    },
+    "bm25": {
+      "base_bm25_mean_ms": 38.81054447000224,
+      "base_bm25_median_ms": 22.042833500051984,
+      "base_bm25_p95_ms": 140.84002554999404,
+      "cumulative_mean_ms": 38.81054447000224,
+      "cumulative_median_ms": 22.042833500051984,
+      "cumulative_p95_ms": 140.84002554999404,
+      "paid_mean_ms": 0.0,
+      "paid_median_ms": 0.0,
+      "paid_p95_ms": 0.0,
+      "raw_ndcg_10": 0.6602221384321436
+    },
+    "ce100": {
+      "base_bm25_mean_ms": 38.81054447000224,
+      "base_bm25_median_ms": 22.042833500051984,
+      "base_bm25_p95_ms": 140.84002554999404,
+      "cumulative_mean_ms": 301.4278360400044,
+      "cumulative_median_ms": 283.67275800007974,
+      "cumulative_p95_ms": 418.9672254999606,
+      "paid_mean_ms": 262.6172915700022,
+      "paid_median_ms": 261.62992450002776,
+      "paid_p95_ms": 278.12719994996655,
+      "raw_ndcg_10": 0.815562221646419
+    },
+    "ce20": {
+      "base_bm25_mean_ms": 38.81054447000224,
+      "base_bm25_median_ms": 22.042833500051984,
+      "base_bm25_p95_ms": 140.84002554999404,
+      "cumulative_mean_ms": 88.02970776999757,
+      "cumulative_median_ms": 74.64908349999178,
+      "cumulative_p95_ms": 198.09851679989367,
+      "paid_mean_ms": 49.21916329999532,
+      "paid_median_ms": 52.60624999993979,
+      "paid_p95_ms": 57.25849124989963,
+      "raw_ndcg_10": 0.7831928784969595
+    },
+    "hybrid": {
+      "base_bm25_mean_ms": 38.81054447000224,
+      "base_bm25_median_ms": 22.042833500051984,
+      "base_bm25_p95_ms": 140.84002554999404,
+      "cumulative_mean_ms": 342.30855550500166,
+      "cumulative_median_ms": 325.4009550000774,
+      "cumulative_p95_ms": 478.7785905500356,
+      "paid_mean_ms": 303.4980110349994,
+      "paid_median_ms": 303.3581215000254,
+      "paid_p95_ms": 337.93856500004154,
+      "raw_ndcg_10": 0.779608103849347
+    }
+  },
+  "sample_size": 200,
+  "schema_version": "worthir-fever-latency-frontier-v1.0",
+  "status": "complete"
+}
