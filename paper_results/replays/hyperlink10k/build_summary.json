@@ -1,0 +1,17 @@
+{
+  "no_training_or_inference": true,
+  "rows": {
+    "action_descriptors": 5,
+    "candidate_pool_fingerprints": 50000,
+    "execution_fingerprints": 50000,
+    "legal_state": 10000,
+    "membership": 10000,
+    "raw_outcomes": 50000,
+    "references": 10005,
+    "split_assignments": 50000
+  },
+  "schema_version": "worthir-hyperlink10k-build-summary-v1.0",
+  "status": "built_pending_independent_validation",
+  "surface_id": "worthir-hyperlink10k-scoring-surface-v1.0",
+  "task_id": "worthir-2wiki-hyperlink10k-v1.0"
+}
