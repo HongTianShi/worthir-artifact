@@ -64,8 +64,8 @@ lambda 和声明为决策时已知的成本；评价方结果与只能在执行�
 
 已接收论文对应的数据和代码集中在 [`paper_results/`](paper_results/) 中。
 运行 `python paper_results/run.py` 后，重建结果会保留在
-`paper_results/reproduced/`。[`v1.1.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.0)
-包含公开成本接口和图 1--7 完整重绘。旧的 `v1.0.0-ipmc2026` 仍是论文接收时
+`paper_results/reproduced/`。[`v1.1.1`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.1)
+包含公开成本接口、图 1--7 完整重绘，以及修正后的源码包和 wheel 启动提示。旧的 `v1.0.0-ipmc2026` 仍是论文接收时
 提交的冻结 artifact；它指向英文提交 `3e1a937`，其发布时的中文对应提交为
 `3bbe1d4`，旧标签保持不变。
 
