@@ -1,0 +1,27 @@
+{
+  "forbidden_public_tokens": [
+    "answer",
+    "support",
+    "qrel",
+    "relevance",
+    "raw_quality",
+    "ndcg",
+    "utility",
+    "regret",
+    "oracle",
+    "ranked_title",
+    "paid_score",
+    "selected_learner",
+    "selected_view"
+  ],
+  "rows": {
+    "legal_action_descriptors": 10000,
+    "legal_query_state": 2000,
+    "membership": 2000,
+    "private_outcomes": 10000,
+    "private_references": 2000
+  },
+  "schema_version": "worthir-structured-v2-build-summary-v1.2",
+  "surface_id": "worthir-structured-v2-scoring-surface-v1.2",
+  "task_id": "worthir-2wiki-structured-v2.0"
+}
