@@ -9,7 +9,14 @@ python run.py
 ```
 
 该命令会创建本地环境，复现论文图表，重新生成 RQ2--RQ5 摘要，并验证已发布的
-任务 ledger。
+任务 ledger。所有输出都会保留：
+
+- `reproduced/paper/`：重建的论文图、表和报告；
+- `reproduced/rqs/`：重建的 RQ2--RQ5 摘要；
+- `reproduced/validation.json`：校验步骤和最终状态。
+
+论文项目、仓库输入、命令和输出之间的对应关系见
+[`PAPER_MAP.md`](PAPER_MAP.md)。
 
 主要内容如下：
 
