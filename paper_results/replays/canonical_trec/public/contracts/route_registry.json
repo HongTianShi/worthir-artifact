@@ -1,0 +1,80 @@
+{
+  "confirmatory_access": "none",
+  "protocol_id": "worthir-g2-msmarco-trecdl-stage0-v1.0",
+  "registry_id": "worthir-g2-final-route-registry-v1.0",
+  "route_order": [
+    "stop_bm25",
+    "dense_fusion",
+    "late_interaction",
+    "cross_encoder"
+  ],
+  "routes": [
+    {
+      "candidate_fingerprint": "worthir-g2-candidate-fingerprint-v1.0",
+      "candidate_k": 1000,
+      "candidate_k_semantics": "requested or reranked prefix depth; complete compiled ranking retains the registered parent tail",
+      "candidate_source": "complete native BM25 result pool for requested k=1000; 1--1000 hits, no padding",
+      "operator": "BM25",
+      "resource_dependencies": [
+        "official Lucene BM25 index"
+      ],
+      "route_id": "stop_bm25",
+      "tail_policy": "not applicable",
+      "tie_breaker": "descending registered score, then ascending numeric document ID"
+    },
+    {
+      "candidate_fingerprint": "worthir-g2-candidate-fingerprint-v1.0",
+      "candidate_k": 2000,
+      "candidate_k_semantics": "requested or reranked prefix depth; complete compiled ranking retains the registered parent tail",
+      "candidate_source": "complete deterministic RRF union of native BM25 and exact dense top-1000",
+      "operator": "exact dense retrieval plus reciprocal-rank fusion",
+      "parent_routes": [
+        "stop_bm25"
+      ],
+      "resource_dependencies": [
+        "stop_bm25",
+        "official exact TCT-ColBERTv2 IndexFlatIP",
+        "frozen TCT query encoder"
+      ],
+      "route_id": "dense_fusion",
+      "tail_policy": "not applicable",
+      "tie_breaker": "descending registered score, then ascending numeric document ID"
+    },
+    {
+      "candidate_fingerprint": "worthir-g2-candidate-fingerprint-v1.0",
+      "candidate_k": 200,
+      "candidate_k_semantics": "requested or reranked prefix depth; complete compiled ranking retains the registered parent tail",
+      "candidate_source": "dense_fusion parent; rerank first 200 and retain untouched tail",
+      "operator": "ColBERTv2 late-interaction reranking",
+      "parent_routes": [
+        "dense_fusion"
+      ],
+      "resource_dependencies": [
+        "dense_fusion",
+        "frozen ColBERTv2 checkpoint",
+        "MS MARCO passage text"
+      ],
+      "route_id": "late_interaction",
+      "tail_policy": "reranked parent prefix first, followed by the untouched dense_fusion parent tail in its original order; no duplicate document ID",
+      "tie_breaker": "descending registered score, then ascending numeric document ID"
+    },
+    {
+      "candidate_fingerprint": "worthir-g2-candidate-fingerprint-v1.0",
+      "candidate_k": 100,
+      "candidate_k_semantics": "requested or reranked prefix depth; complete compiled ranking retains the registered parent tail",
+      "candidate_source": "dense_fusion parent; rerank first 100 and retain untouched tail",
+      "operator": "MiniLM cross-encoder reranking",
+      "parent_routes": [
+        "dense_fusion"
+      ],
+      "resource_dependencies": [
+        "dense_fusion",
+        "frozen MiniLM cross-encoder checkpoint",
+        "MS MARCO passage text"
+      ],
+      "route_id": "cross_encoder",
+      "tail_policy": "reranked parent prefix first, followed by the untouched dense_fusion parent tail in its original order; no duplicate document ID",
+      "tie_breaker": "descending registered score, then ascending numeric document ID"
+    }
+  ]
+}
