@@ -1,0 +1,14 @@
+{
+  "authoritative_sources_verified": 34,
+  "build_id": "worthir-canonical-bundle-build-v1.0",
+  "held_out_outcomes_public": false,
+  "model_training": false,
+  "private_bytes": 7375761,
+  "private_files": 27,
+  "public_bytes": 89172639,
+  "public_files": 47,
+  "reference_baselines_included": true,
+  "retrieval_rerun": false,
+  "status": "pass",
+  "task_id": "worthir-trecdl-multistage-v1.0"
+}
