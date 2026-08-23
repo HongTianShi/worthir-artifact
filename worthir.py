@@ -11,7 +11,13 @@ import sys
 from pathlib import Path
 
 
+CALLER_CWD = Path.cwd()
 ROOT = Path(__file__).resolve().parent
+if not (ROOT / "scripts").is_dir():
+    import worthir_eval
+
+    ROOT = Path(worthir_eval.__file__).resolve().parent
+OUTPUT_ROOT = ROOT if (ROOT / "paper_results").is_dir() else Path.cwd()
 
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8")
@@ -40,7 +46,7 @@ class ChineseArgumentParser(argparse.ArgumentParser):
 
 def _run(script: str, arguments: list[str]) -> None:
     command = [sys.executable, str(ROOT / script), *arguments]
-    completed = subprocess.run(command, cwd=ROOT)
+    completed = subprocess.run(command, cwd=CALLER_CWD)
     if completed.returncode:
         raise SystemExit(completed.returncode)
 
@@ -132,7 +138,10 @@ def main() -> None:
 
     args = parser.parse_args()
     if args.command == "doctor":
-        _run("run.py", [])
+        _run(
+            "scripts/validate_framework.py",
+            ["--output", str(OUTPUT_ROOT / "reproduced" / "framework" / "validation.json")],
+        )
     elif args.command == "init":
         _run(
             "scripts/init_task.py",
@@ -217,8 +226,8 @@ def main() -> None:
             command.extend(["--output-dir", str(args.output_dir)])
         _run("scripts/compare_policies.py", command)
     elif args.command == "demo":
-        destination = ROOT / "reproduced" / "trec_walkthrough"
-        reproduced_root = (ROOT / "reproduced").resolve()
+        destination = OUTPUT_ROOT / "reproduced" / "trec_walkthrough"
+        reproduced_root = (OUTPUT_ROOT / "reproduced").resolve()
         if destination.resolve().parent != reproduced_root:
             raise SystemExit("演示输出位置无效")
         if destination.exists():

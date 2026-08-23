@@ -21,5 +21,34 @@ worthir = "worthir:main"
 
 [tool.setuptools]
 py-modules = ["worthir"]
-packages = ["worthir_eval"]
-package-dir = {worthir_eval = "src/worthir_eval"}
+include-package-data = true
+packages = [
+  "worthir_eval",
+  "worthir_eval.scripts",
+  "worthir_eval.examples",
+  "worthir_eval.examples.custom_router",
+  "worthir_eval.examples.custom_task",
+  "worthir_eval.examples.trec_walkthrough",
+  "worthir_eval.contracts",
+  "worthir_eval.quickstart",
+  "worthir_eval.task_template",
+]
+
+[tool.setuptools.package-dir]
+worthir_eval = "src/worthir_eval"
+"worthir_eval.scripts" = "scripts"
+"worthir_eval.examples" = "examples"
+"worthir_eval.examples.custom_router" = "examples/custom_router"
+"worthir_eval.examples.custom_task" = "examples/custom_task"
+"worthir_eval.examples.trec_walkthrough" = "examples/trec_walkthrough"
+"worthir_eval.contracts" = "contracts"
+"worthir_eval.quickstart" = "quickstart"
+"worthir_eval.task_template" = "task_template"
+
+[tool.setuptools.package-data]
+"worthir_eval.contracts" = ["*.json", "README.md"]
+"worthir_eval.examples.custom_router" = ["README.md"]
+"worthir_eval.examples.custom_task" = ["README.md", "source/*"]
+"worthir_eval.examples.trec_walkthrough" = ["README.md", "source/*", "source/runs/*"]
+"worthir_eval.quickstart" = ["README.md", "participant/*", "evaluator/*"]
+"worthir_eval.task_template" = ["README.md", ".gitignore", "contracts/*", "participant/*", "evaluator/*"]

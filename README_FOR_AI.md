@@ -79,7 +79,7 @@
 | --- | --- | --- |
 | `LICENSE` | 许可证 | WorthIR 自有代码的 MIT 许可证。 |
 | `NOTICE` | 第三方声明 | 指向不受 MIT 许可证覆盖的数据、模型和软件条款。 |
-| `pyproject.toml` | 可编辑安装元数据 | 为已克隆仓库提供 `worthir` 命令。 |
+| `pyproject.toml` | 软件包元数据 | 构建可分发 wheel，并提供 `worthir` 命令。 |
 | `CITATION.cff` | 引用元数据 | 向 GitHub 和引用工具提供软件发布版与论文引用信息。 |
 | `README_FOR_AI.md` | AI 项目地图 | 说明架构、不变量、当前限制以及每个受跟踪文件的用途。 |
 | `README.md` | 人类入口 | 提供一键配置、完整演示、自有数据流程和论文结果边界。 |
