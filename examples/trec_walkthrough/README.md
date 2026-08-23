@@ -2,8 +2,12 @@
 
 这是一个采用标准 TREC 格式的小型检索任务，无需下载数据即可演示完整的人类操作流程。
 
+```powershell
+.\worthir.cmd demo
+```
+
 ```bash
-python worthir.py demo
+./worthir demo
 ```
 
 该命令根据 `source/qrels.tsv` 和三个 TREC run 计算 NDCG@3，构建 WorthIR
@@ -12,7 +16,12 @@ python worthir.py demo
 
 运行示例后，可按以下方式尝试另一个策略：
 
+```powershell
+.\worthir.cmd actions reproduced/trec_walkthrough examples/trec_walkthrough/source/alternative_choices.csv --policy-id alternative
+.\worthir.cmd compare reproduced/trec_walkthrough
+```
+
 ```bash
-python worthir.py actions reproduced/trec_walkthrough examples/trec_walkthrough/source/alternative_choices.csv --policy-id alternative
-python worthir.py compare reproduced/trec_walkthrough
+./worthir actions reproduced/trec_walkthrough examples/trec_walkthrough/source/alternative_choices.csv --policy-id alternative
+./worthir compare reproduced/trec_walkthrough
 ```
