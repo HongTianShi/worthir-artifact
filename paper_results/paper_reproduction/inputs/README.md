@@ -11,3 +11,7 @@
 
 早期探索性 TREC 任务健康度 JSON 使用了朴素的首次 argmax 并列处理，因此有意排除。
 不得用它计算论文中的 13/43 和 14/54 分歧数量。
+
+运行 `python paper_results/run.py` 后，结果位于
+`paper_results/reproduced/paper/`。各论文项目的复现层级见
+`paper_results/PAPER_MAP.md`。
