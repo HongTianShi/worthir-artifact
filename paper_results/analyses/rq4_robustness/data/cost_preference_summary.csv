@@ -1,0 +1,5 @@
+task,analysis_mode,cost_setting_or_range,comparisons,positive_comparisons,minimum_utility_gain,maximum_utility_gain,interpretation
+2Wiki-Structured,full_refit_and_reselection,"lambda={0,.08,.32}",3,3,0.0172889165,0.0370944008,positive_after_policy_refitting_at_all_tested_cost_weights
+2Wiki-Structured,fixed_policy_monotone_schedules,816_schedules,816,816,0.0060963720,0.0437333731,positive_under_every_tested_monotone_schedule
+FEVER,same_predictor_actions_recomputed,65_lambda_points,65,62,-0.0009120959,0.0256844491,positive_except_in_the_lowest_cost_region
+MuSiQue,fixed_policy_rescoring,"lambda=.32",1,0,-0.0037959947,-0.0037959947,fixed_policy_loses_advantage_under_strong_cost_penalty
