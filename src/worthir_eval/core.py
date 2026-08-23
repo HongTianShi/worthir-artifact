@@ -47,30 +47,70 @@ def _load_registry(
     routes = registry.get("routes")
     if not isinstance(routes, list) or not routes:
         raise ScoreError("route registry must contain a nonempty routes list")
-    required = {"route_id", "label", "parent_route_id"}
     route_ids: list[str] = []
-    parents: dict[str, str | None] = {}
+    normalized: list[dict[str, Any]] = []
+    prerequisites: dict[str, list[str]] = {}
     for index, route in enumerate(routes):
-        if not isinstance(route, dict) or set(route) != required:
+        if not isinstance(route, dict):
+            raise ScoreError(f"route {index} has an invalid schema")
+        fields = set(route)
+        if fields == {"route_id", "label", "parent_route_id"}:
+            parent = route["parent_route_id"]
+            route_prerequisites = [] if parent is None else [parent]
+        elif fields == {"route_id", "label", "prerequisites"}:
+            route_prerequisites = route["prerequisites"]
+            if not isinstance(route_prerequisites, list) or any(
+                not isinstance(value, str) or not value
+                for value in route_prerequisites
+            ):
+                raise ScoreError(
+                    f"route {index} prerequisites must be a list of route IDs"
+                )
+            if len(route_prerequisites) != len(set(route_prerequisites)):
+                raise ScoreError(f"route {index} repeats a prerequisite")
+        else:
             raise ScoreError(f"route {index} has an invalid schema")
         route_id = route["route_id"]
         if not isinstance(route_id, str) or not route_id:
             raise ScoreError(f"route {index} has an invalid route_id")
-        if route_id in parents:
+        if not isinstance(route["label"], str) or not route["label"]:
+            raise ScoreError(f"route {index} has an invalid label")
+        if route_id in prerequisites:
             raise ScoreError(f"duplicate route_id: {route_id}")
         route_ids.append(route_id)
-        parents[route_id] = route["parent_route_id"]
-    for route_id, parent in parents.items():
-        if parent is not None and parent not in parents:
-            raise ScoreError(f"missing parent {parent} for route {route_id}")
-        seen = {route_id}
-        cursor = parent
-        while cursor is not None:
-            if cursor in seen:
-                raise ScoreError("route registry contains a parent cycle")
-            seen.add(cursor)
-            cursor = parents[cursor]
-    return registry_id, routes
+        prerequisites[route_id] = list(route_prerequisites)
+        normalized.append(
+            {
+                "route_id": route_id,
+                "label": route["label"],
+                "prerequisites": list(route_prerequisites),
+            }
+        )
+    route_set = set(route_ids)
+    for route_id, required_routes in prerequisites.items():
+        unknown = sorted(set(required_routes) - route_set)
+        if unknown:
+            raise ScoreError(
+                f"route {route_id} has unknown prerequisites: {unknown}"
+            )
+
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(route_id: str) -> None:
+        if route_id in visiting:
+            raise ScoreError("route registry contains a prerequisite cycle")
+        if route_id in visited:
+            return
+        visiting.add(route_id)
+        for prerequisite in prerequisites[route_id]:
+            visit(prerequisite)
+        visiting.remove(route_id)
+        visited.add(route_id)
+
+    for route_id in route_ids:
+        visit(route_id)
+    return registry_id, normalized
 
 
 def _load_actions(
@@ -155,7 +195,12 @@ def _load_ledger(
     required_routes = set(route_ids)
     for query_uid, by_route in matrix.items():
         if set(by_route) != required_routes:
-            raise ScoreError(f"incomplete route set for query {query_uid}")
+            missing = sorted(required_routes - set(by_route))
+            extra = sorted(set(by_route) - required_routes)
+            raise ScoreError(
+                f"incomplete route set for query {query_uid}; "
+                f"missing={missing}, extra={extra}"
+            )
     return matrix
 
 
@@ -165,16 +210,83 @@ def _validate_cumulative_costs(
 ) -> None:
     if not routes:
         return
-    parents = {route["route_id"]: route["parent_route_id"] for route in routes}
+    prerequisites = {
+        route["route_id"]: route["prerequisites"] for route in routes
+    }
     for query_uid, by_route in matrix.items():
-        for route_id, parent in parents.items():
-            if parent is None:
-                continue
-            if by_route[route_id][1] + 1e-15 < by_route[parent][1]:
-                raise ScoreError(
-                    f"noncumulative cost for {query_uid}: "
-                    f"{route_id} is cheaper than parent {parent}"
-                )
+        for route_id, required_routes in prerequisites.items():
+            for prerequisite in required_routes:
+                if by_route[route_id][1] + 1e-15 < by_route[prerequisite][1]:
+                    raise ScoreError(
+                        f"noncumulative cost for {query_uid}: {route_id} "
+                        f"is cheaper than prerequisite {prerequisite}"
+                    )
+
+
+def inspect_task(
+    contract_path: Path,
+    ledger_path: Path,
+    legal_state_path: Path | None = None,
+) -> dict[str, Any]:
+    """Validate a task before scoring and return a compact inventory."""
+
+    contract_path = contract_path.resolve()
+    ledger_path = ledger_path.resolve()
+    contract = read_json(contract_path)
+    registry_id, routes = _load_registry(contract_path, contract)
+    route_ids = [route["route_id"] for route in routes]
+    matrix = _load_ledger(ledger_path, contract, route_ids)
+    _validate_cumulative_costs(matrix, routes)
+    expected_count = int(contract["expected_query_count"])
+    if len(matrix) != expected_count:
+        raise ScoreError(
+            f"ledger query count mismatch: expected {expected_count}, "
+            f"found {len(matrix)}"
+        )
+
+    legal_fields: list[str] = []
+    if legal_state_path is not None:
+        legal_state_path = legal_state_path.resolve()
+        try:
+            with legal_state_path.open("r", encoding="utf-8-sig", newline="") as stream:
+                reader = csv.DictReader(stream)
+                legal_fields = list(reader.fieldnames or [])
+                rows = list(reader)
+        except OSError as exc:
+            raise ScoreError(f"cannot read participant legal state: {exc}") from exc
+        if not legal_fields or legal_fields[0] != "query_uid":
+            raise ScoreError("participant legal state must start with query_uid")
+        legal_ids = [row["query_uid"] for row in rows]
+        if len(legal_ids) != len(set(legal_ids)):
+            raise ScoreError("participant legal state repeats query_uid values")
+        if set(legal_ids) != set(matrix):
+            missing = sorted(set(matrix) - set(legal_ids))
+            extra = sorted(set(legal_ids) - set(matrix))
+            raise ScoreError(
+                f"participant legal state membership mismatch; "
+                f"missing={missing}, extra={extra}"
+            )
+
+    costs_by_route = {
+        route_id: {matrix[query_uid][route_id][1] for query_uid in matrix}
+        for route_id in route_ids
+    }
+    prerequisite_edges = sum(len(route["prerequisites"]) for route in routes)
+    return {
+        "task_id": contract["task_id"],
+        "contract_id": contract["contract_id"],
+        "registry_id": registry_id,
+        "queries": len(matrix),
+        "routes": len(routes),
+        "query_route_rows": sum(len(rows) for rows in matrix.values()),
+        "route_ids": route_ids,
+        "prerequisite_edges": prerequisite_edges,
+        "query_dependent_cost": any(len(values) > 1 for values in costs_by_route.values()),
+        "metric": contract["metric"],
+        "cost_profile": contract["cost_profile"],
+        "development_selected_fixed_route": contract["development_selected_fixed_route"],
+        "participant_fields": legal_fields,
+    }
 
 
 def load_and_score(
