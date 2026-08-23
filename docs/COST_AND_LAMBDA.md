@@ -9,6 +9,13 @@ utility = effectiveness - lambda * cumulative_cost
 The cost unit and lambda belong to the task definition. Utility is meaningful
 within that task and cost profile; it is not a cross-dataset score.
 
+Set `cost_profile.availability` explicitly. `known_at_commitment` means a router
+may use the cost before selecting a route: fixed costs are published in
+`route_registry.json`, while query-dependent costs are published in
+`participant/route_costs.csv`. `measured_after_execution` keeps costs in the
+evaluator ledger and excludes them from router inputs. `validate-task` checks
+that every published cost equals the cost used for scoring.
+
 ## Choose a cost representation
 
 Use the simplest representation that matches the deployment question:

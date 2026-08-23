@@ -33,7 +33,8 @@ preference used in `utility = effectiveness - lambda * cost`:
   "cost_profile": {
     "profile_id": "latency-seconds-v1",
     "provenance": "warm single-query measurements",
-    "lambda": 0.15
+    "lambda": 0.15,
+    "availability": "known_at_commitment"
   },
   "development_selected_fixed_route": "standard"
 }
@@ -91,6 +92,10 @@ combined,Combined review,lexical;semantic,0.08,false
 WorthIR sums each route's transitive prerequisite closure once. To make costs
 query-dependent, add the same `cost` or `incremental_cost` column to
 `outcomes.csv` and provide a value for every pair. Do not mix the two cost modes.
+When availability is `known_at_commitment`, the builder publishes fixed costs
+in `contracts/route_registry.json` or query-dependent cumulative costs in
+`participant/route_costs.csv`. Use `measured_after_execution` when the router
+cannot know the cost until a route has run; those costs stay evaluator-only.
 
 ### 4. Build and validate
 
@@ -105,11 +110,13 @@ query-dependent, add the same `cost` or `incremental_cost` column to
 ```
 
 Validation reports query and route counts, missing combinations, dependency
-problems, cumulative-cost violations, and whether costs vary by query.
+problems, cumulative-cost violations, when costs become available, and whether
+every public cost matches the evaluator ledger.
 
 ### 5. Run a router and compare it
 
-The router reads `my_task/participant/legal_state.csv` and writes:
+The router reads the task contract, public route registry,
+`my_task/participant/legal_state.csv`, and any public costs. It writes:
 
 ```csv
 query_uid,selected_route_id
@@ -139,7 +146,9 @@ same task structure:
 ```
 
 The optional TREC `costs.csv` supplies cumulative query-dependent costs with
-columns `query_uid,route_id,cost`.
+columns `query_uid,route_id,cost`. Add `--cost-availability
+measured_after_execution` only when those costs were not known when the route
+was selected.
 
 ## Outputs
 

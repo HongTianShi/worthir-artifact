@@ -36,6 +36,10 @@ for human users; this document is deliberately detailed.
   regret are evaluator-only.
 - The ledger must contain the complete Cartesian product of queries and routes.
 - Route costs are cumulative. A route cannot cost less than any prerequisite.
+- Cost availability is part of the information boundary. Fixed costs known at
+  commitment are stored on public route entries; query-dependent known costs
+  are stored in `participant/route_costs.csv`; post-execution measurements stay
+  evaluator-only. `validate-task` reconciles public and evaluator costs.
 - Generic sources may provide cumulative cost directly or incremental component
   cost; the builder computes the transitive prerequisite closure once.
 - Utility is `effectiveness - lambda * cumulative_cost`. Raw utilities are
@@ -110,7 +114,7 @@ merely because it is publicly released.
 | --- | --- | --- |
 | `contracts/quickstart_contract.json` | Task contract | Defines the synthetic task, action schema, metric range, cost preference, and identifiers. |
 | `contracts/README.md` | Contract guide | Explains the shared quickstart task contract and route registry. |
-| `contracts/route_registry.json` | Route registry | Registers the synthetic quickstart routes and their prerequisites. |
+| `contracts/route_registry.json` | Route registry | Registers quickstart routes, prerequisites, and fixed commitment-time costs. |
 
 ### Reusable documentation
 
@@ -144,7 +148,7 @@ merely because it is publicly released.
 | `examples/custom_task/source/routes.csv` | Route definition | Demonstrates a multi-prerequisite route and incremental component costs. |
 | `examples/custom_task/source/outcomes.csv` | Evaluator outcomes | Supplies complete answer-coverage and query-dependent cost outcomes. |
 | `examples/custom_router/README.md` | Router guide | Shows how to execute and replace the external example router. |
-| `examples/custom_router/router.py` | Example router | Reads legal state, applies a replaceable rule, and writes a choice CSV without opening evaluator data. |
+| `examples/custom_router/router.py` | Example router | Reads legal state, routes, lambda, and public query-dependent costs, then writes choices without opening evaluator data. |
 | `examples/custom_router/run.py` | Router walkthrough | Builds the generic task, runs the router, binds its choices, and writes the comparison. |
 
 ### Synthetic quickstart
@@ -171,7 +175,7 @@ merely because it is publicly released.
 | `scripts/run_integrity_tests.py` | Integrity tests | Checks invalid inputs, arithmetic invariants, cumulative costs, ties, and the example information boundary. |
 | `scripts/run_smoke_test.py` | Smoke test | Scores the six-query quickstart and writes aggregate results. |
 | `scripts/score_actions.py` | Scoring CLI | Resolves task inputs, invokes the core scorer, and writes aggregate JSON. |
-| `scripts/validate_task.py` | Task validator | Reports task coverage, dependency edges, cost mode, and contract problems before scoring. |
+| `scripts/validate_task.py` | Task validator | Reports task coverage, dependency edges, cost availability, and public-to-evaluator cost agreement before scoring. |
 | `scripts/validate_framework.py` | Framework validator | Runs smoke, integrity, task initialization, TREC construction, action conversion, and comparison checks. |
 
 ### Reusable Python source
@@ -180,7 +184,7 @@ merely because it is publicly released.
 | --- | --- | --- |
 | `src/README.md` | Source guide | Explains the dependency-free source layout. |
 | `src/worthir_eval/__init__.py` | Python API | Exports task inspection, scoring, and the public error type. |
-| `src/worthir_eval/core.py` | Scoring implementation | Validates dependency graphs, actions, ledgers, and cumulative costs, then computes effectiveness, cost, utility, oracle agreement, and regret. |
+| `src/worthir_eval/core.py` | Scoring implementation | Validates dependency graphs, actions, ledgers, cumulative costs, and the public cost boundary, then computes effectiveness, cost, utility, oracle agreement, and regret. |
 | `src/worthir_eval/README.md` | Package guide | Summarizes the scorer API and participant-evaluator boundary. |
 
 ### New-task template

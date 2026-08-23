@@ -47,8 +47,9 @@ Prepare `task.json`, `queries.csv`, `routes.csv`, and `outcomes.csv` as shown in
 
 This path accepts any named higher-is-better effectiveness measure, arbitrary
 route prerequisites, fixed or query-dependent costs, and either cumulative or
-incremental cost input. The router sees only `queries.csv`; evaluator outcomes
-remain separate.
+incremental cost input. The router receives `queries.csv`, the public route
+registry, lambda, and any costs declared as known at commitment time. Evaluator
+outcomes and costs measured only after execution remain separate.
 
 For qrels and six-column TREC runs, use the shorter [`build-trec` walkthrough](examples/trec_walkthrough/README.md).
 All input formats are described in [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_NEW_TASK.md).
