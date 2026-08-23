@@ -1,0 +1,396 @@
+{
+  "decisions": [
+    {
+      "query_uid": "msmarco-trecdl-2019:19335",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:47923",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:87181",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:87452",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:104861",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:130510",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:131843",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:146187",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:148538",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:156493",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:168216",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:182539",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:183378",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:207786",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:264014",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:359349",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:405717",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:443396",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:451602",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:489204",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:490595",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:527433",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:573724",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:833860",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:855410",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:915593",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:962179",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1037798",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1063750",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1103812",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1106007",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1110199",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1112341",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1113437",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1114646",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1114819",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1115776",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1117099",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1121402",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1121709",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1124210",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1129237",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2019:1133167",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:23849",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:42255",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:47210",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:67316",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:118440",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:121171",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:135802",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:141630",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:156498",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:169208",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:174463",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:258062",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:324585",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:330975",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:332593",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:336901",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:390360",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:405163",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:555530",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:583468",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:640502",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:673670",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:701453",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:730539",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:768208",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:877809",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:911232",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:914916",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:938400",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:940547",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:997622",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1030303",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1037496",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1043135",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1051399",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1064670",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1071750",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1105792",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1106979",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1108651",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1109707",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1110678",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1113256",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1115210",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1116380",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1121353",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1122767",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1127540",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1131069",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1132532",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1133579",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1136043",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1136047",
+      "selected_route_id": "late_interaction"
+    },
+    {
+      "query_uid": "msmarco-trecdl-2020:1136962",
+      "selected_route_id": "late_interaction"
+    }
+  ],
+  "description": "Fixed late_interaction reference submission.",
+  "policy_id": "fixed-late_interaction",
+  "schema_id": "worthir-canonical-submission-v1.0",
+  "task_id": "worthir-trecdl-multistage-v1.0"
+}
