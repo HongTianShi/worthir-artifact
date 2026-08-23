@@ -4,6 +4,9 @@
 *.json text eol=lf
 *.md text eol=lf
 *.py text eol=lf
+worthir text eol=lf
+*.sh text eol=lf
+*.cmd text eol=crlf
 
 *.joblib binary
 *.npz binary
