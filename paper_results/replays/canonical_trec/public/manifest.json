@@ -1,0 +1,26 @@
+{
+  "held_out_outcomes_included": false,
+  "manifest_id": "worthir-canonical-public-manifest-v1.0",
+  "omitted_materials": {
+    "development_rows": 6980,
+    "reason": "upstream access and redistribution boundary"
+  },
+  "partitions": {
+    "test": {
+      "2019": {
+        "legal_state": "data/test/2019/legal_state.parquet",
+        "membership": "data/test/2019/query_membership.parquet",
+        "outcomes": "organizer_only",
+        "queries": 43
+      },
+      "2020": {
+        "legal_state": "data/test/2020/legal_state.parquet",
+        "membership": "data/test/2020/query_membership.parquet",
+        "outcomes": "organizer_only",
+        "queries": 54
+      }
+    }
+  },
+  "reference_baselines": "reference_baselines/",
+  "task_id": "worthir-trecdl-multistage-v1.0"
+}
