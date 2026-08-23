@@ -1,0 +1,4 @@
+route_id,label,prerequisites,incremental_cost,development_selected
+keyword_search,关键词检索,,0.03,false
+semantic_search,语义检索,,0.12,true
+combined_review,联合证据复核,keyword_search;semantic_search,0.08,false
