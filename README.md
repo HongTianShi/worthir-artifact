@@ -1,13 +1,19 @@
 # WorthIR
 
-WorthIR evaluates whether a retrieval system should use a more expensive route
-for each query. It reports effectiveness, cost, utility, regret, fixed-route
-baselines, and the fixed-route Pareto curve.
+[English](https://github.com/HongTianShi/worthir-artifact/tree/_en) | [简体中文](https://github.com/HongTianShi/worthir-artifact/tree/zh-cn)
+
+[![CI](https://github.com/HongTianShi/worthir-artifact/actions/workflows/validate.yml/badge.svg?branch=_en)](https://github.com/HongTianShi/worthir-artifact/actions/workflows/validate.yml)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+WorthIR compares query-level routing policies with fixed retrieval strategies
+under a declared effectiveness measure and cost profile. It reports
+effectiveness, cost, utility, regret, and the fixed-route Pareto curve.
 
 If you are an AI tool, read [`README_FOR_AI.md`](README_FOR_AI.md) before
 searching the repository.
 
-## Setup
+## Try it
 
 Python 3.10 or newer is required. The reusable framework has no third-party
 dependencies.
@@ -16,37 +22,44 @@ dependencies.
 python setup_environment.py
 ```
 
-Then run the complete example:
+Run a non-TREC task with query-dependent costs and an external router:
 
 ```powershell
-.\worthir.cmd demo
+.\worthir.cmd demo-custom
 ```
 
 ```bash
-./worthir demo
+./worthir demo-custom
 ```
 
-Open `reproduced/trec_walkthrough/comparison.md` to see the result.
+Open `reproduced/custom_task/comparison.md`.
 
-## Use your retrieval runs
+## Use your own task
 
-Prepare one folder containing qrels, TREC runs, route definitions, and costs as
-shown in [`examples/trec_walkthrough/source/`](examples/trec_walkthrough/source/).
-Then run:
+Prepare `task.json`, `queries.csv`, `routes.csv`, and `outcomes.csv` as shown in
+[`examples/custom_task/source/`](examples/custom_task/source/), then run:
 
 ```powershell
-.\worthir.cmd build-trec my_source my_task --task-id my-task --metric ndcg@10 --lambda 0.08
-.\worthir.cmd compare my_task
+.\worthir.cmd build-custom my_source my_task
+.\worthir.cmd validate-task my_task
+.\worthir.cmd evaluate my_task choices.csv --policy-id my-router
 ```
 
-Use `./worthir` instead of `.\worthir.cmd` on macOS or Linux. Input formats,
-query-dependent costs, additional policies, and the meaning of lambda are
-explained in [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_NEW_TASK.md).
+This path accepts any named higher-is-better effectiveness measure, arbitrary
+route prerequisites, fixed or query-dependent costs, and either cumulative or
+incremental cost input. The router sees only `queries.csv`; evaluator outcomes
+remain separate.
+
+For qrels and six-column TREC runs, use the shorter [`build-trec` walkthrough](examples/trec_walkthrough/README.md).
+All input formats are described in [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_NEW_TASK.md).
 
 ## Paper results
 
-The exact data and code behind the paper are isolated in
-[`paper_results/`](paper_results/). They are not needed to apply WorthIR to a
-new task.
+All data and code tied to the accepted paper are isolated in
+[`paper_results/`](paper_results/). Run `python paper_results/run.py` to keep the
+rebuilt outputs under `paper_results/reproduced/`. The release
+[`v1.0.0-ipmc2026`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.0.0-ipmc2026)
+is the frozen artifact for the IP&MC 2026 paper.
 
-WorthIR-authored code is released under the MIT License.
+WorthIR-authored code is released under the [MIT License](LICENSE). Third-party
+data and model terms are listed in [NOTICE](NOTICE).
