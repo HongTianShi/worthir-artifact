@@ -26,3 +26,7 @@ Build and validate it from the repository root:
 Use `cost` when cumulative route costs are already available. Use
 `incremental_cost` when the tool should sum the transitive prerequisite closure.
 Either column may appear in `outcomes.csv` to provide query-dependent values.
+Set `cost_profile.availability` to `known_at_commitment` when the router may use
+the cost before choosing a route. The builder then publishes fixed costs in the
+route registry or query-dependent costs in `participant/route_costs.csv`. Use
+`measured_after_execution` when cost is evaluator-only.

@@ -14,10 +14,12 @@ The example builds a non-TREC task, runs `router.py`, binds its CSV decisions to
 the task contract, and compares the router with every fixed route. The report is
 written to `reproduced/custom_task/comparison.md`.
 
-`router.py` reads only `participant/legal_state.csv`. It never opens
-`evaluator/ledger.csv`, which contains information unavailable when a route is
-selected. To use your own router, replace `choose_route()` and keep the two-column
-output format:
+`router.py` reads the public task contract, route registry, lambda,
+`participant/legal_state.csv`, and `participant/route_costs.csv`. It selects the
+route with the highest predicted effectiveness minus lambda times public cost.
+It never opens `evaluator/ledger.csv`, which contains information unavailable
+when a route is selected. To use your own router, replace
+`predicted_effectiveness()` and keep the two-column output format:
 
 ```text
 query_uid,selected_route_id
