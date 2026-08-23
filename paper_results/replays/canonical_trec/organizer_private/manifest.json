@@ -1,0 +1,25 @@
+{
+  "authoritative_sealed_validation": "audit/SEALED_BUNDLE_VALIDATION.json",
+  "build_semantics": "deterministic-copy-and-private-projection-v1.0",
+  "manifest_id": "worthir-canonical-private-manifest-v1.0",
+  "omitted_materials": {
+    "reason": "raw qrels, rankings, and candidate audits excluded"
+  },
+  "partitions": {
+    "test": {
+      "2019": {
+        "membership": "data/test/2019/query_membership.parquet",
+        "outcomes": "data/test/2019/route_outcomes.parquet",
+        "queries": 43
+      },
+      "2020": {
+        "membership": "data/test/2020/query_membership.parquet",
+        "outcomes": "data/test/2020/route_outcomes.parquet",
+        "queries": 54
+      }
+    }
+  },
+  "release_normalization": "evaluator-side projection",
+  "release_role": "organizer_private",
+  "task_id": "worthir-trecdl-multistage-v1.0"
+}
