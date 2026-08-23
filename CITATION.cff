@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use WorthIR, please cite the software and the accompanying paper."
+title: "WorthIR: Cost-Aware Retrieval Routing Evaluation Artifact"
+type: software
+version: "1.0.0-ipmc2026"
+date-released: 2026-08-23
+repository-code: "https://github.com/HongTianShi/worthir-artifact"
+license: MIT
+authors:
+  - family-names: Bai
+    given-names: Renjie
+  - family-names: Chan
+    given-names: SzeWing
+  - family-names: Wang
+    given-names: Xiao
+  - family-names: Liu
+    given-names: Juanxiu
+preferred-citation:
+  type: conference-paper
+  title: "WorthIR: An Evaluation Protocol for Cost-Aware Retrieval Routing"
+  authors:
+    - family-names: Bai
+      given-names: Renjie
+    - family-names: Chan
+      given-names: SzeWing
+    - family-names: Wang
+      given-names: Xiao
+    - family-names: Liu
+      given-names: Juanxiu
+  conference:
+    name: "Information Processing & Management Conference 2026"
+  year: 2026
