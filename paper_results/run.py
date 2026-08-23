@@ -82,13 +82,17 @@ def main() -> None:
             str(ROOT),
             "--output",
             str(report),
+            "--work-dir",
+            str(output),
         ]
     )
     result = json.loads(report.read_text(encoding="utf-8"))
     if result.get("status") != "PASS":
         raise SystemExit(f"验证失败；详见 {report}")
     print("通过：WorthIR 论文结果已复现")
-    print(f"报告：{report}")
+    print(f"论文图表：{output / 'paper'}")
+    print(f"RQ2--RQ5 摘要：{output / 'rqs'}")
+    print(f"校验报告：{report}")
 
 
 if __name__ == "__main__":
