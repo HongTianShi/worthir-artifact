@@ -1,0 +1,8 @@
+WorthIR includes released research data derived from third-party datasets,
+models, and software. The MIT License covers WorthIR-authored code and
+documentation only. Upstream terms continue to apply to third-party material.
+
+Dataset, model, and software attributions are listed in:
+
+paper_results/docs/THIRD_PARTY_NOTICES.md
+paper_results/docs/DATA_AND_MODEL_TERMS.md
