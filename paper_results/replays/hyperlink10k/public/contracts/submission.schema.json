@@ -1,0 +1,66 @@
+{
+  "$id": "worthir-hyperlink10k-submission-v1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "decisions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "query_uid": {
+            "type": "string"
+          },
+          "selected_view": {
+            "enum": [
+              "summary",
+              "provided_context",
+              "hyperlink_1hop",
+              "hyperlink_2hop",
+              "full_local_pool"
+            ]
+          }
+        },
+        "required": [
+          "query_uid",
+          "selected_view"
+        ],
+        "type": "object"
+      },
+      "maxItems": 2001,
+      "minItems": 2001,
+      "type": "array"
+    },
+    "evaluation_seed": {
+      "enum": [
+        17,
+        23,
+        31,
+        43,
+        59
+      ]
+    },
+    "partition": {
+      "const": "test"
+    },
+    "policy_id": {
+      "maxLength": 120,
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_id": {
+      "const": "worthir-hyperlink10k-submission-v1.0"
+    },
+    "task_id": {
+      "const": "worthir-2wiki-hyperlink10k-v1.0"
+    }
+  },
+  "required": [
+    "schema_id",
+    "task_id",
+    "evaluation_seed",
+    "partition",
+    "policy_id",
+    "decisions"
+  ],
+  "type": "object"
+}
