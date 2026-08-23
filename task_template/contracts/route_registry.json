@@ -1,0 +1,16 @@
+{
+  "schema_version": "worthir-route-registry-v1.0",
+  "registry_id": "example-routes-v1",
+  "routes": [
+    {
+      "route_id": "base",
+      "label": "Base retrieval",
+      "parent_route_id": null
+    },
+    {
+      "route_id": "advanced",
+      "label": "Advanced retrieval",
+      "parent_route_id": "base"
+    }
+  ]
+}
