@@ -1,0 +1,5 @@
+query_uid,question_length,contains_product_code
+faq-001,6,false
+faq-002,19,true
+faq-003,31,false
+faq-004,12,true
