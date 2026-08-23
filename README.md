@@ -68,8 +68,9 @@ All input formats are described in [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_N
 All data and code tied to the accepted paper are isolated in
 [`paper_results/`](paper_results/). Run `python paper_results/run.py` to keep the
 rebuilt outputs under `paper_results/reproduced/`. The
-[`v1.1.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.0)
-release contains the public-cost interface and complete Figure 1--7 redraw. The
+[`v1.1.1`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.1)
+release contains the public-cost interface, complete Figure 1--7 redraw, and
+the corrected source and wheel launchers. The
 earlier `v1.0.0-ipmc2026` release remains the frozen artifact originally
 submitted with the accepted IP&MC 2026 paper.
 
