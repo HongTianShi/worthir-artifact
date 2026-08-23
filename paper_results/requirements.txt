@@ -4,3 +4,5 @@ pyarrow==20.0.0
 matplotlib==3.10.3
 Pillow==11.2.1
 colorspacious==1.1.2
+# Last release with wheels for every supported Python version (3.10--3.13).
+contourpy==1.3.2

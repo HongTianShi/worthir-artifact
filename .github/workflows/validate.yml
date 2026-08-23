@@ -23,7 +23,10 @@ jobs:
       - if: runner.os != 'Windows'
         run: ./worthir demo
       - if: matrix.python == '3.13'
-        run: python worthir.py demo-custom
+        run: |
+          python worthir.py demo-custom
+          python examples/python_api/example.py reproduced/custom_task
+          python paper_results/full_replay/replay.py --help
 
   paper-results:
     runs-on: ubuntu-latest
@@ -33,8 +36,8 @@ jobs:
         with:
           python-version: "3.13"
           cache: pip
-          cache-dependency-path: paper_results/requirements.txt
-      - run: python -m pip install --disable-pip-version-check -r paper_results/requirements.txt
+          cache-dependency-path: paper_results/requirements-lock.txt
+      - run: python -m pip install --disable-pip-version-check --require-hashes -r paper_results/requirements-lock.txt
       - run: python paper_results/run.py --use-current-python
 
   installed-wheel:

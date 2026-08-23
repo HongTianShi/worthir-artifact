@@ -1,18 +1,17 @@
 # Raw-route reconstruction requirements
 
-The default `python run.py` path uses compact released ledgers. Raw retrieval
-reconstruction requires additional corpora, indexes, checkpoints, storage, and
-task-specific execution time.
+These are planning ranges, not benchmark claims. Time varies with hardware,
+batching, index availability, and cache state. Disk estimates include a working
+copy of indexes and intermediate route outputs.
 
-| Surface | External material | Main work | Expected resources |
-| --- | --- | --- | --- |
-| TREC-DL | MS MARCO passages/development records, TREC qrels, indexes, checkpoints | Lexical, dense, CE, and late-interaction rankings | GPU recommended; index storage dominates setup |
-| FEVER | Wikipedia dump, Lucene index, checkpoints, candidate cache | Five routes over 5.4M pages | Multi-hour GPU run and large local storage |
-| 2Wiki/Hyperlink10k | Candidate text and corpus-derived evidence | Route ledgers and grouped/split actions | CPU feasible after evidence materialization |
-| MuSiQue | `bdsaglam/musique` and fitted policy inputs | Paragraph evidence, policy fit, validation scoring | Moderate CPU/RAM |
-| FiQA260 | Source snapshot, encoders, and indexes | Compression and reranking outcomes | GPU recommended for neural routes |
-| Dense-standard | Five-dataset inputs and encoders | Split ledgers | Dataset-specific |
+| Task | External material | Disk | RAM | VRAM | 20-query smoke | Full route run |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| TREC-DL | MS MARCO, topics/qrels, indexes, checkpoints | 80--140 GB | 32 GB | 12 GB recommended | 20--60 min | 12--48 GPU-hours |
+| FEVER | 2017 Wikipedia dump, Lucene index, checkpoints, candidates | 120--220 GB | 32 GB | 12 GB recommended | 20--60 min | 10--30 GPU-hours |
+| 2Wiki/Hyperlink10k | dataset snapshot, evidence text, checkpoints | 10--30 GB | 16 GB | 8 GB recommended | 10--30 min | 1--6 GPU-hours |
+| MuSiQue | dataset snapshot, paragraph evidence, checkpoints | 10--20 GB | 16 GB | 8 GB recommended | 10--30 min | 1--4 GPU-hours |
+| FiQA260 | query snapshot, dense indexes, checkpoints | 50--120 GB | 32 GB | 12 GB recommended | 15--45 min | 3--12 GPU-hours |
+| Dense-standard | five dataset snapshots, dense indexes, encoders | 50--150 GB | 32 GB | 12 GB recommended | 15--45 min | 4--18 GPU-hours |
 
-Exact time depends on hardware, batching, and cache state. Each task card
-defines its route order, costs, and source requirements. Upstream licenses
-remain controlling.
+The normal `python paper_results/run.py` path needs none of these external
+materials. Upstream dataset and model licenses remain controlling.

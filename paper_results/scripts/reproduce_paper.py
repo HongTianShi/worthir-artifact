@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild Figures 1--7 and Tables 2--4 from frozen released inputs."""
+"""Recompute the 2026-08-16 manuscript figures and tables."""
 
 from __future__ import annotations
 
@@ -351,15 +351,140 @@ def reproduce_table2(output: Path, steps: list[dict[str, Any]]) -> pd.DataFrame:
             abs_tol=5e-7,
         ):
             raise RuntimeError(f"Table 2 {year} headroom mismatch")
-    frame.to_csv(output / "table2_canonical_heldout.csv", index=False)
+    frame.to_csv(output / "table2_canonical_heldout_detail.csv", index=False)
     (output / "table2_canonical_heldout.md").write_text(
         markdown_table(frame.round(6)),
         encoding="utf-8",
     )
+    fiqa = pd.read_csv(
+        ROOT / "paper_reproduction" / "figures" / "cost_quality_inversion_data.csv"
+    )
+    quality_best = fiqa.loc[fiqa["raw_ndcg_at_10"].idxmax()]
+    utility_best = fiqa.loc[fiqa["utility_lambda_0p08"].idxmax()]
+    manuscript = pd.DataFrame(
+        [
+            {
+                "task": "TREC-DL 2019",
+                "effectiveness_best_fixed_strategy": "Cross-encoder",
+                "utility_best_fixed_strategy": "Cross-encoder",
+                "fixed_order_changed_by_cost": "No",
+                "additional_diagnosis": "30.23% (13/43) oracle-route disagreements",
+            },
+            {
+                "task": "TREC-DL 2020",
+                "effectiveness_best_fixed_strategy": "Cross-encoder",
+                "utility_best_fixed_strategy": "Cross-encoder",
+                "fixed_order_changed_by_cost": "No",
+                "additional_diagnosis": "25.93% (14/54) oracle-route disagreements",
+            },
+            {
+                "task": "FiQA-Compression260",
+                "effectiveness_best_fixed_strategy": str(quality_best["view"]),
+                "utility_best_fixed_strategy": str(utility_best["view"]),
+                "fixed_order_changed_by_cost": "Yes",
+                "additional_diagnosis": "Cost reverses the fixed-route ordering",
+            },
+        ]
+    )
+    manuscript.to_csv(output / "table2.csv", index=False)
+    return manuscript
+
+
+def reproduce_table1(output: Path) -> pd.DataFrame:
+    frame = pd.read_csv(ROOT / "paper_reproduction" / "inputs" / "table1.csv")
+    frame.to_csv(output / "table1.csv", index=False)
     return frame
 
 
+def inference_label(holm_p: float, estimate: float) -> str:
+    if holm_p >= 0.05:
+        return "n.s."
+    return "+" if estimate > 0 else "-"
+
+
 def reproduce_table3(output: Path) -> pd.DataFrame:
+    comparison = pd.read_csv(
+        ROOT / "analyses" / "rq2_policy_comparison" / "results" / "policy_comparison.csv"
+    )
+    holm = pd.read_csv(
+        ROOT / "analyses" / "rq2_policy_comparison" / "results" / "holm_tests.csv"
+    )
+    display_names = {
+        "trec_dl": "TREC-DL",
+        "fever": "FEVER",
+        "structured_v2": "2Wiki-Structured",
+        "musique": "MuSiQue",
+    }
+    rows: list[dict[str, Any]] = []
+    for task, display in display_names.items():
+        task_rows = comparison.loc[comparison["task"].eq(task)]
+        tests = holm.loc[holm["task"].eq(task)].set_index("contrast")
+        qpp = float(task_rows.loc[task_rows["policy"].eq("qpp"), "delta_utility_vs_fixed"].iloc[0])
+        native = float(task_rows.loc[task_rows["policy"].eq("native_adaptive"), "delta_utility_vs_fixed"].iloc[0])
+        arr = task_rows.loc[task_rows["policy"].str.startswith("arr_seed_")]
+        uniform = float(task_rows.loc[task_rows["policy"].eq("uniform_random_analytic"), "delta_utility_vs_fixed"].iloc[0])
+        arr_primary = float(tests.loc["arr_primary_vs_fixed", "estimate"])
+        rows.append(
+            {
+                "task": display,
+                "qpp_delta_u_points": 100.0 * qpp,
+                "qpp_inference": inference_label(float(tests.loc["qpp_vs_fixed", "holm_p_within_task_family"]), qpp),
+                "task_specific_delta_u_points": 100.0 * native,
+                "task_specific_inference": inference_label(float(tests.loc["native_vs_fixed", "holm_p_within_task_family"]), native),
+                "arr_min_delta_u_points": 100.0 * float(arr["delta_utility_vs_fixed"].min()),
+                "arr_max_delta_u_points": 100.0 * float(arr["delta_utility_vs_fixed"].max()),
+                "arr_primary_inference": inference_label(float(tests.loc["arr_primary_vs_fixed", "holm_p_within_task_family"]), arr_primary),
+                "uniform_random_delta_u_points": 100.0 * uniform,
+            }
+        )
+    frame = pd.DataFrame(rows)
+    frame.to_csv(output / "table3.csv", index=False, float_format="%.4f")
+    return frame
+
+
+def reproduce_table4(output: Path) -> pd.DataFrame:
+    fixed = pd.read_csv(
+        ROOT / "paper_reproduction" / "inputs" / "table4_fixed_and_random.csv"
+    )
+    learned = pd.read_csv(
+        ROOT / "analyses" / "rq2_policy_comparison" / "results" / "fever_same_menu_policy_comparison.csv"
+    ).rename(columns={"menu_size": "menu_size"})
+    names = {
+        "extratrees3": "ExtraTrees-3",
+        "qpp3": "QPP-3",
+        "arr3": "ARR-3",
+        "extratrees5": "ExtraTrees-5",
+        "qpp5": "QPP-5",
+        "arr5": "ARR-5",
+    }
+    learned = learned.assign(policy=learned["policy"].map(names))[
+        ["menu_size", "policy", "mean_quality", "mean_cost", "mean_utility", "delta_fixed", "q025", "q975"]
+    ].rename(columns={"q025": "ci_low", "q975": "ci_high"})
+    frame = pd.concat([fixed, learned], ignore_index=True)
+    order = {
+        "Fixed CE-100": 0,
+        "Uniform random": 1,
+        "QPP-3": 2,
+        "ExtraTrees-3": 3,
+        "ARR-3": 4,
+        "QPP-5": 2,
+        "ExtraTrees-5": 3,
+        "ARR-5": 4,
+    }
+    frame["_order"] = frame["policy"].map(order)
+    frame = frame.sort_values(["menu_size", "_order"]).drop(columns="_order")
+    intervals = pd.read_csv(
+        ROOT / "paper_reproduction" / "inputs" / "table4_manuscript_intervals.csv"
+    )
+    display = frame.drop(columns=["ci_low", "ci_high"]).merge(
+        intervals, on="policy", how="left", validate="many_to_one"
+    )
+    display["delta_u_points"] = 100.0 * display.pop("delta_fixed")
+    display.to_csv(output / "table4.csv", index=False, float_format="%.4f")
+    return display
+
+
+def reproduce_table5(output: Path) -> pd.DataFrame:
     source = (
         ROOT
         / "paper_reproduction"
@@ -384,16 +509,34 @@ def reproduce_table3(output: Path) -> pd.DataFrame:
         if not math.isclose(kappa_tih, row.kappa_tih_percent, abs_tol=0.015):
             failures.append(f"{row.task}: kappa_tih")
     if failures:
-        raise RuntimeError(f"Table 3 arithmetic mismatch: {failures}")
-    frame.to_csv(output / "table3_recoverability.csv", index=False)
-    (output / "table3_recoverability.md").write_text(
-        markdown_table(frame),
+        raise RuntimeError(f"Table 5 arithmetic mismatch: {failures}")
+    names = {
+        "2Wiki structured 2k": "2Wiki-Structured",
+        "2Wiki hyperlink 10k": "Hyperlink10k",
+        "Dense pooled replay": "Dense pooled replay",
+    }
+    display = pd.DataFrame(
+        {
+            "task": frame["task"].replace(names),
+            "f_dev_mean_utility": frame["f_dev"],
+            "f_test_mean_utility": frame["f_tih"],
+            "routing_policy_mean_utility": frame["valid_adaptive"],
+            "oracle_mean_utility": frame["o_tih"],
+            "delta_u_vs_f_dev_points": 100.0 * frame["delta_dev"],
+            "delta_u_vs_f_test_points": 100.0 * frame["delta_tih"],
+            "recovered_vs_f_dev_percent": frame["kappa_dev_percent"],
+            "recovered_vs_f_test_percent": frame["kappa_tih_percent"],
+        }
+    )
+    display.to_csv(output / "table5.csv", index=False, float_format="%.4f")
+    (output / "table5.md").write_text(
+        markdown_table(display.round(4)),
         encoding="utf-8",
     )
-    return frame
+    return display
 
 
-def reproduce_table4(output: Path) -> pd.DataFrame:
+def reproduce_aux_matched_top10(output: Path) -> pd.DataFrame:
     source = (
         ROOT
         / "paper_reproduction"
@@ -477,6 +620,130 @@ def reproduce_table4(output: Path) -> pd.DataFrame:
         encoding="utf-8",
     )
     return display
+
+
+def reproduce_table6(output: Path) -> pd.DataFrame:
+    frame = pd.read_csv(ROOT / "paper_reproduction" / "inputs" / "table6.csv")
+    prediction = pd.read_csv(
+        ROOT / "analyses" / "rq5_route_value" / "data" / "rq5_route_value_prediction_summary.csv"
+    )
+    names = {"2Wiki-Structured": "Structured-v2"}
+    for row in frame.itertuples(index=False):
+        task = names.get(row.task, row.task)
+        joint = prediction.loc[
+            prediction["task"].eq(task)
+            & prediction["block"].eq("joint")
+            & prediction["target"].eq("continuous_delta_utility")
+        ].set_index("model")
+        if not math.isclose(float(joint.loc["linear", "mean_spearman"]), row.inference_time_linear_rho, abs_tol=5e-5):
+            raise RuntimeError(f"Table 6 linear correlation mismatch for {row.task}")
+        if not math.isclose(float(joint.loc["extra_trees", "mean_spearman"]), row.inference_time_extratrees_rho, abs_tol=5e-5):
+            raise RuntimeError(f"Table 6 ExtraTrees correlation mismatch for {row.task}")
+    frame.to_csv(output / "table6.csv", index=False, float_format="%.4f")
+    return frame
+
+
+def reproduce_appendix_tables(output: Path) -> dict[str, int]:
+    inputs = ROOT / "paper_reproduction" / "inputs"
+    direct = ["a1", "a2", "b1", "c1", "d1", "d2", "e3", "e5", "e6"]
+    counts: dict[str, int] = {}
+    for suffix in direct:
+        frame = pd.read_csv(inputs / f"appendix_table_{suffix}.csv")
+        frame.to_csv(output / f"appendix_table_{suffix}.csv", index=False)
+        counts[suffix] = len(frame)
+
+    routes = pd.read_csv(inputs / "appendix_table_b2_routes.csv")
+    policies = pd.read_csv(
+        ROOT / "analyses" / "rq2_policy_comparison" / "results" / "fever_online_latency.csv"
+    )
+    policy_names = {
+        "fixed_ce100": "Fixed CE-100",
+        "qpp3": "QPP-3",
+        "extratrees3": "ExtraTrees-3",
+        "arr3": "ARR-3",
+        "qpp5": "QPP-5",
+        "extratrees5": "ExtraTrees-5",
+        "arr5": "ARR-5",
+    }
+    policy_table = pd.DataFrame(
+        {
+            "routing_policy": policies["policy"].map(policy_names),
+            "overhead_ms": policies["router_mean_ms"],
+            "total_mean_ms": policies["online_mean_ms"],
+            "saving_ms": policies["mean_saving_vs_fixed_ce100_ms"],
+        }
+    )
+    rows = max(len(routes), len(policy_table))
+    routes = routes.reindex(range(rows))
+    policy_table = policy_table.reindex(range(rows))
+    b2 = pd.concat([routes, policy_table], axis=1)
+    b2.to_csv(output / "appendix_table_b2.csv", index=False, float_format="%.3f")
+    counts["b2"] = len(b2)
+
+    holm = pd.read_csv(
+        ROOT / "analyses" / "rq2_policy_comparison" / "results" / "holm_tests.csv"
+    )
+    labels = {
+        "trec_dl": "TREC-DL",
+        "fever": "FEVER",
+        "structured_v2": "2Wiki-Structured",
+        "musique": "MuSiQue",
+    }
+    e1_rows: list[dict[str, Any]] = []
+    contrasts = {
+        "qpp": "qpp_vs_expected_cost_null",
+        "task_specific": "native_vs_expected_cost_null",
+        "arr": "arr_primary_vs_expected_cost_null",
+    }
+    for task, label in labels.items():
+        task_tests = holm.loc[holm["task"].eq(task)].set_index("contrast")
+        row: dict[str, Any] = {"task": label}
+        for prefix, contrast in contrasts.items():
+            test = task_tests.loc[contrast]
+            row[f"{prefix}_delta_u_points"] = 100.0 * float(test["estimate"])
+            row[f"{prefix}_ci_low_points"] = 100.0 * float(test["ci_low"])
+            row[f"{prefix}_ci_high_points"] = 100.0 * float(test["ci_high"])
+            row[f"{prefix}_holm_p"] = float(test["holm_p_within_task_family"])
+        e1_rows.append(row)
+    e1 = pd.DataFrame(e1_rows)
+    e1.to_csv(output / "appendix_table_e1.csv", index=False, float_format="%.4f")
+    counts["e1"] = len(e1)
+
+    same_menu = pd.read_csv(
+        ROOT / "analyses" / "rq2_policy_comparison" / "results" / "fever_same_menu_policy_comparison.csv"
+    )
+    e2 = pd.DataFrame(
+        {
+            "router": same_menu["policy"].str.extract(r"(extratrees|qpp|arr)", expand=False).map(
+                {"extratrees": "ExtraTrees", "qpp": "QPP", "arr": "ARR"}
+            ),
+            "routes": same_menu["menu_size"],
+            "delta_u_points": 100.0 * same_menu["delta_fixed"],
+            "ci_low_points": 100.0 * same_menu["q025"],
+            "ci_high_points": 100.0 * same_menu["q975"],
+        }
+    )
+    e2.to_csv(output / "appendix_table_e2.csv", index=False, float_format="%.4f")
+    counts["e2"] = len(e2)
+
+    recurrence = pd.read_csv(
+        ROOT / "analyses" / "rq4_robustness" / "data" / "structured_candidate_recurrence.csv"
+    ).loc[lambda frame: frame["removed_top_candidate_fraction"].gt(0)].copy()
+    e4 = pd.DataFrame(
+        {
+            "top_recurrent_identities_removed_percent": 100.0 * recurrence["removed_top_candidate_fraction"],
+            "queries_retained": recurrence["retained_queries"],
+            "retained_percent": 100.0 * recurrence["retained_queries"] / 2000.0,
+            "delta_u_points": 100.0 * recurrence["utility_gain"],
+            "ci_low_points": 100.0 * recurrence["bootstrap_ci_low"],
+            "ci_high_points": 100.0 * recurrence["bootstrap_ci_high"],
+            "positive_estimates_percent": 100.0 * recurrence["configurations_positive"] / recurrence["total_configurations"],
+            "intervals_above_zero_percent": 100.0 * recurrence["configurations_ci_positive"] / recurrence["total_configurations"],
+        }
+    )
+    e4.to_csv(output / "appendix_table_e4.csv", index=False, float_format="%.4f")
+    counts["e4"] = len(e4)
+    return counts
 
 
 def run_native_replays(output: Path, steps: list[dict[str, Any]]) -> None:
@@ -578,41 +845,44 @@ def run_native_replays(output: Path, steps: list[dict[str, Any]]) -> None:
         math.isclose(musique_score["mean_utility"], 0.519406, abs_tol=5e-7),
     ]
     if not all(checks):
-        raise RuntimeError("native scorer cross-check does not match Table 3")
+        raise RuntimeError("native scorer cross-check does not match Table 5")
 
 
 def reproduce_figures(output: Path, steps: list[dict[str, Any]]) -> None:
     source = ROOT / "paper_reproduction" / "figures"
-    work = output / "figures"
-    work.mkdir(parents=True, exist_ok=True)
-    for name in (
-        "make_worthir_contract.py",
-        "hero_example_2019.json",
-        "make_cost_quality_inversion.py",
-        "cost_quality_inversion_data.csv",
-        "make_recoverability_bridge.py",
-        "recoverability_bridge_data.csv",
-    ):
-        shutil.copy2(source / name, work / name)
+    assets = ROOT / "paper_reproduction" / "assets"
+    figure2_work = output / "_figure2_work"
     commands = [
         (
-            "figure1",
+            "manuscript_assets",
             [
                 sys.executable,
-                str(work / "make_worthir_contract.py"),
-                "--input",
-                str(work / "hero_example_2019.json"),
-                "--output-stem",
-                str(work / "figure1"),
+                str(source / "export_manuscript_assets.py"),
+                "--assets",
+                str(assets),
+                "--output-dir",
+                str(output),
             ],
         ),
         (
             "figure2",
-            [sys.executable, str(work / "make_cost_quality_inversion.py")],
+            [
+                sys.executable,
+                str(source / "make_figure2.py"),
+                "--output",
+                str(figure2_work / "figure2.pdf"),
+            ],
         ),
         (
             "figure3",
-            [sys.executable, str(work / "make_recoverability_bridge.py")],
+            [
+                sys.executable,
+                str(source / "make_figure3.py"),
+                "--input",
+                str(ROOT / "paper_reproduction" / "inputs" / "figure3_decomposition.csv"),
+                "--output",
+                str(output / "figure3.pdf"),
+            ],
         ),
         (
             "figures4-7",
@@ -622,25 +892,31 @@ def reproduce_figures(output: Path, steps: list[dict[str, Any]]) -> None:
                 "--data-root",
                 str(ROOT),
                 "--output-dir",
-                str(work),
+                str(output),
             ],
         ),
     ]
     for step_id, command in commands:
-        result = run(command, work)
+        result = run(command, ROOT)
         steps.append({"id": step_id, **result})
         if result["returncode"] != 0:
             raise RuntimeError(f"{step_id} failed: {result['stderr']}")
+    shutil.copy2(figure2_work / "figure2.pdf", output / "figure2.pdf")
+    shutil.rmtree(figure2_work)
     required = (
         "figure1.pdf",
-        "cost_quality_final.pdf",
-        "recoverability_bridge.pdf",
+        "figure2.pdf",
+        "figure3.pdf",
         "figure4.pdf",
         "figure5.pdf",
         "figure6.pdf",
         "figure7.pdf",
+        "appendix_figure_e1.pdf",
+        "appendix_figure_e2.pdf",
+        "appendix_figure_f1.pdf",
+        "appendix_figure_f2.pdf",
     )
-    missing = [name for name in required if not (work / name).is_file()]
+    missing = [name for name in required if not (output / name).is_file()]
     if missing:
         raise RuntimeError(f"missing generated figures: {missing}")
 
@@ -658,9 +934,13 @@ def main() -> None:
     steps: list[dict[str, Any]] = []
     started = time.perf_counter()
     try:
+        table1 = reproduce_table1(output)
         table2 = reproduce_table2(output, steps)
         table3 = reproduce_table3(output)
         table4 = reproduce_table4(output)
+        table5 = reproduce_table5(output)
+        table6 = reproduce_table6(output)
+        appendix_tables = reproduce_appendix_tables(output)
         if not args.skip_native_scorers:
             run_native_replays(output, steps)
         if not args.skip_figures:
@@ -670,14 +950,19 @@ def main() -> None:
     except Exception as exc:
         status = "FAIL"
         error = str(exc)
-        table2 = table3 = table4 = pd.DataFrame()
+        table1 = table2 = table3 = table4 = table5 = table6 = pd.DataFrame()
+        appendix_tables = {}
     report = {
         "status": status,
         "elapsed_seconds": round(time.perf_counter() - started, 3),
         "tables": {
+            "table1_rows": len(table1),
             "table2_rows": len(table2),
             "table3_rows": len(table3),
             "table4_rows": len(table4),
+            "table5_rows": len(table5),
+            "table6_rows": len(table6),
+            "appendix_table_rows": appendix_tables,
         },
         "steps": steps,
         "error": error,

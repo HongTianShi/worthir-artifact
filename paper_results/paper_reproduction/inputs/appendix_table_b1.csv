@@ -1,0 +1,12 @@
+task,route,raw_work_or_schedule,cumulative_cost
+TREC-DL,BM25,0,0
+TREC-DL,Dense fusion,9.87 billion MACs,0.0042
+TREC-DL,Late interaction,2.36 trillion MACs,1
+TREC-DL,Cross-encoder,206.49 billion MACs,0.0874
+FEVER,BM25,0 tokens,0
+FEVER,Bi-200,"31,420 tokens",0.5093
+FEVER,CE-20,"4,137 tokens",0.067
+FEVER,CE-100,"20,041 tokens",0.3248
+FEVER,Hybrid,"34,914 tokens",0.5659
+Structured-v2,Summary/one-hop/two-hop/full/CE,declared evidence schedule,0/0.16/0.26/0.55/0.95
+MuSiQue,V0/V1/V2/V3,0/dT/P/[dT+(1+d)P],0/0.0257/0.2775/1 (mean)

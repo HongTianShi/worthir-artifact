@@ -1,0 +1,76 @@
+{
+  "trec": {
+    "name": "TREC-DL 2019/2020",
+    "guide": "CANONICAL_TREC.md",
+    "required_inputs": {
+      "collection": "MS MARCO passage collection",
+      "topics_qrels": "TREC-DL 2019/2020 topics and qrels",
+      "indexes": "registered lexical, dense, and late-interaction indexes",
+      "checkpoints": "dense, ColBERTv2, and cross-encoder checkpoints"
+    },
+    "expected_queries": [43, 54, 97],
+    "expected_routes": [4],
+    "resources": {"disk": "80--140 GB", "ram": "32 GB", "vram": "12 GB recommended", "smoke": "20--60 minutes", "full": "12--48 GPU-hours"}
+  },
+  "fever": {
+    "name": "FEVER",
+    "guide": "FEVER.md",
+    "required_inputs": {
+      "wikipedia": "official FEVER 2017 Wikipedia dump",
+      "index": "matching Lucene page index",
+      "checkpoints": "bi-encoder and cross-encoder checkpoints",
+      "candidate_cache": "BM25 candidate cache over the registered corpus"
+    },
+    "expected_queries": [13332],
+    "expected_routes": [5],
+    "resources": {"disk": "120--220 GB", "ram": "32 GB", "vram": "12 GB recommended", "smoke": "20--60 minutes", "full": "10--30 GPU-hours"}
+  },
+  "structured": {
+    "name": "2Wiki-Structured / Hyperlink10k",
+    "guide": "STRUCTURED_AND_DIAGNOSTIC.md",
+    "required_inputs": {
+      "dataset": "2WikiMultiHopQA snapshot and Hyperlink10k query list",
+      "evidence": "candidate-title and evidence-text materialization",
+      "checkpoints": "registered summary, retrieval, and cross-encoder models"
+    },
+    "expected_queries": [2000, 10000],
+    "expected_routes": [5],
+    "resources": {"disk": "10--30 GB", "ram": "16 GB", "vram": "8 GB recommended", "smoke": "10--30 minutes", "full": "1--6 GPU-hours"}
+  },
+  "musique": {
+    "name": "MuSiQue",
+    "guide": "MUSIQUE.md",
+    "required_inputs": {
+      "dataset": "bdsaglam/musique snapshot",
+      "evidence": "paragraph evidence reconstructed from source paragraph IDs",
+      "checkpoints": "registered decomposition and retrieval checkpoints"
+    },
+    "expected_queries": [2417],
+    "expected_routes": [4],
+    "resources": {"disk": "10--20 GB", "ram": "16 GB", "vram": "8 GB recommended", "smoke": "10--30 minutes", "full": "1--4 GPU-hours"}
+  },
+  "fiqa260": {
+    "name": "FiQA-Compression260 / Systems260",
+    "guide": "STRUCTURED_AND_DIAGNOSTIC.md",
+    "required_inputs": {
+      "dataset": "frozen 260-query FiQA diagnostic snapshot",
+      "indexes": "registered compressed and full dense indexes",
+      "checkpoints": "dense and cross-encoder checkpoints"
+    },
+    "expected_queries": [260],
+    "expected_routes": [8],
+    "resources": {"disk": "50--120 GB", "ram": "32 GB", "vram": "12 GB recommended", "smoke": "15--45 minutes", "full": "3--12 GPU-hours"}
+  },
+  "dense_standard": {
+    "name": "Dense-standard",
+    "guide": "STRUCTURED_AND_DIAGNOSTIC.md",
+    "required_inputs": {
+      "datasets": "FiQA, SciFact, NFCorpus, ArguAna, and ANTIQUE snapshots",
+      "indexes": "registered IVF--PQ and full dense indexes",
+      "checkpoints": "registered dense encoders"
+    },
+    "expected_queries": [200, 300, 323, 648, 1401],
+    "expected_routes": [3],
+    "resources": {"disk": "50--150 GB", "ram": "32 GB", "vram": "12 GB recommended", "smoke": "15--45 minutes", "full": "4--18 GPU-hours"}
+  }
+}

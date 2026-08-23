@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 VENV = ROOT / ".venv"
-REQUIREMENTS = ROOT / "requirements.txt"
+REQUIREMENTS_LOCK = ROOT / "requirements-lock.txt"
 
 
 def environment_python() -> Path:
@@ -32,7 +32,7 @@ def prepare_environment() -> Path:
     if not python.is_file():
         print("Creating paper_results/.venv ...", flush=True)
         venv.EnvBuilder(with_pip=True).create(VENV)
-    expected = REQUIREMENTS.read_text(encoding="utf-8")
+    expected = REQUIREMENTS_LOCK.read_text(encoding="utf-8")
     stamp = VENV / ".worthir-requirements"
     current = stamp.read_text(encoding="utf-8") if stamp.is_file() else ""
     if current != expected:
@@ -43,8 +43,9 @@ def prepare_environment() -> Path:
                 "pip",
                 "install",
                 "--disable-pip-version-check",
+                "--require-hashes",
                 "-r",
-                str(REQUIREMENTS),
+                str(REQUIREMENTS_LOCK),
             ]
         )
         stamp.write_text(expected, encoding="utf-8")
@@ -82,7 +83,8 @@ def main() -> None:
     result = json.loads(report.read_text(encoding="utf-8"))
     if result.get("status") != "PASS":
         raise SystemExit(f"Validation failed; see {report}")
-    print("PASS: WorthIR paper results reproduced")
+    print("PASS: paper results recomputed from released ledgers and frozen readouts")
+    print(f"Result index: {output / 'INDEX.md'}")
     print(f"Paper figures and tables: {output / 'paper'}")
     print(f"RQ2--RQ5 summaries: {output / 'rqs'}")
     print(f"Validation report: {report}")

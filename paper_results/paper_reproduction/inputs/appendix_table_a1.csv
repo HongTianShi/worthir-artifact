@@ -1,0 +1,7 @@
+task,development_or_training,held_out_evaluation,resampling_unit
+TREC-DL,"6,980","43 (2019) + 54 (2020)",query
+FEVER,"6,000","13,332","1,042 components"
+Structured-v2,"2,000 in five OOF folds","2,000 in five OOF folds","1,636 support components"
+MuSiQue,"15,950 train + 3,988 dev","2,417",union component
+Dense-standard,"648/300/323/1,401/200","648/300/323/1,401/200",query
+FiQA-Compression260,--,260,query

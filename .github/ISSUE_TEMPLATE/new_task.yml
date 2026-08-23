@@ -1,0 +1,49 @@
+name: Add a task adapter
+description: Propose or contribute a runnable WorthIR task
+title: "Task adapter: "
+labels: ["task-adapter"]
+body:
+  - type: input
+    id: task
+    attributes:
+      label: Task and dataset
+      description: Name the task and link its official data source.
+    validations:
+      required: true
+  - type: input
+    id: metric
+    attributes:
+      label: Effectiveness measure
+      description: State its range and whether higher values are better.
+    validations:
+      required: true
+  - type: textarea
+    id: routes
+    attributes:
+      label: Available routes and prerequisites
+      description: List every route and any operations it requires.
+    validations:
+      required: true
+  - type: textarea
+    id: costs
+    attributes:
+      label: Cost definition and availability
+      description: Explain the unit, provenance, and whether each cost is known before route selection.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Runnable small example
+      description: Give the proposed prepare, build, validate, and compare commands.
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Information boundary
+      options:
+        - label: The router input excludes relevance judgments and unselected-route outcomes.
+          required: true
+        - label: The proposed data and model files may be redistributed under their licenses.
+          required: true

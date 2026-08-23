@@ -1,35 +1,47 @@
 # Paper result map
 
-Run `python run.py` in this directory first. The command writes the paths shown
-below under `reproduced/`.
+This map applies only to:
 
-| Paper item | Released input | Generator or check | Persistent output | Reproduction level |
-| --- | --- | --- | --- | --- |
-| Figure 1 | `paper_reproduction/figures/hero_example_2019.json` | `scripts/reproduce_paper.py` | `reproduced/paper/figures/figure1.pdf` | Complete redraw |
-| Figure 2 | `paper_reproduction/figures/cost_quality_inversion_data.csv` | `scripts/reproduce_paper.py` | `reproduced/paper/figures/cost_quality_final.png` | Complete redraw |
-| Figure 3 | `paper_reproduction/figures/recoverability_bridge_data.csv` | `scripts/reproduce_paper.py` | `reproduced/paper/figures/recoverability_bridge.png` | Complete redraw |
-| Figure 4 | `analyses/rq3_utility_sources/data/query_strata.csv` | `paper_reproduction/figures/make_figures_4_7.py` | `reproduced/paper/figures/figure4.pdf` | Complete redraw |
-| Figure 5 | `analyses/rq4_robustness/data/cost_preference_curves.csv` | `paper_reproduction/figures/make_figures_4_7.py` | `reproduced/paper/figures/figure5.pdf` | Complete redraw |
-| Figure 6 | `analyses/rq5_route_value/data/rq5_fever_gold_rank_band_routes.csv` | `paper_reproduction/figures/make_figures_4_7.py` | `reproduced/paper/figures/figure6.pdf` | Complete redraw |
-| Figure 7 | `analyses/rq2_policy_comparison/results/fever_online_latency.csv` and `fever_same_menu_policy_comparison.csv` | `paper_reproduction/figures/make_figures_4_7.py` | `reproduced/paper/figures/figure7.pdf` | Complete redraw |
-| Table 2 | Complete TREC-DL route ledgers | `scripts/reproduce_paper.py` | `reproduced/paper/table2_canonical_heldout.csv` | Per-query recomputation |
-| Table 3 | `paper_reproduction/inputs/table3_recoverability.csv` | `scripts/reproduce_paper.py` | `reproduced/paper/table3_recoverability.csv` | Arithmetic recomputation |
-| Table 4 | `paper_reproduction/inputs/table4_query_level.parquet` | `scripts/reproduce_paper.py` | `reproduced/paper/table4_matched_top10.csv` | Query-level reaggregation |
-| Table 5 | `analyses/rq2_policy_comparison/results/fever_same_menu_policy_comparison.csv` | `scripts/reproduce_rqs.py` | `reproduced/rqs/rq2_fever_same_menu.csv` | Released-action rescoring and table check |
-| Table 6 | `analyses/rq5_route_value/data/rq5_route_value_prediction_summary.csv` | RQ5 checks in `scripts/reproduce_rqs.py` | `reproduced/rqs/rq5_prediction_summary.csv` | Numerical closure from released predictions |
+- **Paper:** *WorthIR: An Evaluation Protocol for Cost-Aware Retrieval Routing*
+- **Version:** 2026-08-16 submission
+- **Artifact release:** [v1.2.0](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0)
 
-## Appendix results
+`PAPER_SPEC.json` is the machine-readable source of truth. `python run.py`
+checks that every item below is produced and writes a clickable
+`reproduced/INDEX.md`.
 
-The appendix analyses are grouped by research question rather than by page:
+## Main paper
 
-| Result family | Repository location | What can be rerun locally |
-| --- | --- | --- |
-| Matched policies, random controls, and FEVER latency | `analyses/rq2_policy_comparison/` | Released action vectors are rescored against released route outcomes |
-| Utility-source strata and switching analyses | `analyses/rq3_utility_sources/` | Published summaries and their arithmetic checks |
-| Cost preference, route recurrence, and learner checks | `analyses/rq4_robustness/` | Published summaries and their closure checks |
-| Evidence depth, structured controls, and predictability | `analyses/rq5_route_value/` | Published summaries and their closure checks |
-| Released evaluator bundles | `replays/` | Ledger integrity and scoring without rerunning retrieval |
-| Retrieval from raw corpora and model inference | `full_replay/` | Documented resource-heavy procedure; data and model downloads are not bundled |
+| Paper item | Primary released input | Output | Reproduction level |
+| --- | --- | --- | --- |
+| Figure 1 | `paper_reproduction/assets/figure1.png` | `reproduced/paper/figure1.pdf` | Frozen manuscript asset export |
+| Figure 2 | TREC-DL and structured route ledgers; FEVER frozen actions; FiQA diagnostic results | `reproduced/paper/figure2.pdf` | Complete redraw |
+| Figure 3 | `paper_reproduction/inputs/figure3_decomposition.csv` | `reproduced/paper/figure3.pdf` | Complete redraw and arithmetic closure |
+| Figure 4 | `analyses/rq3_utility_sources/data/query_strata.csv` | `reproduced/paper/figure4.pdf` | Complete redraw |
+| Figure 5 | `analyses/rq4_robustness/data/cost_preference_curves.csv` | `reproduced/paper/figure5.pdf` | Complete redraw |
+| Figure 6 | `analyses/rq5_route_value/data/rq5_fever_gold_rank_band_routes.csv` | `reproduced/paper/figure6.pdf` | Complete redraw |
+| Figure 7 | FEVER latency and matched-policy results | `reproduced/paper/figure7.pdf` | Complete redraw |
+| Table 1 | Registered task and route descriptions | `reproduced/paper/table1.csv` | Frozen task-specification export |
+| Table 2 | TREC-DL query--route ledgers and FiQA diagnostic results | `reproduced/paper/table2.csv` | Per-query recomputation and diagnostic closure |
+| Table 3 | Cross-task policy summaries and Holm tests | `reproduced/paper/table3.csv` | Released-action aggregation and test closure |
+| Table 4 | FEVER matched-route-set results | `reproduced/paper/table4.csv` | Frozen-action summary and manuscript-interval check |
+| Table 5 | `paper_reproduction/inputs/table3_recoverability.csv` | `reproduced/paper/table5.csv` | Arithmetic closure |
+| Table 6 | Held-out route-value summaries | `reproduced/paper/table6.csv` | Summary closure |
 
-Summary CSVs under `reproduced/rqs/` remain available for exact value lookup;
-the seven main-paper figures are also regenerated under `reproduced/paper/figures/`.
+Table numbers refer to the 2026-08-16 paper. Internal RQ filenames are not
+paper table numbers.
+
+## Appendix
+
+Appendix outputs use paper labels directly:
+
+- Tables A.1--A.2: `appendix_table_a1.csv`, `appendix_table_a2.csv`
+- Tables B.1--B.2: `appendix_table_b1.csv`, `appendix_table_b2.csv`
+- Table C.1: `appendix_table_c1.csv`
+- Tables D.1--D.2: `appendix_table_d1.csv`, `appendix_table_d2.csv`
+- Tables E.1--E.6: `appendix_table_e1.csv` through `appendix_table_e6.csv`
+- Figures E.1--E.2: `appendix_figure_e1.pdf`, `appendix_figure_e2.pdf`
+- Figures F.1--F.2: `appendix_figure_f1.pdf`, `appendix_figure_f2.pdf`
+
+The generated `reproduced/INDEX.md` records the caption, output, status, and
+reproduction level for every item.

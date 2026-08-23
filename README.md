@@ -13,25 +13,12 @@ effectiveness, cost, utility, regret, and the fixed-route Pareto curve.
 If you are an AI tool, read [`README_FOR_AI.md`](README_FOR_AI.md) before
 searching the repository.
 
-## Try it
+## 60-second demo
 
-Python 3.10 or newer is required. The reusable framework has no third-party
-dependencies.
+Python 3.10 or newer is required. Choose one installation path.
 
-```bash
-python setup_environment.py
-```
-
-Install a normal wheel from the clone:
-
-```bash
-python -m pip install .
-worthir demo-custom
-```
-
-Use `python -m pip install -e .` instead when editing the source.
-
-Run a non-TREC task with query-dependent costs and an external router:
+**Source archive or Git clone:** run the local launcher. It creates the local
+environment when first needed.
 
 ```powershell
 .\worthir.cmd demo-custom
@@ -41,7 +28,16 @@ Run a non-TREC task with query-dependent costs and an external router:
 ./worthir demo-custom
 ```
 
-Open `reproduced/custom_task/comparison.md`.
+**Installed wheel:** install the wheel, then use the global command.
+
+```bash
+python -m pip install worthir_eval-1.2.0-py3-none-any.whl
+worthir demo-custom
+```
+
+Do not run both setup paths. Open `reproduced/custom_task/comparison.md` after
+the command finishes. The published wheel uses English terminal messages; the
+Chinese source branch provides Chinese launchers and documentation.
 
 ## Use your own task
 
@@ -62,17 +58,35 @@ outcomes and costs measured only after execution remain separate.
 
 For qrels and six-column TREC runs, use the shorter [`build-trec` walkthrough](examples/trec_walkthrough/README.md).
 All input formats are described in [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_NEW_TASK.md).
+For direct library use, see the
+[`worthir_eval` Python example](examples/python_api/README.md).
 
-## Paper results
+## Recompute the paper results
 
-All data and code tied to the accepted paper are isolated in
-[`paper_results/`](paper_results/). Run `python paper_results/run.py` to keep the
-rebuilt outputs under `paper_results/reproduced/`. The
-[`v1.1.1`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.1)
-release contains the public-cost interface, complete Figure 1--7 redraw, and
-the corrected source and wheel launchers. The
-earlier `v1.0.0-ipmc2026` release remains the frozen artifact originally
-submitted with the accepted IP&MC 2026 paper.
+This uses released query--route ledgers and frozen route selections. It does
+not redownload corpora or rerun retrieval models.
+
+```bash
+python paper_results/run.py
+```
+
+Open [`paper_results/reproduced/INDEX.md`](paper_results/reproduced/INDEX.md).
+The index names the exact paper version, caption, output, and reproduction
+level for every main-paper and appendix figure or table.
+
+## Rebuild the original retrieval routes
+
+This is a separate, resource-intensive workflow. It checks licensed corpora
+and checkpoints, invokes a configured task adapter, and constructs new
+query--route ledgers through five explicit stages. Start with
+[`paper_results/full_replay/README.md`](paper_results/full_replay/README.md) and
+its task-specific resource estimates. Raw corpora, indexes, and model weights
+are not included in this repository.
+
+The [`v1.2.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0)
+release is the published artifact currently bound to the 2026-08-16 paper
+mapping. The earlier `v1.0.0-ipmc2026` release remains the artifact submitted
+with the accepted IP&MC 2026 paper.
 
 WorthIR-authored code is released under the [MIT License](LICENSE). Third-party
 data and model terms are listed in [NOTICE](NOTICE).

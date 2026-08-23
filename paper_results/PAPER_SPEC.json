@@ -1,0 +1,107 @@
+{
+  "paper": {
+    "title": "WorthIR: An Evaluation Protocol for Cost-Aware Retrieval Routing",
+    "version": "2026-08-16 submission",
+    "artifact_release": "v1.2.0",
+    "artifact_release_url": "https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0"
+  },
+  "main_items": [
+    {
+      "id": "figure1",
+      "output": "figure1.pdf",
+      "level": "frozen manuscript asset export",
+      "caption": "WorthIR evaluation protocol. A frozen routing policy selects one available retrieval route using only information available at inference time. The evaluator retrieves the corresponding per-query effectiveness and cumulative route cost results from the held-out query--route result matrix. Results for all available routes are used only to compute evaluation-only references, per-query regret, and the effectiveness--cost Pareto curve."
+    },
+    {
+      "id": "figure2",
+      "output": "figure2.pdf",
+      "level": "complete redraw from released aggregate and frozen-action results",
+      "caption": "Effectiveness--cost profiles under lambda = 0.08. Top: fixed-route comparisons on TREC-DL 2019 and FiQA-Compression260. The open circle marks the route with the highest mean effectiveness, and the orange diamond marks the route with the highest mean utility. Bottom: adaptive routing on FEVER and 2Wiki-Structured. The open square denotes the development-selected fixed strategy, and the orange star denotes the routing policy evaluated on held-out queries. Across all four panels, blue points denote fixed retrieval routes, blue line segments trace their effectiveness--cost Pareto curves, and the dashed lines are equal-utility contours, with higher-utility points above them. An adaptive point averages query-specific route selections and need not coincide with an individual fixed route."
+    },
+    {
+      "id": "figure3",
+      "output": "figure3.pdf",
+      "level": "complete redraw from released decomposition results",
+      "caption": "FEVER utility decomposition relative to the development-selected fixed CE-100 strategy. The route-mix term measures the effect of changing aggregate route frequencies, and the query--route matching term measures the additional effect of assigning routes to individual queries. Diamonds mark their sum, delta U. ExtraTrees and QPP gain because query--route matching offsets an unfavorable route mixture; ARR remains below the fixed strategy even when its matching term is positive."
+    },
+    {
+      "id": "figure4",
+      "output": "figure4.pdf",
+      "level": "complete redraw from released arithmetic strata",
+      "caption": "Routing-opportunity contributions to task-level mean utility. Bars decompose the overall difference from the development-selected fixed strategy into queries with no paid effectiveness gain, queries whose effectiveness gain is rejected by cost, and queries for which a paid route is utility-warranted. FEVER and MuSiQue gain mainly by avoiding unproductive paid computation but lose utility on paid-warranted queries, whereas 2Wiki-Structured obtains positive contributions in both major strata."
+    },
+    {
+      "id": "figure5",
+      "output": "figure5.pdf",
+      "level": "complete redraw from released sensitivity grids",
+      "caption": "Cost-preference sensitivity of the adaptive-routing-policy gain relative to the development-selected fixed strategy. Delta U equals the utility of the routing policy minus the utility of the development-selected fixed strategy. The blue curves report mean utility gain in points, and the error bars show 95% intervals at the marked settings. The orange star and shaded vertical band identify the primary setting lambda = 0.08; the dashed horizontal line denotes no gain over the fixed reference. For FEVER, the trained predictor is held fixed while cost-adjusted route selections are recomputed every 0.005. For 2Wiki-Structured, the routing policy is fully refitted and both the routing policy and fixed strategy are reselected every 0.01. For MuSiQue, adaptive route selections are held fixed while the fixed strategy is reselected every 0.01 under the query-relative and development-normalized work profiles."
+    },
+    {
+      "id": "figure6",
+      "output": "figure6.pdf",
+      "level": "complete redraw from released route-local strata",
+      "caption": "Where FEVER reranking creates value. Panel A reports the mean effectiveness gain and mean utility gain, both in points, for the route that first reaches the relevant evidence in each BM25-rank stratum. When the relevant page is absent from the top 200, the interval gives the utility range across all paid-route contrasts. Panel B reports the proportion of queries with positive utility gain. Row labels identify the route contrast and sample size."
+    },
+    {
+      "id": "figure7",
+      "output": "figure7.pdf",
+      "level": "complete redraw from released latency and frozen-policy results",
+      "caption": "FEVER warm-online systems audit. Panel A relates the route-frequency-weighted online latency estimate to mean utility difference in points relative to the fixed CE-100 strategy. Filled circles and open squares denote the three- and five-route settings, respectively; the shaded upper-left region represents lower latency and positive utility gain. Panel B decomposes each online mean into selected-route execution and router overhead. The dashed line marks the latency of fixed CE-100."
+    },
+    {
+      "id": "table1",
+      "output": "table1.csv",
+      "level": "registered task-specification export",
+      "caption": "Evaluation tasks, evaluation topics, available retrieval routes, and target measures."
+    },
+    {
+      "id": "table2",
+      "output": "table2.csv",
+      "level": "per-query recomputation and frozen diagnostic closure",
+      "caption": "Effect of cost-aware evaluation on fixed-strategy preference and the additional query-level diagnosis. Route-level agreement does not imply that the effectiveness and utility objectives agree for every query."
+    },
+    {
+      "id": "table3",
+      "output": "table3.csv",
+      "level": "released-action aggregation and Holm-test closure",
+      "caption": "Cross-task matched routing comparison. Entries are mean delta U in utility points relative to the development-selected fixed strategy, where one point represents an absolute utility difference of 0.01. ARR reports the range over five seeds as minimum to maximum. Superscripts plus and minus denote a positive or negative difference, respectively, after Holm correction within each task; n.s. denotes no clear difference."
+    },
+    {
+      "id": "table4",
+      "output": "table4.csv",
+      "level": "frozen-action replay summary",
+      "caption": "FEVER routing-policy comparison under matched sets of available retrieval routes. The fixed reference is CE-100. Learned routing policies are frozen before evaluation outcomes are joined."
+    },
+    {
+      "id": "table5",
+      "output": "table5.csv",
+      "level": "arithmetic closure from released within-task summaries",
+      "caption": "Observed within-task recoverable opportunity. Oracle gain and realized gain are utility differences in points relative to the development-selected fixed strategy. Recovery is the percentage of the fixed-to-oracle utility gap recovered by the routing policy. All quantities are interpreted only within a row."
+    },
+    {
+      "id": "table6",
+      "output": "table6.csv",
+      "level": "summary closure from released held-out route-value analyses",
+      "caption": "Association with route-specific utility gain. Linear and ExtraTrees columns report route-averaged Spearman correlations using combined query and first-stage features. Evaluator-only difficulty uses base-route effectiveness and is not an input to the query router. Within-difficulty correlations are computed within fixed difficulty bands. Correlations are rounded to four decimal places."
+    }
+  ],
+  "appendix_items": [
+    {"id": "appendix_table_a1", "output": "appendix_table_a1.csv", "level": "frozen table export", "caption": "Frozen development and evaluation partitions."},
+    {"id": "appendix_table_a2", "output": "appendix_table_a2.csv", "level": "frozen table export", "caption": "Prespecified diagnostic configurations."},
+    {"id": "appendix_table_b1", "output": "appendix_table_b1.csv", "level": "frozen table export", "caption": "Raw work and cumulative normalized route costs."},
+    {"id": "appendix_table_b2", "output": "appendix_table_b2.csv", "level": "released latency-summary closure", "caption": "Post hoc FEVER warm online-latency audit."},
+    {"id": "appendix_table_c1", "output": "appendix_table_c1.csv", "level": "frozen table export", "caption": "Primary query routers and evaluation protocols."},
+    {"id": "appendix_table_d1", "output": "appendix_table_d1.csv", "level": "frozen table export", "caption": "Role of each analysis family."},
+    {"id": "appendix_table_d2", "output": "appendix_table_d2.csv", "level": "frozen table export", "caption": "Prespecified uncertainty procedures."},
+    {"id": "appendix_table_e1", "output": "appendix_table_e1.csv", "level": "released arithmetic closure", "caption": "Utility difference from the expected-cost random null."},
+    {"id": "appendix_table_e2", "output": "appendix_table_e2.csv", "level": "frozen-action summary", "caption": "FEVER query-router variation on matched route sets."},
+    {"id": "appendix_table_e3", "output": "appendix_table_e3.csv", "level": "released robustness-summary closure", "caption": "2Wiki-Structured hard-budget robustness."},
+    {"id": "appendix_table_e4", "output": "appendix_table_e4.csv", "level": "released robustness-summary closure", "caption": "2Wiki-Structured recurrence exclusions."},
+    {"id": "appendix_table_e5", "output": "appendix_table_e5.csv", "level": "released diagnostic-summary closure", "caption": "Cheapest-route target separability after excluding metric-saturated queries."},
+    {"id": "appendix_table_e6", "output": "appendix_table_e6.csv", "level": "released sensitivity-summary closure", "caption": "Tolerance-adjusted recovery under near ties."},
+    {"id": "appendix_figure_e1", "output": "appendix_figure_e1.pdf", "level": "frozen manuscript graphic export", "caption": "Configuration-level 2Wiki-Structured robustness under the canonical out-of-fold evaluation."},
+    {"id": "appendix_figure_e2", "output": "appendix_figure_e2.pdf", "level": "frozen manuscript graphic export", "caption": "Utility-target analysis under the prespecified top-decile switching rule."},
+    {"id": "appendix_figure_f1", "output": "appendix_figure_f1.pdf", "level": "frozen manuscript graphic export", "caption": "Paired information-block contrasts."},
+    {"id": "appendix_figure_f2", "output": "appendix_figure_f2.pdf", "level": "frozen manuscript graphic export", "caption": "Financial granularity results in 100 delta(1-Brier) points with 95% 12-month moving-block intervals."}
+  ]
+}
