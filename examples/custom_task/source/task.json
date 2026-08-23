@@ -1,0 +1,15 @@
+{
+  "task_id": "faq-answer-routing-v1",
+  "metric": {
+    "name": "answer_coverage",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "higher_is_better": true
+  },
+  "cost_profile": {
+    "profile_id": "measured-seconds-v1",
+    "provenance": "预热后的单查询执行时间",
+    "lambda": 0.15
+  },
+  "development_selected_fixed_route": "semantic_search"
+}
