@@ -1,0 +1,13 @@
+query_uid,route_id,effectiveness,incremental_cost
+faq-001,keyword_search,0.92,0.025
+faq-001,semantic_search,0.88,0.105
+faq-001,combined_review,0.94,0.070
+faq-002,keyword_search,0.61,0.030
+faq-002,semantic_search,0.84,0.115
+faq-002,combined_review,0.96,0.075
+faq-003,keyword_search,0.45,0.035
+faq-003,semantic_search,0.81,0.140
+faq-003,combined_review,0.93,0.095
+faq-004,keyword_search,0.78,0.028
+faq-004,semantic_search,0.80,0.110
+faq-004,combined_review,0.91,0.080
