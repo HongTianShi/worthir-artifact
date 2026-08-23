@@ -20,6 +20,13 @@ WorthIR 在明确的有效性指标和成本配置下，将逐查询路由策略
 python setup_environment.py
 ```
 
+如果希望在当前克隆中安装一个可从任意目录调用的命令：
+
+```bash
+python -m pip install -e .
+worthir demo-custom
+```
+
 运行一个带逐查询成本和外部路由器的非 TREC 任务：
 
 ```powershell
@@ -44,7 +51,8 @@ python setup_environment.py
 ```
 
 这条路径支持任意命名的“越高越好”有效性指标、一般路线依赖关系、固定或逐查询
-成本，以及累计或增量成本输入。路由器只读取 `queries.csv`，评价方结果始终分离。
+成本，以及累计或增量成本输入。路由器可以读取 `queries.csv`、公开路线注册表、
+lambda 和声明为决策时已知的成本；评价方结果与只能在执行后测量的成本始终分离。
 
 若输入是 qrels 和六列 TREC run，可使用更短的
 [`build-trec` 示例](examples/trec_walkthrough/README.md)。所有输入格式见
@@ -57,6 +65,8 @@ python setup_environment.py
 `paper_results/reproduced/`。发布版
 [`v1.0.0-ipmc2026`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.0.0-ipmc2026)
 对应 IP&MC 2026 论文的冻结 artifact。
+该标签指向英文提交 `3e1a937`；其发布时的中文对应提交为 `3bbe1d4`。标签保持不变，
+当前中英文分支还包含此后增加的成本信息边界与复现改进。
 
 WorthIR 原创代码采用 [MIT 许可证](LICENSE)。第三方数据和模型条款见
 [NOTICE](NOTICE)。

@@ -31,6 +31,9 @@
 - 相关性标注、未选路线结果、效用、Oracle 动作和遗憾只对评测端可见。
 - ledger 必须包含查询与路线的完整笛卡尔积。
 - 路线成本为累计成本；任一路线成本不得低于其前置路线。
+- 成本何时可见是信息边界的一部分。决策时已知的固定成本写在公开路线记录中；
+  决策时已知的逐查询成本写在 `participant/route_costs.csv` 中；执行后测量的成本
+  只留在评价方。`validate-task` 会核对公开成本和评价成本。
 - 通用输入既可直接提供累计成本，也可提供增量组件成本；构建器会对传递前置闭包
   求和，并且每个组件只计一次。
 - 效用为 `effectiveness - lambda * cumulative_cost`。原始效用由任务定义，
@@ -76,6 +79,7 @@
 | --- | --- | --- |
 | `LICENSE` | 许可证 | WorthIR 自有代码的 MIT 许可证。 |
 | `NOTICE` | 第三方声明 | 指向不受 MIT 许可证覆盖的数据、模型和软件条款。 |
+| `pyproject.toml` | 可编辑安装元数据 | 为已克隆仓库提供 `worthir` 命令。 |
 | `CITATION.cff` | 引用元数据 | 向 GitHub 和引用工具提供软件发布版与论文引用信息。 |
 | `README_FOR_AI.md` | AI 项目地图 | 说明架构、不变量、当前限制以及每个受跟踪文件的用途。 |
 | `README.md` | 人类入口 | 提供一键配置、完整演示、自有数据流程和论文结果边界。 |
@@ -99,7 +103,7 @@
 | --- | --- | --- |
 | `contracts/quickstart_contract.json` | 任务契约 | 定义合成任务、动作模式、指标范围、成本偏好和标识符。 |
 | `contracts/README.md` | 契约指南 | 说明共享的快速入门任务契约和路线注册表。 |
-| `contracts/route_registry.json` | 路线注册表 | 注册合成快速入门路线及其前置关系。 |
+| `contracts/route_registry.json` | 路线注册表 | 注册快速入门路线、前置关系和决策时已知的固定成本。 |
 
 ### 可复用说明文档
 
@@ -133,7 +137,7 @@
 | `examples/custom_task/source/routes.csv` | 路线定义 | 演示具有两个前置路线的路线和增量组件成本。 |
 | `examples/custom_task/source/outcomes.csv` | 评价方结果 | 提供完整 answer-coverage 和逐查询成本结果。 |
 | `examples/custom_router/README.md` | 路由器指南 | 说明如何执行和替换外部示例路由器。 |
-| `examples/custom_router/router.py` | 示例路由器 | 读取合法状态、执行可替换规则并生成路线选择 CSV，不打开评价方数据。 |
+| `examples/custom_router/router.py` | 示例路由器 | 读取合法状态、路线、lambda 和公开逐查询成本并生成选择，不打开评价方数据。 |
 | `examples/custom_router/run.py` | 路由器流程 | 构建通用任务、运行路由器、绑定选择并写出比较结果。 |
 
 ### 合成快速入门任务
@@ -160,7 +164,7 @@
 | `scripts/run_integrity_tests.py` | 完整性测试 | 检查无效输入、算术不变量、累计成本、并列情况和示例信息边界。 |
 | `scripts/run_smoke_test.py` | 冒烟测试 | 评估六查询快速入门任务并写出汇总结果。 |
 | `scripts/score_actions.py` | 评分 CLI | 解析任务输入、调用核心评分器并写出汇总 JSON。 |
-| `scripts/validate_task.py` | 任务校验器 | 评分前报告任务覆盖范围、依赖边、成本模式和契约问题。 |
+| `scripts/validate_task.py` | 任务校验器 | 评分前报告任务覆盖范围、依赖边、成本可见时点和公开成本一致性。 |
 | `scripts/validate_framework.py` | 框架验证器 | 运行冒烟测试、完整性测试、任务初始化、TREC 构建、动作转换和比较检查。 |
 
 ### 可复用 Python 源码
@@ -169,7 +173,7 @@
 | --- | --- | --- |
 | `src/README.md` | 源码指南 | 说明无依赖源码布局。 |
 | `src/worthir_eval/__init__.py` | Python API | 导出任务检查、评分函数和公共错误类型。 |
-| `src/worthir_eval/core.py` | 评分实现 | 验证依赖图、动作、ledger 和累计成本，再计算有效性、成本、效用、Oracle 一致率和遗憾。 |
+| `src/worthir_eval/core.py` | 评分实现 | 验证依赖图、动作、ledger、累计成本和公开成本边界，再计算有效性、成本、效用、Oracle 一致率和遗憾。 |
 | `src/worthir_eval/README.md` | 软件包指南 | 概述评分器 API 及参与者--评测者边界。 |
 
 ### 新任务模板
@@ -254,6 +258,7 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `paper_results/analyses/rq4_robustness/data/cost_preference_summary.csv` | Analysis table | cost preference summary: released RQ4 diagnostic result used by the paper analysis. |
+| `paper_results/analyses/rq4_robustness/data/cost_preference_curves.csv` | Figure source | 重绘图 5 所需的稠密成本偏好曲线和标记区间。 |
 | `paper_results/analyses/rq4_robustness/data/fever_candidate_dependence.csv` | Analysis table | fever candidate dependence: released RQ4 diagnostic result used by the paper analysis. |
 | `paper_results/analyses/rq4_robustness/data/model_and_fold_summary.csv` | Analysis table | model and fold summary: released RQ4 diagnostic result used by the paper analysis. |
 | `paper_results/analyses/rq4_robustness/data/README.md` | Analysis guide | Explains the RQ4 diagnostic data. |
@@ -283,6 +288,7 @@
 | `paper_results/paper_reproduction/figures/cost_quality_inversion_data.csv` | Paper input | cost quality inversion data: compact values consumed by a figure or table builder. |
 | `paper_results/paper_reproduction/figures/hero_example_2019.json` | Paper input | hero example 2019: compact values consumed by a figure or table builder. |
 | `paper_results/paper_reproduction/figures/make_cost_quality_inversion.py` | Figure builder | make cost quality inversion: recreates a released WorthIR paper figure. |
+| `paper_results/paper_reproduction/figures/make_figures_4_7.py` | Figure builder | 根据发布表格重绘机会、敏感性、重排定位和延迟图片。 |
 | `paper_results/paper_reproduction/figures/make_recoverability_bridge.py` | Figure builder | make recoverability bridge: recreates a released WorthIR paper figure. |
 | `paper_results/paper_reproduction/figures/make_worthir_contract.py` | Figure builder | make worthir contract: recreates a released WorthIR paper figure. |
 | `paper_results/paper_reproduction/figures/README.md` | Figure-builder guide | Maps figure scripts to compact inputs. |
