@@ -1,0 +1,259 @@
+{
+  "checks": [
+    {
+      "check": "required file exists: route_results",
+      "passed": true
+    },
+    {
+      "check": "required file exists: route_report",
+      "passed": true
+    },
+    {
+      "check": "required file exists: legal_state",
+      "passed": true
+    },
+    {
+      "check": "required file exists: costs",
+      "passed": true
+    },
+    {
+      "check": "required file exists: development_outcomes",
+      "passed": true
+    },
+    {
+      "check": "required file exists: actions",
+      "passed": true
+    },
+    {
+      "check": "required file exists: registry",
+      "passed": true
+    },
+    {
+      "check": "required file exists: test_outcomes",
+      "passed": true
+    },
+    {
+      "check": "required file exists: evaluation",
+      "passed": true
+    },
+    {
+      "check": "required file exists: central_table",
+      "passed": true
+    },
+    {
+      "check": "development membership is 6,000 unique queries",
+      "passed": true
+    },
+    {
+      "check": "test membership is 13,332 unique queries",
+      "passed": true
+    },
+    {
+      "check": "development and test IDs are disjoint",
+      "passed": true
+    },
+    {
+      "check": "development role is exact",
+      "passed": true
+    },
+    {
+      "check": "test role is exact",
+      "passed": true
+    },
+    {
+      "check": "legal state is a complete unique population",
+      "passed": true
+    },
+    {
+      "check": "legal state membership is exact",
+      "passed": true
+    },
+    {
+      "check": "legal state excludes forbidden fields ([])",
+      "passed": true
+    },
+    {
+      "check": "legal numeric state is finite",
+      "passed": true
+    },
+    {
+      "check": "route ledger contains 19,332 rows",
+      "passed": true
+    },
+    {
+      "check": "route ledger membership is exact and unique",
+      "passed": true
+    },
+    {
+      "check": "route ledger hash matches atomic report",
+      "passed": true
+    },
+    {
+      "check": "every route row contains the registered five routes",
+      "passed": true
+    },
+    {
+      "check": "cost ledger is a complete query-route matrix",
+      "passed": true
+    },
+    {
+      "check": "cost ledger membership and routes are exact",
+      "passed": true
+    },
+    {
+      "check": "operator-work costs are finite and normalized",
+      "passed": true
+    },
+    {
+      "check": "BM25 incremental operator cost is zero",
+      "passed": true
+    },
+    {
+      "check": "development outcomes are complete and role-isolated",
+      "passed": true
+    },
+    {
+      "check": "test outcomes are complete and role-isolated",
+      "passed": true
+    },
+    {
+      "check": "development outcomes have no duplicate query-route rows",
+      "passed": true
+    },
+    {
+      "check": "development metrics are finite in [0,1]",
+      "passed": true
+    },
+    {
+      "check": "test outcomes have no duplicate query-route rows",
+      "passed": true
+    },
+    {
+      "check": "test metrics are finite in [0,1]",
+      "passed": true
+    },
+    {
+      "check": "frozen actions cover the test population exactly",
+      "passed": true
+    },
+    {
+      "check": "all frozen action fields use registered routes",
+      "passed": true
+    },
+    {
+      "check": "F_dev remains query-invariant for every preference",
+      "passed": true
+    },
+    {
+      "check": "registry binds the frozen action file",
+      "passed": true
+    },
+    {
+      "check": "registry binds development outcomes",
+      "passed": true
+    },
+    {
+      "check": "registry binds the cost ledger",
+      "passed": true
+    },
+    {
+      "check": "registry binds the legal state",
+      "passed": true
+    },
+    {
+      "check": "test outcomes were materialized after action freezing",
+      "passed": true
+    },
+    {
+      "check": "full evaluation declares the exact complete population",
+      "passed": true
+    },
+    {
+      "check": "evaluation reports all registered routes",
+      "passed": true
+    },
+    {
+      "check": "evaluation reports the complete preference grid",
+      "passed": true
+    },
+    {
+      "check": "reference routes are registered at lambda=0.0",
+      "passed": true
+    },
+    {
+      "check": "evaluation values are finite at lambda=0.0",
+      "passed": true
+    },
+    {
+      "check": "oracle dominates F_TIH at lambda=0.0",
+      "passed": true
+    },
+    {
+      "check": "reference routes are registered at lambda=0.02",
+      "passed": true
+    },
+    {
+      "check": "evaluation values are finite at lambda=0.02",
+      "passed": true
+    },
+    {
+      "check": "oracle dominates F_TIH at lambda=0.02",
+      "passed": true
+    },
+    {
+      "check": "reference routes are registered at lambda=0.04",
+      "passed": true
+    },
+    {
+      "check": "evaluation values are finite at lambda=0.04",
+      "passed": true
+    },
+    {
+      "check": "oracle dominates F_TIH at lambda=0.04",
+      "passed": true
+    },
+    {
+      "check": "reference routes are registered at lambda=0.08",
+      "passed": true
+    },
+    {
+      "check": "evaluation values are finite at lambda=0.08",
+      "passed": true
+    },
+    {
+      "check": "oracle dominates F_TIH at lambda=0.08",
+      "passed": true
+    },
+    {
+      "check": "reference routes are registered at lambda=0.16",
+      "passed": true
+    },
+    {
+      "check": "evaluation values are finite at lambda=0.16",
+      "passed": true
+    },
+    {
+      "check": "oracle dominates F_TIH at lambda=0.16",
+      "passed": true
+    },
+    {
+      "check": "evaluation binds test outcomes",
+      "passed": true
+    },
+    {
+      "check": "evaluation binds frozen actions",
+      "passed": true
+    },
+    {
+      "check": "evaluation binds costs",
+      "passed": true
+    },
+    {
+      "check": "registered replay inputs are byte/state identical",
+      "passed": true
+    }
+  ],
+  "checks_passed": 63,
+  "schema_version": "worthir-fever-full-validation-v1.0",
+  "status": "pass"
+}
