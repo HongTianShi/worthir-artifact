@@ -1,0 +1,52 @@
+{
+  "$id": "worthir-structured-v2-submission-v1.1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "decisions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "query_uid": {
+            "type": "string"
+          },
+          "selected_view": {
+            "enum": [
+              "summary",
+              "one_hop",
+              "two_hop",
+              "full_context",
+              "ce"
+            ]
+          }
+        },
+        "required": [
+          "query_uid",
+          "selected_view"
+        ],
+        "type": "object"
+      },
+      "maxItems": 2000,
+      "minItems": 2000,
+      "type": "array"
+    },
+    "policy_id": {
+      "maxLength": 120,
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_id": {
+      "const": "worthir-structured-v2-submission-v1.1"
+    },
+    "task_id": {
+      "const": "worthir-2wiki-structured-v2.0"
+    }
+  },
+  "required": [
+    "schema_id",
+    "task_id",
+    "policy_id",
+    "decisions"
+  ],
+  "type": "object"
+}
