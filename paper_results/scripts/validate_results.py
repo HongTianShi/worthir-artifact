@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -38,6 +39,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).parents[1])
     parser.add_argument("--output", type=Path)
+    parser.add_argument(
+        "--work-dir",
+        type=Path,
+        help="将复现后的论文图表和 RQ 输出保留在此目录",
+    )
     args = parser.parse_args()
     root = args.root.resolve()
     output = (
@@ -57,10 +63,14 @@ def main() -> None:
     ]
     missing = [path for path in required if not (root / path).is_file()]
     if missing:
-        raise RuntimeError(f"required paper-result files missing: {missing}")
+        raise RuntimeError(f"缺少必要的论文结果文件：{missing}")
 
-    with tempfile.TemporaryDirectory(prefix="worthir-paper-") as temp:
-        work = Path(temp)
+    def reproduce(work: Path) -> tuple[list[dict[str, Any]], float]:
+        work.mkdir(parents=True, exist_ok=True)
+        for name in ("paper", "rqs"):
+            target = work / name
+            if target.exists():
+                shutil.rmtree(target)
         commands = [
             [
                 sys.executable,
@@ -88,7 +98,7 @@ def main() -> None:
                 "--root",
                 str(root / "replays" / "canonical_trec"),
                 "--output",
-                str(work / "canonical.json"),
+                str(work / "rqs" / "canonical_validation.json"),
             ],
         ]
         started = time.perf_counter()
@@ -98,6 +108,13 @@ def main() -> None:
             results.append(result)
             if result["returncode"] != 0:
                 break
+        return results, started
+
+    if args.work_dir:
+        results, started = reproduce(args.work_dir.resolve())
+    else:
+        with tempfile.TemporaryDirectory(prefix="worthir-paper-") as temp:
+            results, started = reproduce(Path(temp))
 
     status = (
         "PASS"
