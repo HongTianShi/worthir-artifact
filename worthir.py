@@ -29,17 +29,20 @@ def main() -> None:
     subparsers.add_parser("doctor", help="check the local framework installation")
 
     init = subparsers.add_parser("init", help="create an editable example task")
-    init.add_argument("task_dir", type=Path)
-    init.add_argument("--task-id", required=True)
+    init.add_argument("task_dir", type=Path, help="new task directory")
+    init.add_argument("--task-id", required=True, help="stable identifier for the task")
 
     build = subparsers.add_parser(
         "build-trec", help="build a task from qrels, TREC runs, and costs"
     )
-    build.add_argument("source_dir", type=Path)
-    build.add_argument("task_dir", type=Path)
-    build.add_argument("--task-id", required=True)
-    build.add_argument("--metric", default="ndcg@10")
-    build.add_argument("--lambda", dest="lam", type=float, default=0.08)
+    build.add_argument("source_dir", type=Path, help="qrels, route table, and run files")
+    build.add_argument("task_dir", type=Path, help="new WorthIR task directory")
+    build.add_argument("--task-id", required=True, help="stable identifier for the task")
+    build.add_argument("--metric", default="ndcg@10", help="NDCG measure, such as ndcg@10")
+    build.add_argument(
+        "--lambda", dest="lam", type=float, default=0.08,
+        help="cost preference used in U = effectiveness - lambda * cost",
+    )
     build.add_argument(
         "--policy-id",
         default="provided-policy",
@@ -49,24 +52,50 @@ def main() -> None:
     actions = subparsers.add_parser(
         "actions", help="convert query-route choices from CSV to actions JSON"
     )
-    actions.add_argument("task_dir", type=Path)
-    actions.add_argument("choice_csv", type=Path)
-    actions.add_argument("--policy-id", required=True)
-    actions.add_argument("--output", type=Path)
+    custom = subparsers.add_parser(
+        "build-custom", help="build any task from query, route, and outcome tables"
+    )
+    custom.add_argument("source_dir", type=Path, help="directory with task.json and CSV inputs")
+    custom.add_argument("task_dir", type=Path, help="new WorthIR task directory")
+    custom.add_argument(
+        "--policy-id", default="provided-policy", help="name for optional policy_choices.csv"
+    )
+
+    validate = subparsers.add_parser(
+        "validate-task", help="check coverage, contracts, dependencies, and costs"
+    )
+    validate.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    validate.add_argument("--output", type=Path, help="optional JSON validation report")
+
+    actions.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    actions.add_argument("choice_csv", type=Path, help="CSV with query_uid and selected_route_id")
+    actions.add_argument("--policy-id", required=True, help="identifier recorded in the action file")
+    actions.add_argument("--output", type=Path, help="action JSON destination")
 
     score = subparsers.add_parser("score", help="score the task's default policy")
-    score.add_argument("task_dir", type=Path)
-    score.add_argument("--actions", type=Path)
-    score.add_argument("--output", type=Path)
+    score.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    score.add_argument("--actions", type=Path, help="action JSON; defaults to participant/actions.json")
+    score.add_argument("--output", type=Path, help="score JSON destination")
 
     compare = subparsers.add_parser(
         "compare", help="compare policies with all registered fixed routes"
     )
-    compare.add_argument("task_dir", type=Path)
-    compare.add_argument("--output-dir", type=Path)
+    compare.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    compare.add_argument("--output-dir", type=Path, help="report destination; defaults to task directory")
+
+    evaluate = subparsers.add_parser(
+        "evaluate", help="bind a choice CSV and compare it with all fixed routes"
+    )
+    evaluate.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    evaluate.add_argument("choice_csv", type=Path, help="router output CSV")
+    evaluate.add_argument("--policy-id", required=True, help="identifier for the router")
+    evaluate.add_argument("--output-dir", type=Path, help="report destination")
 
     subparsers.add_parser(
         "demo", help="run the complete qrels-to-report walkthrough"
+    )
+    subparsers.add_parser(
+        "demo-custom", help="run the non-TREC custom-task and router walkthrough"
     )
 
     args = parser.parse_args()
@@ -95,6 +124,23 @@ def main() -> None:
         )
         launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
         print(f'NEXT: {launcher} compare "{args.task_dir}"')
+    elif args.command == "build-custom":
+        _run(
+            "scripts/build_custom_task.py",
+            [
+                str(args.source_dir),
+                str(args.task_dir),
+                "--policy-id",
+                args.policy_id,
+            ],
+        )
+        launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
+        print(f'NEXT: {launcher} validate-task "{args.task_dir}"')
+    elif args.command == "validate-task":
+        command = [str(args.task_dir)]
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/validate_task.py", command)
     elif args.command == "actions":
         command = [
             "--task-dir",
@@ -115,6 +161,23 @@ def main() -> None:
             command.extend(["--output", str(args.output)])
         _run("scripts/score_actions.py", command)
     elif args.command == "compare":
+        command = [str(args.task_dir)]
+        if args.output_dir:
+            command.extend(["--output-dir", str(args.output_dir)])
+        _run("scripts/compare_policies.py", command)
+    elif args.command == "evaluate":
+        action_path = (
+            args.task_dir / "participant" / "policies" / f"{args.policy_id}.json"
+        )
+        _run(
+            "scripts/actions_from_csv.py",
+            [
+                "--task-dir", str(args.task_dir),
+                "--input", str(args.choice_csv),
+                "--policy-id", args.policy_id,
+                "--output", str(action_path),
+            ],
+        )
         command = [str(args.task_dir)]
         if args.output_dir:
             command.extend(["--output-dir", str(args.output_dir)])
@@ -141,6 +204,8 @@ def main() -> None:
         )
         _run("scripts/compare_policies.py", [str(destination)])
         print(f"OPEN: {destination / 'comparison.md'}")
+    elif args.command == "demo-custom":
+        _run("examples/custom_router/run.py", [])
 
 
 if __name__ == "__main__":
