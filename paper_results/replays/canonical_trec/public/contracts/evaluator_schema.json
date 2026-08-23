@@ -1,0 +1,33 @@
+{
+  "confirmatory_access": "none",
+  "fields": [
+    {
+      "name": "query_uid"
+    },
+    {
+      "name": "route_id"
+    },
+    {
+      "name": "raw_ndcg_at_10"
+    },
+    {
+      "name": "C_op"
+    },
+    {
+      "name": "C_lat"
+    },
+    {
+      "name": "C_mem"
+    },
+    {
+      "name": "utility_C_op_lambda_0_08"
+    },
+    {
+      "name": "exact_within_menu_regret"
+    },
+    {
+      "name": "oracle_route_evaluator_only"
+    }
+  ],
+  "schema_id": "worthir-g2-evaluator-v1.0"
+}
