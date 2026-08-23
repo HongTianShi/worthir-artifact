@@ -1,0 +1,16 @@
+{
+  "action_share": {
+    "bm25": 1410,
+    "ce100": 5055,
+    "ce20": 6651,
+    "hybrid": 216
+  },
+  "lambda": 0.08,
+  "mean_cost_work": 0.16193269839172714,
+  "mean_raw_ndcg_10": 0.8136716089231717,
+  "mean_regret": 0.059756556676167215,
+  "mean_utility": 0.8007169930518335,
+  "queries": 13332,
+  "schema_version": "worthir-fever-action-score-v1.0",
+  "zero_regret_share": 0.2728772877287729
+}
