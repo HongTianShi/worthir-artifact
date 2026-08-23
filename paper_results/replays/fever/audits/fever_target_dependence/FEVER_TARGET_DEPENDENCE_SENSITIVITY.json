@@ -1,0 +1,510 @@
+{
+  "component_summary": {
+    "components": 1042,
+    "components_ge_10": 695,
+    "definition": "connected components induced by shared gold evidence page or identical normalized claim",
+    "largest_component": 133,
+    "p50_component_size": 11.0,
+    "p90_component_size": 19.0,
+    "p99_component_size": 48.58999999999992,
+    "queries": 13332,
+    "singleton_components": 1
+  },
+  "draws": 5000,
+  "results": [
+    {
+      "A_frozen": 0.8146501257050518,
+      "F_TIH": 0.815562221646419,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.815562221646419,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.8663745353398082,
+      "delta_dev": -0.000912095941367395,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          -0.0011677995866855443,
+          -0.000503074045063781
+        ],
+        "mean": -0.000912095941367395,
+        "positive_component_bootstrap_fraction": 0.18,
+        "query_bootstrap_q025_q975": [
+          -0.002364302720024314,
+          0.0005214102393667247
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.0030530076200744345,
+          0.0010480115082805578
+        ]
+      },
+      "delta_tih": -0.000912095941367395,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          -0.0011677995866855443,
+          -0.000503074045063781
+        ],
+        "mean": -0.000912095941367395,
+        "positive_component_bootstrap_fraction": 0.1876,
+        "query_bootstrap_q025_q975": [
+          -0.0023008040183346607,
+          0.0004957308676426603
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.0029348574693276175,
+          0.0010335249785132273
+        ]
+      },
+      "headroom_dev": 0.05081231369338923,
+      "headroom_tih": 0.05081231369338923,
+      "kappa_dev": -0.017950293444048783,
+      "kappa_tih": -0.017950293444048783,
+      "lambda": 0.0,
+      "metric": "raw_ndcg_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8101250929463406,
+      "F_TIH": 0.8090655714627286,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.8090655714627286,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.86488555701582,
+      "delta_dev": 0.0010595214836121504,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          0.0008066036088131241,
+          0.0014392329652760567
+        ],
+        "mean": 0.0010595214836121504,
+        "positive_component_bootstrap_fraction": 0.8564,
+        "query_bootstrap_q025_q975": [
+          -0.00040885141972410953,
+          0.0025097233767830277
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.000979654847534596,
+          0.0029548191422554713
+        ]
+      },
+      "delta_tih": 0.0010595214836121504,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          0.0008066036088131241,
+          0.0014392329652760567
+        ],
+        "mean": 0.0010595214836121504,
+        "positive_component_bootstrap_fraction": 0.849,
+        "query_bootstrap_q025_q975": [
+          -0.0004736366874990657,
+          0.0025040798757612497
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.001013714205239112,
+          0.0029856022363749075
+        ]
+      },
+      "headroom_dev": 0.05581998555309142,
+      "headroom_tih": 0.05581998555309142,
+      "kappa_dev": 0.018981041881575192,
+      "kappa_tih": 0.018981041881575192,
+      "lambda": 0.02,
+      "metric": "raw_ndcg_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8063162220501808,
+      "F_TIH": 0.802568921279038,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.802568921279038,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.863403369470535,
+      "delta_dev": 0.0037473007711428547,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          0.003572769900446019,
+          0.004051547041556467
+        ],
+        "mean": 0.0037473007711428547,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.0023887561839425675,
+          0.005110282804022266
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.0018507623285809044,
+          0.005508123279857228
+        ]
+      },
+      "delta_tih": 0.0037473007711428547,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          0.003572769900446019,
+          0.004051547041556467
+        ],
+        "mean": 0.0037473007711428547,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.002379823681593045,
+          0.005172603313656364
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.001879769248069162,
+          0.005506600936401357
+        ]
+      },
+      "headroom_dev": 0.06083444819149697,
+      "headroom_tih": 0.06083444819149697,
+      "kappa_dev": 0.0615983358531824,
+      "kappa_tih": 0.0615983358531824,
+      "lambda": 0.04,
+      "metric": "raw_ndcg_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8007169930518335,
+      "F_TIH": 0.7895756209116568,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.7895756209116568,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.8604735497280008,
+      "delta_dev": 0.011141372140176757,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          0.01101641297419894,
+          0.011546080739646249
+        ],
+        "mean": 0.011141372140176757,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.00973304946704581,
+          0.012479903074557156
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.009221153892616593,
+          0.012845830727845727
+        ]
+      },
+      "delta_tih": 0.011141372140176757,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          0.01101641297419894,
+          0.011546080739646249
+        ],
+        "mean": 0.011141372140176757,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.009767044722143613,
+          0.012489755395618512
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.009288163798496386,
+          0.012905730156892354
+        ]
+      },
+      "headroom_dev": 0.07089792881634405,
+      "headroom_tih": 0.07089792881634405,
+      "kappa_dev": 0.15714665190061725,
+      "kappa_tih": 0.15714665190061725,
+      "lambda": 0.08,
+      "metric": "raw_ndcg_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.7910195020823156,
+      "F_TIH": 0.7724650977961716,
+      "F_TIH_route": "ce20",
+      "F_dev": 0.7724650977961716,
+      "F_dev_route": "ce20",
+      "O_TIH": 0.8547699115325433,
+      "delta_dev": 0.01855440428614413,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          0.018057575640180543,
+          0.01872446756710915
+        ],
+        "mean": 0.01855440428614413,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.01572862527274286,
+          0.021360509339678896
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.014479572106455025,
+          0.02277827227072728
+        ]
+      },
+      "delta_tih": 0.01855440428614413,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          0.018057575640180543,
+          0.01872446756710915
+        ],
+        "mean": 0.01855440428614413,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.01584189010383304,
+          0.021465662006607794
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.014604752039232682,
+          0.022840692450106306
+        ]
+      },
+      "headroom_dev": 0.08230481373637177,
+      "headroom_tih": 0.08230481373637177,
+      "kappa_dev": 0.2254352260072566,
+      "kappa_tih": 0.2254352260072566,
+      "lambda": 0.16,
+      "metric": "raw_ndcg_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8912391239123912,
+      "F_TIH": 0.8938643864386439,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.8938643864386439,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.918991899189919,
+      "delta_dev": -0.0026252625262526254,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          -0.0029294674378427103,
+          -0.002107164358819988
+        ],
+        "mean": -0.0026252625262526254,
+        "positive_component_bootstrap_fraction": 0.0202,
+        "query_bootstrap_q025_q975": [
+          -0.004575457545754576,
+          -0.00075007500750075
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.0053378853094778736,
+          -7.640661099501454e-05
+        ]
+      },
+      "delta_tih": -0.0026252625262526254,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          -0.0029294674378427103,
+          -0.002107164358819988
+        ],
+        "mean": -0.0026252625262526254,
+        "positive_component_bootstrap_fraction": 0.0186,
+        "query_bootstrap_q025_q975": [
+          -0.004575457545754576,
+          -0.0006750675067506751
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.005355377086253132,
+          -7.720035187473687e-05
+        ]
+      },
+      "headroom_dev": 0.025127512751275116,
+      "headroom_tih": 0.025127512751275116,
+      "kappa_dev": -0.10447761194029856,
+      "kappa_tih": -0.10447761194029856,
+      "lambda": 0.0,
+      "metric": "complete_set_recall_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8859570609388481,
+      "F_TIH": 0.8873677362549532,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.8873677362549532,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.9184137412136572,
+      "delta_dev": -0.0014106753161052619,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          -0.0017131748728662869,
+          -0.0009620222208569302
+        ],
+        "mean": -0.0014106753161052619,
+        "positive_component_bootstrap_fraction": 0.1548,
+        "query_bootstrap_q025_q975": [
+          -0.0034976958554338963,
+          0.0005969677744891319
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.004182550952563941,
+          0.0012030264415816784
+        ]
+      },
+      "delta_tih": -0.0014106753161052619,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          -0.0017131748728662869,
+          -0.0009620222208569302
+        ],
+        "mean": -0.0014106753161052619,
+        "positive_component_bootstrap_fraction": 0.1596,
+        "query_bootstrap_q025_q975": [
+          -0.0034754258955216706,
+          0.0006146232746815911
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.004070594491593275,
+          0.0013533496230455106
+        ]
+      },
+      "headroom_dev": 0.03104600495870391,
+      "headroom_tih": 0.03104600495870391,
+      "kappa_dev": -0.045438223629149156,
+      "kappa_tih": -0.045438223629149156,
+      "lambda": 0.02,
+      "metric": "complete_set_recall_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8810117547024412,
+      "F_TIH": 0.8808710860712626,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.8808710860712626,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.9178355832373952,
+      "delta_dev": 0.00014066863117847048,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          -9.540123046694288e-05,
+          0.0004421081339417088
+        ],
+        "mean": 0.00014066863117847048,
+        "positive_component_bootstrap_fraction": 0.5448,
+        "query_bootstrap_q025_q975": [
+          -0.0019171331280722725,
+          0.002100137159316943
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.002536009453091532,
+          0.0027295987151759555
+        ]
+      },
+      "delta_tih": 0.00014066863117847048,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          -9.540123046694288e-05,
+          0.0004421081339417088
+        ],
+        "mean": 0.00014066863117847048,
+        "positive_component_bootstrap_fraction": 0.5378,
+        "query_bootstrap_q025_q975": [
+          -0.0018446421681198204,
+          0.0021785736308329996
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          -0.002410598560642686,
+          0.002654560873034365
+        ]
+      },
+      "headroom_dev": 0.03696449716613259,
+      "headroom_tih": 0.03696449716613259,
+      "kappa_dev": 0.003805506417313127,
+      "kappa_tih": 0.003805506417313127,
+      "lambda": 0.04,
+      "metric": "complete_set_recall_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8746841480050495,
+      "F_TIH": 0.8678777857038816,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.8678777857038816,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.9166792672848717,
+      "delta_dev": 0.006806362301167877,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          0.006565833458987084,
+          0.007244709644902078
+        ],
+        "mean": 0.006806362301167877,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.0047949985845641115,
+          0.008752813024430036
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.004176144138182044,
+          0.009383280944251518
+        ]
+      },
+      "delta_tih": 0.006806362301167877,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          0.006565833458987084,
+          0.007244709644902078
+        ],
+        "mean": 0.006806362301167877,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.004864417700684747,
+          0.008785458480527773
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.0042332430703835,
+          0.009392342704511437
+        ]
+      },
+      "headroom_dev": 0.04880148158099007,
+      "headroom_tih": 0.04880148158099007,
+      "kappa_dev": 0.13947040296045438,
+      "kappa_tih": 0.13947040296045438,
+      "lambda": 0.08,
+      "metric": "complete_set_recall_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    },
+    {
+      "A_frozen": 0.8632356247813577,
+      "F_TIH": 0.8418911849691193,
+      "F_TIH_route": "ce100",
+      "F_dev": 0.8418911849691193,
+      "F_dev_route": "ce100",
+      "O_TIH": 0.9143666353798243,
+      "delta_dev": 0.021344439812238488,
+      "delta_dev_resampling": {
+        "leave_one_component_out_min_max": [
+          0.02101721474547795,
+          0.021850111490358655
+        ],
+        "mean": 0.021344439812238488,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.01915301600667069,
+          0.023508531261904716
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.01827781754646556,
+          0.024449079076309894
+        ]
+      },
+      "delta_tih": 0.021344439812238488,
+      "delta_tih_resampling": {
+        "leave_one_component_out_min_max": [
+          0.02101721474547795,
+          0.021850111490358655
+        ],
+        "mean": 0.021344439812238488,
+        "positive_component_bootstrap_fraction": 1.0,
+        "query_bootstrap_q025_q975": [
+          0.019095146825042982,
+          0.023556746490909466
+        ],
+        "shared_page_component_bootstrap_q025_q975": [
+          0.018211915939048966,
+          0.024292648150822733
+        ]
+      },
+      "headroom_dev": 0.07247545041070502,
+      "headroom_tih": 0.07247545041070502,
+      "kappa_dev": 0.29450579046123176,
+      "kappa_tih": 0.29450579046123176,
+      "lambda": 0.16,
+      "metric": "complete_set_recall_10",
+      "policy_status": "same frozen NDCG-trained legal action vector; no refitting"
+    }
+  ],
+  "schema_version": "worthir-fever-target-dependence-sensitivity-v1.0",
+  "scope": "frozen-outcome rescoring only; no model fit, selection, or route rerun",
+  "seed": 20260731,
+  "status": "complete"
+}
