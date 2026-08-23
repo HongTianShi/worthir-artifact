@@ -1,0 +1,63 @@
+{
+  "analysis": "bounded frozen-sweep statistical replay",
+  "new_method_or_hyperparameter_search": false,
+  "results": [
+    {
+      "conservative_per_split": [
+        0.033120147372684206,
+        0.02565623342579848,
+        0.031177814678847282,
+        0.0302613814208873,
+        0.030816231554604112,
+        0.032967840260481385,
+        0.03209731806926197,
+        0.03099126157513521,
+        0.03154772131847683,
+        0.03315163351667583
+      ],
+      "delta_dev": {
+        "hi": 0.03363786415141612,
+        "lo": 0.030103538458675676,
+        "mean": 0.03198258988287802
+      },
+      "delta_tih": {
+        "hi": 0.03226729485300544,
+        "lo": 0.02968264180459832,
+        "mean": 0.03117875831928526
+      },
+      "deployable_per_split": [
+        0.033120147372684206,
+        0.02565623342579848,
+        0.03150979360424688,
+        0.0302613814208873,
+        0.030816231554604112,
+        0.032967840260481385,
+        0.03209731806926197,
+        0.03553889136688821,
+        0.03154772131847683,
+        0.036310340435450825
+      ],
+      "fixed_hindsight_inflation_per_split": [
+        0.0,
+        0.0,
+        0.0003319789253996,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.004547629791753,
+        0.0,
+        0.003158706918775
+      ],
+      "frozen_mean_centering_shift": 0.0,
+      "identity_max_abs_error": 2.168404344971009e-18,
+      "outcome_cache": "provenance://archived-analysis/hyperlink-outcomes",
+      "regime": "2wiki_hyperlink_10k",
+      "repeats": 10,
+      "replay_raw_conservative_mean": 0.03117875831928526,
+      "seed": 20260521,
+      "source_script": "provenance://archived-analysis/hyperlink-sweep-script"
+    }
+  ],
+  "retained_fitted_models": false
+}
