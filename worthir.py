@@ -48,6 +48,12 @@ def main() -> None:
         default="provided-policy",
         help="name for policy_choices.csv when that file is present",
     )
+    build.add_argument(
+        "--cost-availability",
+        choices=["known_at_commitment", "measured_after_execution"],
+        default="known_at_commitment",
+        help="when costs become visible to the routing policy",
+    )
 
     actions = subparsers.add_parser(
         "actions", help="convert query-route choices from CSV to actions JSON"
@@ -120,6 +126,8 @@ def main() -> None:
                 str(args.lam),
                 "--policy-id",
                 args.policy_id,
+                "--cost-availability",
+                args.cost_availability,
             ],
         )
         launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
