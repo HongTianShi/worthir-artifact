@@ -1,0 +1,36 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  framework:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python setup_environment.py
+      - if: runner.os == 'Windows'
+        run: .\worthir.cmd demo
+      - if: runner.os != 'Windows'
+        run: ./worthir demo
+
+  paper-results:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: paper_results/requirements.txt
+      - run: python -m pip install --disable-pip-version-check -r paper_results/requirements.txt
+      - run: python paper_results/run.py --use-current-python
