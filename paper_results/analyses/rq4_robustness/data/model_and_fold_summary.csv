@@ -1,0 +1,3 @@
+task,test,replications_or_configurations,positive_point_estimates,positive_intervals_or_runs,minimum_gain,maximum_gain,mean_gain
+2Wiki-Structured,canonical_model_grid,16,16,15,,,
+2Wiki-Structured,full_fold_reassignment_refit_reselection,20,20,20,0.0231427600,0.0285627800,0.0257883100
