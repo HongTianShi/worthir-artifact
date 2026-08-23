@@ -1,0 +1,57 @@
+{
+  "example": {
+    "bm25_score_mean": 10.482417749404908,
+    "bm25_score_std": 1.7867965213583392,
+    "bm25_top1_top2_margin": 0.9363002777099609,
+    "bm25_top_score": 17.81920051574707,
+    "quality_oracle_action": "late_interaction",
+    "query_text": "types of dysarthria from cerebral palsy",
+    "query_uid": "msmarco-trecdl-2019:527433",
+    "query_whitespace_token_count": 6,
+    "routes": [
+      {
+        "C_op": 0.0,
+        "raw_ndcg_at_10": 0.4965763904785327,
+        "route_id": "stop_bm25",
+        "utility": 0.4965763904785327,
+        "utility_regret": 0.06417412349674118
+      },
+      {
+        "C_op": 0.004180423145283137,
+        "raw_ndcg_at_10": 0.5610849478268966,
+        "route_id": "dense_fusion",
+        "utility": 0.5607505139752739,
+        "utility_regret": 0.0
+      },
+      {
+        "C_op": 0.0874385701648912,
+        "raw_ndcg_at_10": 0.5168036526182268,
+        "route_id": "cross_encoder",
+        "utility": 0.5098085670050355,
+        "utility_regret": 0.05094194697023835
+      },
+      {
+        "C_op": 1.0,
+        "raw_ndcg_at_10": 0.5676830721018323,
+        "route_id": "late_interaction",
+        "utility": 0.4876830721018323,
+        "utility_regret": 0.07306744187344155
+      }
+    ],
+    "utility_oracle_action": "dense_fusion"
+  },
+  "schema": {
+    "cost_column": "C_op",
+    "join_key": "query_uid",
+    "quality_column": "raw_ndcg_at_10",
+    "regret_column": "exact_within_menu_regret",
+    "utility_column": "utility_C_op_lambda_0_08"
+  },
+  "selection_rule": "Largest archived quality-oracle utility regret among topics whose quality and utility oracle actions disagree; otherwise first stable row.",
+  "source": {
+    "legal_state_asset": "replays/canonical_trec/public/data/test/2019/legal_state.parquet",
+    "outcome_asset": "replays/canonical_trec/organizer_private/data/test/2019/route_outcomes.parquet",
+    "query_uid": "msmarco-trecdl-2019:527433",
+    "year": "2019"
+  }
+}
