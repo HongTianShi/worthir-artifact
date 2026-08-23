@@ -20,8 +20,10 @@ Use the simplest representation that matches the deployment question:
 - **Model operations or energy:** use a consistent measured or computed unit and
   include all required preceding stages.
 
-Do not mix unrelated units in one profile. A child route includes the cost of
-its parents; it is not merely the incremental final-stage cost.
+Do not mix unrelated units in one profile. When cumulative costs are supplied,
+each route includes all of its prerequisites. When incremental costs are
+supplied, WorthIR sums the transitive prerequisite closure and counts each
+component once.
 
 ## Normalize only when it helps interpretation
 
