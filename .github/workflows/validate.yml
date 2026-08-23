@@ -61,8 +61,16 @@ jobs:
           mkdir -p "$RUNNER_TEMP/installed-work"
           cd "$RUNNER_TEMP/installed-work"
           "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" doctor
-          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" demo-custom
-          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" init initialized-task --task-id installed-task-v1
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" demo-custom | tee demo-custom.log
+          grep -q '^NEXT: worthir validate-task' demo-custom.log
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" build-trec \
+            "$GITHUB_WORKSPACE/examples/trec_walkthrough/source" installed-trec \
+            --task-id installed-trec-v1 --metric ndcg@3 | tee build-trec.log
+          grep -q '^NEXT: worthir compare' build-trec.log
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" init initialized-task --task-id installed-task-v1 | tee init.log
+          grep -q '^NEXT: worthir validate-task' init.log
           test ! -e initialized-task/__init__.py
           test ! -d initialized-task/__pycache__
           grep -q '^worthir validate-task' initialized-task/README.md
+          grep -q '^worthir validate-task' reproduced/custom_task/README.md
+          grep -q '^worthir compare' installed-trec/README.md
