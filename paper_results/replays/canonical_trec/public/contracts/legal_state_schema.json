@@ -1,0 +1,87 @@
+{
+  "confirmatory_access": "none",
+  "fields": [
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "query_uid",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "dataset_id",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "source_query_id",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "query_text",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "query_character_count",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "query_whitespace_token_count",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "query_digit_count",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "official query membership or pure query-text transform",
+      "name": "query_punctuation_count",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "registered legal BM25 base output",
+      "name": "bm25_document_ids",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "registered legal BM25 base output",
+      "name": "bm25_scores",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "registered legal BM25 base output",
+      "name": "bm25_top_score",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "registered legal BM25 base output",
+      "name": "bm25_score_mean",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "registered legal BM25 base output",
+      "name": "bm25_score_std",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "registered legal BM25 base output",
+      "name": "bm25_top1_top2_margin",
+      "purchase_time": "pre_purchase"
+    },
+    {
+      "lineage": "frozen legal-lineage specification",
+      "name": "legal_lineage_version",
+      "purchase_time": "pre_purchase"
+    }
+  ],
+  "forbidden_sources": [
+    "qrels or judgments",
+    "paid-route candidates or scores",
+    "route quality, utility, regret, or oracle action",
+    "development-selected Q_dev or W_dev as predictor inputs"
+  ],
+  "schema_id": "worthir-g2-legal-state-v1.0"
+}
