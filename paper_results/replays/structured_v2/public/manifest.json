@@ -1,0 +1,6 @@
+{
+  "release_normalization": "logical provenance labels",
+  "schema_version": "worthir-public-manifest-v1.1",
+  "surface_id": "worthir-structured-v2-scoring-surface-v1.2",
+  "task_id": "worthir-2wiki-structured-v2.0"
+}
