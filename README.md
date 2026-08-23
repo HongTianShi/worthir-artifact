@@ -20,12 +20,14 @@ WorthIR 在明确的有效性指标和成本配置下，将逐查询路由策略
 python setup_environment.py
 ```
 
-如果希望在当前克隆中安装一个可从任意目录调用的命令：
+从当前克隆构建并安装普通 wheel：
 
 ```bash
-python -m pip install -e .
+python -m pip install .
 worthir demo-custom
 ```
+
+需要直接修改源码时，再使用 `python -m pip install -e .`。
 
 运行一个带逐查询成本和外部路由器的非 TREC 任务：
 
@@ -62,11 +64,10 @@ lambda 和声明为决策时已知的成本；评价方结果与只能在执行�
 
 已接收论文对应的数据和代码集中在 [`paper_results/`](paper_results/) 中。
 运行 `python paper_results/run.py` 后，重建结果会保留在
-`paper_results/reproduced/`。发布版
-[`v1.0.0-ipmc2026`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.0.0-ipmc2026)
-对应 IP&MC 2026 论文的冻结 artifact。
-该标签指向英文提交 `3e1a937`；其发布时的中文对应提交为 `3bbe1d4`。标签保持不变，
-当前中英文分支还包含此后增加的成本信息边界与复现改进。
+`paper_results/reproduced/`。[`v1.1.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.0)
+包含公开成本接口和图 1--7 完整重绘。旧的 `v1.0.0-ipmc2026` 仍是论文接收时
+提交的冻结 artifact；它指向英文提交 `3e1a937`，其发布时的中文对应提交为
+`3bbe1d4`，旧标签保持不变。
 
 WorthIR 原创代码采用 [MIT 许可证](LICENSE)。第三方数据和模型条款见
 [NOTICE](NOTICE)。
