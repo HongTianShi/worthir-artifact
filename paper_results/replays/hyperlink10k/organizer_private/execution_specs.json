@@ -1,0 +1,158 @@
+{
+  "full_local_pool": {
+    "bm25": {
+      "b": 0.75,
+      "k1": 1.2
+    },
+    "candidate_generation": "stable first-occurrence normalized-title deduplication of dataset-provided context titles",
+    "candidate_k": "all provided context titles; score top-4",
+    "controls_materialized": false,
+    "cumulative_declared_cost": 0.55,
+    "dataset": "voidful/2wikimultihopqa train prefix 10000",
+    "evidence_per_context": 6,
+    "fingerprint_version": "worthir-hyperlink10k-fingerprint-v1.0",
+    "fusion": {
+      "provided_context": 0.1
+    },
+    "max_1hop": 16,
+    "max_2hop": 16,
+    "metric": {
+      "cutoff": 4,
+      "empty_positive_handling": 0.0,
+      "name": "binary support-title NDCG",
+      "title_normalization": "underscore-to-space, lowercase, whitespace collapse"
+    },
+    "parents": [
+      "provided_context",
+      "hyperlink_1hop",
+      "hyperlink_2hop"
+    ],
+    "query_tokenizer": "lowercase regex [a-z0-9]+",
+    "ranking_tie_break": "descending float score then normalized title",
+    "representation": "same depth-2 expanded paragraph materialization as hyperlink_2hop",
+    "scoring": "BM25(depth-2 expanded paragraph) + 0.10 * provided_context_score",
+    "view": "full_local_pool"
+  },
+  "hyperlink_1hop": {
+    "bm25": {
+      "b": 0.75,
+      "k1": 1.2
+    },
+    "candidate_generation": "stable first-occurrence normalized-title deduplication of dataset-provided context titles",
+    "candidate_k": "all provided context titles; score top-4",
+    "controls_materialized": false,
+    "cumulative_declared_cost": 0.2,
+    "dataset": "voidful/2wikimultihopqa train prefix 10000",
+    "evidence_per_context": 6,
+    "fingerprint_version": "worthir-hyperlink10k-fingerprint-v1.0",
+    "fusion": {
+      "summary": 0.2
+    },
+    "max_1hop": 16,
+    "max_2hop": 16,
+    "metric": {
+      "cutoff": 4,
+      "empty_positive_handling": 0.0,
+      "name": "binary support-title NDCG",
+      "title_normalization": "underscore-to-space, lowercase, whitespace collapse"
+    },
+    "parents": [
+      "summary"
+    ],
+    "query_tokenizer": "lowercase regex [a-z0-9]+",
+    "ranking_tie_break": "descending float score then normalized title",
+    "representation": "base paragraph plus up to six selected 1-hop paragraphs per context",
+    "scoring": "BM25(expanded paragraph) + 0.20 * summary_score",
+    "view": "hyperlink_1hop"
+  },
+  "hyperlink_2hop": {
+    "bm25": {
+      "b": 0.75,
+      "k1": 1.2
+    },
+    "candidate_generation": "stable first-occurrence normalized-title deduplication of dataset-provided context titles",
+    "candidate_k": "all provided context titles; score top-4",
+    "controls_materialized": false,
+    "cumulative_declared_cost": 0.34,
+    "dataset": "voidful/2wikimultihopqa train prefix 10000",
+    "evidence_per_context": 6,
+    "fingerprint_version": "worthir-hyperlink10k-fingerprint-v1.0",
+    "fusion": {
+      "summary": 0.18
+    },
+    "max_1hop": 16,
+    "max_2hop": 16,
+    "metric": {
+      "cutoff": 4,
+      "empty_positive_handling": 0.0,
+      "name": "binary support-title NDCG",
+      "title_normalization": "underscore-to-space, lowercase, whitespace collapse"
+    },
+    "parents": [
+      "summary"
+    ],
+    "query_tokenizer": "lowercase regex [a-z0-9]+",
+    "ranking_tie_break": "descending float score then normalized title",
+    "representation": "base paragraph plus selected 1-hop and 2-hop paragraphs",
+    "scoring": "BM25(depth-2 expanded paragraph) + 0.18 * summary_score",
+    "view": "hyperlink_2hop"
+  },
+  "provided_context": {
+    "bm25": {
+      "b": 0.75,
+      "k1": 1.2
+    },
+    "candidate_generation": "stable first-occurrence normalized-title deduplication of dataset-provided context titles",
+    "candidate_k": "all provided context titles; score top-4",
+    "controls_materialized": false,
+    "cumulative_declared_cost": 0.08,
+    "dataset": "voidful/2wikimultihopqa train prefix 10000",
+    "evidence_per_context": 6,
+    "fingerprint_version": "worthir-hyperlink10k-fingerprint-v1.0",
+    "fusion": {
+      "summary": 0.15
+    },
+    "max_1hop": 16,
+    "max_2hop": 16,
+    "metric": {
+      "cutoff": 4,
+      "empty_positive_handling": 0.0,
+      "name": "binary support-title NDCG",
+      "title_normalization": "underscore-to-space, lowercase, whitespace collapse"
+    },
+    "parents": [
+      "summary"
+    ],
+    "query_tokenizer": "lowercase regex [a-z0-9]+",
+    "ranking_tie_break": "descending float score then normalized title",
+    "representation": "frozen corpus paragraph for each provided candidate",
+    "scoring": "BM25(paragraph) + 0.15 * summary_score",
+    "view": "provided_context"
+  },
+  "summary": {
+    "bm25": {
+      "b": 0.75,
+      "k1": 1.2
+    },
+    "candidate_generation": "stable first-occurrence normalized-title deduplication of dataset-provided context titles",
+    "candidate_k": "all provided context titles; score top-4",
+    "controls_materialized": false,
+    "cumulative_declared_cost": 0.0,
+    "dataset": "voidful/2wikimultihopqa train prefix 10000",
+    "evidence_per_context": 6,
+    "fingerprint_version": "worthir-hyperlink10k-fingerprint-v1.0",
+    "max_1hop": 16,
+    "max_2hop": 16,
+    "metric": {
+      "cutoff": 4,
+      "empty_positive_handling": 0.0,
+      "name": "binary support-title NDCG",
+      "title_normalization": "underscore-to-space, lowercase, whitespace collapse"
+    },
+    "query_tokenizer": "lowercase regex [a-z0-9]+",
+    "ranking_tie_break": "descending float score then normalized title",
+    "representation": "corpus title string for each provided candidate",
+    "scoring": "BM25(title)",
+    "view": "summary"
+  }
+}
