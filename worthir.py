@@ -54,17 +54,20 @@ def main() -> None:
     subparsers.add_parser("doctor", help="检查本地框架安装")
 
     init = subparsers.add_parser("init", help="创建可编辑的示例任务")
-    init.add_argument("task_dir", type=Path)
-    init.add_argument("--task-id", required=True)
+    init.add_argument("task_dir", type=Path, help="新任务目录")
+    init.add_argument("--task-id", required=True, help="任务的稳定标识符")
 
     build = subparsers.add_parser(
         "build-trec", help="根据 qrels、TREC run 和成本构建任务"
     )
-    build.add_argument("source_dir", type=Path)
-    build.add_argument("task_dir", type=Path)
-    build.add_argument("--task-id", required=True)
-    build.add_argument("--metric", default="ndcg@10")
-    build.add_argument("--lambda", dest="lam", type=float, default=0.08)
+    build.add_argument("source_dir", type=Path, help="qrels、路线表和 run 文件")
+    build.add_argument("task_dir", type=Path, help="新 WorthIR 任务目录")
+    build.add_argument("--task-id", required=True, help="任务的稳定标识符")
+    build.add_argument("--metric", default="ndcg@10", help="NDCG 指标，例如 ndcg@10")
+    build.add_argument(
+        "--lambda", dest="lam", type=float, default=0.08,
+        help="效用公式 U = 有效性 - lambda * 成本中的成本偏好",
+    )
     build.add_argument(
         "--policy-id",
         default="provided-policy",
@@ -74,24 +77,51 @@ def main() -> None:
     actions = subparsers.add_parser(
         "actions", help="将 CSV 中的查询--路线选择转换为动作 JSON"
     )
-    actions.add_argument("task_dir", type=Path)
-    actions.add_argument("choice_csv", type=Path)
-    actions.add_argument("--policy-id", required=True)
-    actions.add_argument("--output", type=Path)
+
+    custom = subparsers.add_parser(
+        "build-custom", help="根据查询、路线和结果表构建任意任务"
+    )
+    custom.add_argument("source_dir", type=Path, help="包含 task.json 和 CSV 输入的目录")
+    custom.add_argument("task_dir", type=Path, help="新 WorthIR 任务目录")
+    custom.add_argument(
+        "--policy-id", default="provided-policy", help="可选 policy_choices.csv 的策略名称"
+    )
+
+    validate = subparsers.add_parser(
+        "validate-task", help="检查覆盖范围、契约、依赖关系和成本"
+    )
+    validate.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    validate.add_argument("--output", type=Path, help="可选的 JSON 校验报告")
+
+    actions.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    actions.add_argument("choice_csv", type=Path, help="包含 query_uid 和 selected_route_id 的 CSV")
+    actions.add_argument("--policy-id", required=True, help="写入动作文件的策略标识符")
+    actions.add_argument("--output", type=Path, help="动作 JSON 的输出位置")
 
     score = subparsers.add_parser("score", help="评估任务的默认策略")
-    score.add_argument("task_dir", type=Path)
-    score.add_argument("--actions", type=Path)
-    score.add_argument("--output", type=Path)
+    score.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    score.add_argument("--actions", type=Path, help="动作 JSON；默认使用 participant/actions.json")
+    score.add_argument("--output", type=Path, help="评分 JSON 的输出位置")
 
     compare = subparsers.add_parser(
         "compare", help="将策略与所有已注册固定路线比较"
     )
-    compare.add_argument("task_dir", type=Path)
-    compare.add_argument("--output-dir", type=Path)
+    compare.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    compare.add_argument("--output-dir", type=Path, help="报告目录；默认写入任务目录")
+
+    evaluate = subparsers.add_parser(
+        "evaluate", help="绑定路线选择 CSV，并与所有固定路线比较"
+    )
+    evaluate.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    evaluate.add_argument("choice_csv", type=Path, help="路由器输出的路线选择 CSV")
+    evaluate.add_argument("--policy-id", required=True, help="路由器标识符")
+    evaluate.add_argument("--output-dir", type=Path, help="报告输出目录")
 
     subparsers.add_parser(
         "demo", help="运行从 qrels 到报告的完整示例"
+    )
+    subparsers.add_parser(
+        "demo-custom", help="运行非 TREC 自定义任务和外部路由器示例"
     )
 
     args = parser.parse_args()
@@ -120,6 +150,23 @@ def main() -> None:
         )
         launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
         print(f'下一步：{launcher} compare "{args.task_dir}"')
+    elif args.command == "build-custom":
+        _run(
+            "scripts/build_custom_task.py",
+            [
+                str(args.source_dir),
+                str(args.task_dir),
+                "--policy-id",
+                args.policy_id,
+            ],
+        )
+        launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
+        print(f'下一步：{launcher} validate-task "{args.task_dir}"')
+    elif args.command == "validate-task":
+        command = [str(args.task_dir)]
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/validate_task.py", command)
     elif args.command == "actions":
         command = [
             "--task-dir",
@@ -140,6 +187,23 @@ def main() -> None:
             command.extend(["--output", str(args.output)])
         _run("scripts/score_actions.py", command)
     elif args.command == "compare":
+        command = [str(args.task_dir)]
+        if args.output_dir:
+            command.extend(["--output-dir", str(args.output_dir)])
+        _run("scripts/compare_policies.py", command)
+    elif args.command == "evaluate":
+        action_path = (
+            args.task_dir / "participant" / "policies" / f"{args.policy_id}.json"
+        )
+        _run(
+            "scripts/actions_from_csv.py",
+            [
+                "--task-dir", str(args.task_dir),
+                "--input", str(args.choice_csv),
+                "--policy-id", args.policy_id,
+                "--output", str(action_path),
+            ],
+        )
         command = [str(args.task_dir)]
         if args.output_dir:
             command.extend(["--output-dir", str(args.output_dir)])
@@ -166,6 +230,8 @@ def main() -> None:
         )
         _run("scripts/compare_policies.py", [str(destination)])
         print(f"请打开：{destination / 'comparison.md'}")
+    elif args.command == "demo-custom":
+        _run("examples/custom_router/run.py", [])
 
 
 if __name__ == "__main__":
