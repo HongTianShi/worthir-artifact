@@ -1,0 +1,25 @@
+{
+  "analysis_id": "musique-worthir-common-cost-dependence-v1.0",
+  "point_estimate": 0.010830797938539583,
+  "lambda": 0.08,
+  "F_dev": "V2",
+  "intervals": {
+    "support_title": [
+      0.00190367359837822,
+      0.02289322249109451
+    ],
+    "support_paragraph_text": [
+      -0.0010396297116344164,
+      0.022895890958272404
+    ],
+    "decomposition_question": [
+      -0.0023271275216193692,
+      0.023860542769817757
+    ],
+    "union": [
+      0.0027099753487831515,
+      0.025365142741373664
+    ]
+  },
+  "interpretation": "conditional component-resampling stability on the fixed official-validation ledger"
+}
