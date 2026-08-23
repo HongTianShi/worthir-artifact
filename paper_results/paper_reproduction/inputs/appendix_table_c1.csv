@@ -1,0 +1,5 @@
+task,primary_query_router,inference_time_information,development_selection,evaluation
+TREC-DL,Direct-utility ExtraTrees,Query-form and BM25 score statistics,"Five-fold utility; refit on 6,980 queries",TREC-DL 2019 and 2020 separately
+FEVER,ExtraTrees,"Claim, BM25 score-distribution, candidate-count, and document-length features","Five fixed claim folds; refit on 6,000 claims","13,332 held-out claims"
+2Wiki-Structured,Development-selected model from 16 configurations,"Query, summary-route, graph-coverage, and route descriptors",Nested selection within component-disjoint folds,Five-fold OOF predictions
+MuSiQue,ExtraTrees,"Query, decomposition, context, base-score, and route descriptors","Select on 3,988 development questions; refit on 15,950 training questions","2,417 held-out validation questions"

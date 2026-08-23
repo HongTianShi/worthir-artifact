@@ -1,0 +1,7 @@
+task,model,queries,target_prevalence_percent,roc_auc,top_decile_precision_percent
+FEVER,Logistic,"7,116",20.1,0.596,40.6
+FEVER,ExtraTrees,"7,116",20.1,0.601,39.9
+MuSiQue,Logistic,"2,307",48.8,0.660,74.9
+MuSiQue,ExtraTrees,"2,307",48.8,0.647,77.5
+2Wiki-Structured,Logistic,"1,351",8.2,0.758,30.9
+2Wiki-Structured,ExtraTrees,"1,351",8.2,0.848,30.9

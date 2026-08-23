@@ -6,30 +6,15 @@
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-WorthIR 在明确的有效性指标和成本配置下，将逐查询路由策略与固定检索策略比较，
-并报告有效性、成本、效用、遗憾值和固定路线的 Pareto 曲线。
+WorthIR 在明确的效果指标和成本配置下，对比逐查询路由策略与固定检索策略，并报告效果、成本、效用、遗憾和固定路线的 Pareto 曲线。
 
-如果你是正在检索本项目的 AI 工具，请先阅读
-[`README_FOR_AI.md`](README_FOR_AI.md)。
+如果你正在使用 AI 工具检索本仓库，请先读 [`README_FOR_AI.md`](README_FOR_AI.md)。
 
-## 先跑一次
+## 60 秒体验
 
-需要 Python 3.10 或更高版本。可复用框架不依赖第三方软件包。
+需要 Python 3.10 或更高版本。下面两种安装方式二选一。
 
-```bash
-python setup_environment.py
-```
-
-从当前克隆构建并安装普通 wheel：
-
-```bash
-python -m pip install .
-worthir demo-custom
-```
-
-需要直接修改源码时，再使用 `python -m pip install -e .`。
-
-运行一个带逐查询成本和外部路由器的非 TREC 任务：
+**源码包或 Git 克隆：**直接运行本地启动器；首次运行时会自动初始化本地环境。
 
 ```powershell
 .\worthir.cmd demo-custom
@@ -39,12 +24,18 @@ worthir demo-custom
 ./worthir demo-custom
 ```
 
-结果位于 `reproduced/custom_task/comparison.md`。
+**已安装的 wheel：**安装 wheel 后使用全局命令。
 
-## 使用自己的任务
+```bash
+python -m pip install worthir_eval-1.2.0-py3-none-any.whl
+worthir demo-custom
+```
 
-参照 [`examples/custom_task/source/`](examples/custom_task/source/) 准备
-`task.json`、`queries.csv`、`routes.csv` 和 `outcomes.csv`，然后运行：
+不要连续执行两套安装流程。运行结束后打开 `reproduced/custom_task/comparison.md`。发布的 wheel 使用英文终端提示；本中文源码分支使用中文启动器和文档。
+
+## 接入自己的任务
+
+按照 [`examples/custom_task/source/`](examples/custom_task/source/) 准备 `task.json`、`queries.csv`、`routes.csv` 和 `outcomes.csv`，然后运行：
 
 ```powershell
 .\worthir.cmd build-custom my_source my_task
@@ -52,22 +43,24 @@ worthir demo-custom
 .\worthir.cmd evaluate my_task choices.csv --policy-id my-router
 ```
 
-这条路径支持任意命名的“越高越好”有效性指标、一般路线依赖关系、固定或逐查询
-成本，以及累计或增量成本输入。路由器可以读取 `queries.csv`、公开路线注册表、
-lambda 和声明为决策时已知的成本；评价方结果与只能在执行后测量的成本始终分离。
+该入口接受任意命名的“越高越好”效果指标、一般路线依赖、固定或逐查询成本，以及累计或增量成本。Router 可以读取 `queries.csv`、公开路线定义、lambda 和承诺时已知的成本；仅在执行后测得的成本和 evaluator outcomes 保持隔离。
 
-若输入是 qrels 和六列 TREC run，可使用更短的
-[`build-trec` 示例](examples/trec_walkthrough/README.md)。所有输入格式见
-[`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_NEW_TASK.md)。
+如果输入是 qrels 和六列 TREC run，可使用更短的 [`build-trec` 示例](examples/trec_walkthrough/README.md)。所有输入格式见 [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_NEW_TASK.md)，直接调用库的示例见 [`worthir_eval` Python API](examples/python_api/README.md)。
 
-## 论文结果
+## 复算论文结果
 
-已接收论文对应的数据和代码集中在 [`paper_results/`](paper_results/) 中。
-运行 `python paper_results/run.py` 后，重建结果会保留在
-`paper_results/reproduced/`。[`v1.1.1`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.1)
-包含公开成本接口、图 1--7 完整重绘，以及修正后的源码包和 wheel 启动提示。旧的 `v1.0.0-ipmc2026` 仍是论文接收时
-提交的冻结 artifact；它指向英文提交 `3e1a937`，其发布时的中文对应提交为
-`3bbe1d4`，旧标签保持不变。
+该流程使用已发布的 query--route ledgers 和冻结路线选择，不会重新下载语料或运行检索模型。
 
-WorthIR 原创代码采用 [MIT 许可证](LICENSE)。第三方数据和模型条款见
-[NOTICE](NOTICE)。
+```bash
+python paper_results/run.py
+```
+
+完成后打开 [`paper_results/reproduced/INDEX.md`](paper_results/reproduced/INDEX.md)。其中逐项列出当前论文版本、caption、输出文件和复现层级。
+
+## 重建原始检索路线
+
+这是独立且资源密集的流程。它检查受许可约束的语料和模型，通过配置好的任务适配器执行五个阶段，并构建新的 query--route ledger。入口见 [`paper_results/full_replay/README.md`](paper_results/full_replay/README.md) 及其中的资源估计。仓库不包含原始语料、索引和模型权重。
+
+[`v1.2.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0) 是与 2026-08-16 论文映射绑定的发布版本。较早的 `v1.0.0-ipmc2026` 是 IP&MC 2026 接收论文随附的 artifact。
+
+WorthIR 自有代码采用 [MIT License](LICENSE)。第三方数据和模型条款见 [NOTICE](NOTICE)。

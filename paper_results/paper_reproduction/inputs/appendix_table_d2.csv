@@ -1,0 +1,8 @@
+analysis,unit,draws
+TREC-DL 2019 / 2020,query,"10,000"
+FEVER primary,shared-page component,"5,000"
+Structured-v2,support component,"10,000"
+MuSiQue,union component,"10,000"
+Cross-task contrasts,task-specific component,"20,000"
+FEVER decomposition,route-selection permutation,"1,000"
+RQ5,within-fold target permutation,500

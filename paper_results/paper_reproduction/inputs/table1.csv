@@ -1,0 +1,8 @@
+section,task,topics_or_questions,available_retrieval_routes,metric,evaluation_role
+Primary evaluation tasks,TREC-DL 2019/2020,43 / 54 topics,BM25; dense fusion; ColBERTv2 reranking; cross-encoder reranking,nDCG@10,Passage ranking
+Primary evaluation tasks,FEVER,"13,332 claim queries",BM25; bi-encoder; CE-20; CE-100; hybrid dense--lexical plus CE,nDCG@10,Evidence-page retrieval
+Primary evaluation tasks,2Wiki-Structured,"2,000 questions",Summary; one-hop; two-hop; full context; cross-encoder,Support-title nDCG@4,Grouped OOF evaluation
+Primary evaluation tasks,MuSiQue,"2,417 questions",Title; decomposition-title; paragraph; decomposition-paragraph,Paragraph nDCG@4,Official validation split
+Complementary diagnostic settings,Hyperlink10k,"10,000 questions",Summary; provided context; one-hop; two-hop; full local pool,Support-title nDCG@4,Dependent scale diagnostic
+Complementary diagnostic settings,Dense-standard,"648 / 300 / 323 / 1,401 / 200 queries",Compact summary; IVF--PQ; full dense,nDCG@10,Historical replay diagnostic
+Complementary diagnostic settings,FiQA-Comp. / Systems260,260 queries,Two separate eight-route compression and system settings,nDCG@10,Cost-profile diagnostic

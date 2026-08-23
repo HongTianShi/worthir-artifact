@@ -52,11 +52,15 @@ def main() -> None:
         else root / "reproduced" / "validation.json"
     )
     required = [
+        "PAPER_SPEC.json",
         "analyses/rq2_policy_comparison/actions/non_neural_actions.parquet",
         "analyses/rq3_utility_sources/data/query_strata.csv",
         "analyses/rq4_robustness/data/cost_preference_summary.csv",
         "analyses/rq5_route_value/data/rq5_route_value_prediction_summary.csv",
         "paper_reproduction/inputs/table3_recoverability.csv",
+        "paper_reproduction/inputs/table1.csv",
+        "paper_reproduction/inputs/table6.csv",
+        "paper_reproduction/assets/figure1.png",
         "replays/fever/scripts/verify_bundle.py",
         "replays/canonical_trec/score_actions.py",
         "full_replay/RESOURCE_REQUIREMENTS.md",
@@ -77,6 +81,16 @@ def main() -> None:
                 str(root / "scripts" / "reproduce_paper.py"),
                 "--output-dir",
                 str(work / "paper"),
+            ],
+            [
+                sys.executable,
+                str(root / "scripts" / "build_paper_index.py"),
+                "--spec",
+                str(root / "PAPER_SPEC.json"),
+                "--paper-root",
+                str(work / "paper"),
+                "--output",
+                str(work / "INDEX.md"),
             ],
             [
                 sys.executable,
@@ -118,7 +132,7 @@ def main() -> None:
 
     status = (
         "PASS"
-        if len(results) == 4
+        if len(results) == 5
         and all(result["returncode"] == 0 for result in results)
         else "FAIL"
     )

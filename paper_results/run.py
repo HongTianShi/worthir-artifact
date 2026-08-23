@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""配置并验证 WorthIR 论文结果。"""
+"""Set up and validate the WorthIR paper results."""
 
 from __future__ import annotations
 
 import argparse
 import json
-import os
 import subprocess
 import sys
 import venv
@@ -14,13 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 VENV = ROOT / ".venv"
-REQUIREMENTS = ROOT / "requirements.txt"
-
-if sys.platform == "win32":
-    sys.stdout.reconfigure(encoding="utf-8")
-    sys.stderr.reconfigure(encoding="utf-8")
-    os.environ["PYTHONIOENCODING"] = "utf-8"
-    os.environ["PYTHONUTF8"] = "1"
+REQUIREMENTS_LOCK = ROOT / "requirements-lock.txt"
 
 
 def environment_python() -> Path:
@@ -37,9 +30,9 @@ def run(command: list[str]) -> None:
 def prepare_environment() -> Path:
     python = environment_python()
     if not python.is_file():
-        print("正在创建 paper_results/.venv……", flush=True)
+        print("正在创建 paper_results/.venv ...", flush=True)
         venv.EnvBuilder(with_pip=True).create(VENV)
-    expected = REQUIREMENTS.read_text(encoding="utf-8")
+    expected = REQUIREMENTS_LOCK.read_text(encoding="utf-8")
     stamp = VENV / ".worthir-requirements"
     current = stamp.read_text(encoding="utf-8") if stamp.is_file() else ""
     if current != expected:
@@ -50,8 +43,9 @@ def prepare_environment() -> Path:
                 "pip",
                 "install",
                 "--disable-pip-version-check",
+                "--require-hashes",
                 "-r",
-                str(REQUIREMENTS),
+                str(REQUIREMENTS_LOCK),
             ]
         )
         stamp.write_text(expected, encoding="utf-8")
@@ -88,11 +82,12 @@ def main() -> None:
     )
     result = json.loads(report.read_text(encoding="utf-8"))
     if result.get("status") != "PASS":
-        raise SystemExit(f"验证失败；详见 {report}")
-    print("通过：WorthIR 论文结果已复现")
+        raise SystemExit(f"验证失败，详见 {report}")
+    print("PASS：已从发布的 ledger 与冻结结果复算论文结果")
+    print(f"结果总索引：{output / 'INDEX.md'}")
     print(f"论文图表：{output / 'paper'}")
     print(f"RQ2--RQ5 摘要：{output / 'rqs'}")
-    print(f"校验报告：{report}")
+    print(f"验证报告：{report}")
 
 
 if __name__ == "__main__":

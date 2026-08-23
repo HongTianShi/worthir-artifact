@@ -1,0 +1,4 @@
+diagnostic,available_routes_and_costs,frozen_implementation,candidate_set_constraint
+Dense-standard,Summary/PQ/full; 0/0.20/0.58,"sentence-transformers/all-MiniLM-L6-v2; IVF--PQ m=24, 8 bits, nprobe=32; dataset-specific nlist","Common output constraint; 648/300/323/1,401/200 queries"
+FiQA-Compression260,"Summary/binary/PQ/trunc-96/int8/trunc-192/full/CE; 0/0.08/0.20/0.26/0.30/0.40/0.58/1.03","Normalized 384-dimensional all-MiniLM-L6-v2 representations and registered compression routes",Same 260 queries and candidate contract
+Hyperlink10k,"Summary/provided context/one-hop/two-hop/full local pool; 0/0.16/0.26/0.55/0.95",Frozen split replay on the supplied local title pool,Contains 2Wiki-Structured and is not an independent replication

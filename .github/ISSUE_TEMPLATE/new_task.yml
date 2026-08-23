@@ -1,0 +1,49 @@
+name: 接入新任务
+description: 提议或贡献一个可运行的 WorthIR 任务
+title: "任务适配器："
+labels: ["task-adapter"]
+body:
+  - type: input
+    id: task
+    attributes:
+      label: 任务与数据集
+      description: 请给出任务名称及其官方数据来源。
+    validations:
+      required: true
+  - type: input
+    id: metric
+    attributes:
+      label: 效果指标
+      description: 请说明取值范围，以及是否越高越好。
+    validations:
+      required: true
+  - type: textarea
+    id: routes
+    attributes:
+      label: 可用路线及其前置依赖
+      description: 列出每条路线及其所需操作。
+    validations:
+      required: true
+  - type: textarea
+    id: costs
+    attributes:
+      label: 成本定义与可见时间
+      description: 说明成本单位、来源，以及路线选择前是否可知。
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: 可运行的小型示例
+      description: 给出 prepare、build、validate 和 compare 命令。
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: 信息边界
+      options:
+        - label: Router 输入不包含相关性标注和未选择路线的结果。
+          required: true
+        - label: 拟提交的数据和模型文件可依其许可证再分发。
+          required: true

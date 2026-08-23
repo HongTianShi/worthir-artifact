@@ -1,0 +1,7 @@
+analysis_family,role,effect_on_routing_policy,use_of_evaluation_outcomes
+Held-out and OOF routing comparisons,Primary,Policy selected on development data and then frozen,Scoring only
+Cost-preference grids and hard budgets,Prespecified robustness,Refit or reselect on development data where stated,Scoring only
+"Expected-cost, route-set, and permutation controls",Evaluator-side diagnostic,Frozen route selections; no new routing policy,Scoring and decomposition
+Target-definition and near-tie analyses,Evaluator-side sensitivity,No query-router refit,Diagnostic target or evaluation rule only
+Route-value probes,Exploratory diagnostic,Not evaluated as routing baselines,Targets constructed from per-query route results
+Warm-latency audit,Post hoc systems measurement,Frozen routes and routing policies,No effectiveness outcomes used for timing

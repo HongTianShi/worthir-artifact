@@ -1,0 +1,5 @@
+menu_size,policy,mean_quality,mean_cost,mean_utility,delta_fixed,ci_low,ci_high
+3,Fixed CE-100,0.8156,0.3248,0.7896,0.0000,,
+3,Uniform random,0.7529,0.1307,0.7425,-0.0471,,
+5,Fixed CE-100,0.8156,0.3248,0.7896,0.0000,,
+5,Uniform random,0.7303,0.2936,0.7069,-0.0827,,

@@ -1,0 +1,5 @@
+task,inference_time_linear_rho,inference_time_extratrees_rho,evaluator_only_difficulty_rho,within_difficulty_linear_rho,within_difficulty_extratrees_rho,routes_above_permutation_baseline
+FEVER,0.3838,0.3747,0.5704,0.1416,0.0870,4/4
+MuSiQue,0.1508,0.1362,0.3872,0.0562,-0.0057,2/3
+2Wiki-Structured,0.6242,0.6694,0.5535,0.4283,0.4942,4/4
+TREC-DL,0.0207,-0.0090,0.4289,0.0298,-0.0109,0/3
