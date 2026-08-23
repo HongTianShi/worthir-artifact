@@ -1,0 +1,150 @@
+{
+  "base": "summary",
+  "closure_count_including_base_only": 9,
+  "cost_note": "full_local_pool declared_cost=0.55 is a standalone cumulative terminal charge. Parent closure defines availability; parent costs are not added and 0.55 is not interpreted as an incremental saving.",
+  "frozen_at": "2026-07-23",
+  "primary_A1_menus": [
+    "H4",
+    "H6",
+    "H7",
+    "H8"
+  ],
+  "regime": "2wiki_hyperlink",
+  "schema_version": "m2s-wsdm-legal-submenus-v1.0",
+  "status": "active_with_frozen_sketch_condition",
+  "submenus": [
+    {
+      "closure_proof": "base only",
+      "included_views": [
+        "summary"
+      ],
+      "intended_test": "base check",
+      "menu_id": "H0",
+      "outcome_reusable": true,
+      "removed_views": [
+        "provided_context",
+        "hyperlink_1hop",
+        "hyperlink_2hop",
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "provided_context parent summary retained",
+      "included_views": [
+        "summary",
+        "provided_context"
+      ],
+      "intended_test": "provided-context alternative",
+      "menu_id": "H1",
+      "outcome_reusable": true,
+      "removed_views": [
+        "hyperlink_1hop",
+        "hyperlink_2hop",
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "one-hop parent summary retained",
+      "included_views": [
+        "summary",
+        "hyperlink_1hop"
+      ],
+      "intended_test": "one-hop alternative",
+      "menu_id": "H2",
+      "outcome_reusable": true,
+      "removed_views": [
+        "provided_context",
+        "hyperlink_2hop",
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "two-hop parent is summary",
+      "included_views": [
+        "summary",
+        "hyperlink_2hop"
+      ],
+      "intended_test": "two-hop alternative",
+      "menu_id": "H3",
+      "outcome_reusable": true,
+      "removed_views": [
+        "provided_context",
+        "hyperlink_1hop",
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "all parents retained",
+      "included_views": [
+        "summary",
+        "provided_context",
+        "hyperlink_1hop"
+      ],
+      "intended_test": "A1 context/one-hop composition",
+      "menu_id": "H4",
+      "outcome_reusable": true,
+      "removed_views": [
+        "hyperlink_2hop",
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "all parents retained",
+      "included_views": [
+        "summary",
+        "provided_context",
+        "hyperlink_2hop"
+      ],
+      "intended_test": "supporting composition",
+      "menu_id": "H5",
+      "outcome_reusable": true,
+      "removed_views": [
+        "hyperlink_1hop",
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "both hop views depend only on summary",
+      "included_views": [
+        "summary",
+        "hyperlink_1hop",
+        "hyperlink_2hop"
+      ],
+      "intended_test": "A1 hop-composition",
+      "menu_id": "H6",
+      "outcome_reusable": true,
+      "removed_views": [
+        "provided_context",
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "no full-pool child retained",
+      "included_views": [
+        "summary",
+        "provided_context",
+        "hyperlink_1hop",
+        "hyperlink_2hop"
+      ],
+      "intended_test": "A1 no-full-pool composition",
+      "menu_id": "H7",
+      "outcome_reusable": true,
+      "removed_views": [
+        "full_local_pool"
+      ]
+    },
+    {
+      "closure_proof": "full_local_pool has all three declared parents",
+      "included_views": [
+        "summary",
+        "provided_context",
+        "hyperlink_1hop",
+        "hyperlink_2hop",
+        "full_local_pool"
+      ],
+      "intended_test": "A1/A2 canonical full menu",
+      "menu_id": "H8",
+      "outcome_reusable": true
+    }
+  ]
+}
