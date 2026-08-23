@@ -268,26 +268,26 @@ def main() -> None:
         )
 
         broken_registry = copy.deepcopy(base_registry)
-        broken_registry["routes"][1]["parent_route_id"] = "__missing__"
+        broken_registry["routes"][1]["prerequisites"] = ["__missing__"]
         contract_path, action_path, _ = bind(
             temp, base_contract, broken_registry, base_actions
         )
         write_csv(ledger_path, base_rows)
         expect_rejection(
-            "I15_MISSING_PARENT_REJECTED",
+            "I15_MISSING_PREREQUISITE_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "missing parent",
+            "unknown prerequisites",
         )
 
         cyclic_registry = copy.deepcopy(base_registry)
-        cyclic_registry["routes"][0]["parent_route_id"] = "ce20"
+        cyclic_registry["routes"][0]["prerequisites"] = ["ce20"]
         contract_path, action_path, _ = bind(
             temp, base_contract, cyclic_registry, base_actions
         )
         expect_rejection(
-            "I16_PARENT_CYCLE_REJECTED",
+            "I16_PREREQUISITE_CYCLE_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "parent cycle",
+            "prerequisite cycle",
         )
 
         dominated_registry = copy.deepcopy(base_registry)
@@ -295,7 +295,7 @@ def main() -> None:
             {
                 "route_id": "dominated",
                 "label": "Dominated injected route",
-                "parent_route_id": "ce20",
+                "prerequisites": ["ce20"],
             }
         )
         dominated_rows = copy.deepcopy(base_rows)
@@ -339,7 +339,7 @@ def main() -> None:
             {
                 "route_id": "dense_copy",
                 "label": "Redundant dense route",
-                "parent_route_id": "dense",
+                "prerequisites": ["dense"],
             }
         )
         duplicate_view_rows = copy.deepcopy(base_rows)

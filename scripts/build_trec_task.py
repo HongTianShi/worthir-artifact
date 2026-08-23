@@ -105,7 +105,7 @@ def _read_routes(source: Path) -> list[dict[str, str]]:
     required = [
         "route_id",
         "label",
-        "parent_route_id",
+        "prerequisites",
         "run_file",
         "cost",
         "development_selected",
@@ -131,9 +131,18 @@ def _read_routes(source: Path) -> list[dict[str, str]]:
     if len(selected) != 1:
         raise BuildError("routes.csv must mark exactly one development_selected route")
     for row in routes:
-        parent = row["parent_route_id"].strip()
-        if parent and parent not in route_ids:
-            raise BuildError(f"unknown parent route: {parent}")
+        prerequisites = [
+            value.strip()
+            for value in row["prerequisites"].split(";")
+            if value.strip()
+        ]
+        unknown = sorted(set(prerequisites) - set(route_ids))
+        if row["route_id"].strip() in prerequisites:
+            raise BuildError(f"route {row['route_id']} cannot require itself")
+        if len(prerequisites) != len(set(prerequisites)):
+            raise BuildError(f"route {row['route_id']} repeats a prerequisite")
+        if unknown:
+            raise BuildError(f"unknown prerequisites for {row['route_id']}: {unknown}")
         run_path = (source / row["run_file"]).resolve()
         if not run_path.is_file():
             raise BuildError(f"run file is missing: {row['run_file']}")
@@ -199,29 +208,43 @@ def _validate_route_graph_and_costs(
     query_ids: list[str],
     overrides: dict[tuple[str, str], float],
 ) -> None:
-    parents = {
-        row["route_id"].strip(): row["parent_route_id"].strip() or None
+    prerequisites = {
+        row["route_id"].strip(): [
+            value.strip()
+            for value in row["prerequisites"].split(";")
+            if value.strip()
+        ]
         for row in routes
     }
     constants = {row["route_id"].strip(): float(row["cost"]) for row in routes}
-    for route_id in parents:
-        seen = {route_id}
-        cursor = parents[route_id]
-        while cursor is not None:
-            if cursor in seen:
-                raise BuildError("route parent relationships contain a cycle")
-            seen.add(cursor)
-            cursor = parents[cursor]
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(route_id: str) -> None:
+        if route_id in visiting:
+            raise BuildError("route prerequisites contain a cycle")
+        if route_id in visited:
+            return
+        visiting.add(route_id)
+        for prerequisite in prerequisites[route_id]:
+            visit(prerequisite)
+        visiting.remove(route_id)
+        visited.add(route_id)
+
+    for route_id in prerequisites:
+        visit(route_id)
     for query_uid in query_ids:
-        for route_id, parent in parents.items():
-            if parent is None:
-                continue
+        for route_id, required_routes in prerequisites.items():
             child_cost = overrides.get((query_uid, route_id), constants[route_id])
-            parent_cost = overrides.get((query_uid, parent), constants[parent])
-            if child_cost < parent_cost:
-                raise BuildError(
-                    f"route {route_id} costs less than parent {parent} for query {query_uid}"
+            for prerequisite in required_routes:
+                prerequisite_cost = overrides.get(
+                    (query_uid, prerequisite), constants[prerequisite]
                 )
+                if child_cost < prerequisite_cost:
+                    raise BuildError(
+                        f"route {route_id} costs less than prerequisite {prerequisite} "
+                        f"for query {query_uid}"
+                    )
 
 
 def _read_policy(
@@ -313,13 +336,17 @@ def build_task(
         writer.writerows(legal_rows)
 
     registry = {
-        "schema_version": "worthir-route-registry-v1.0",
+        "schema_version": "worthir-route-registry-v1.1",
         "registry_id": f"{task_id}-routes-v1",
         "routes": [
             {
                 "route_id": row["route_id"].strip(),
                 "label": row["label"].strip() or row["route_id"].strip(),
-                "parent_route_id": row["parent_route_id"].strip() or None,
+                "prerequisites": [
+                    value.strip()
+                    for value in row["prerequisites"].split(";")
+                    if value.strip()
+                ],
             }
             for row in routes
         ],

@@ -1,4 +1,4 @@
-route_id,label,parent_route_id,run_file,cost,development_selected
+route_id,label,prerequisites,run_file,cost,development_selected
 base,BM25,,runs/base.trec,0.00,false
 prf,Query expansion,base,runs/prf.trec,0.25,true
 rerank,Cross-encoder,prf,runs/rerank.trec,0.75,false
