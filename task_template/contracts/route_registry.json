@@ -1,16 +1,23 @@
 {
-  "schema_version": "worthir-route-registry-v1.1",
+  "schema_version": "worthir-route-registry-v1.2",
   "registry_id": "example-routes-v1",
+  "cost_information": {
+    "availability": "known_at_commitment",
+    "mode": "fixed",
+    "route_costs_file": null
+  },
   "routes": [
     {
       "route_id": "base",
       "label": "Base retrieval",
-      "prerequisites": []
+      "prerequisites": [],
+      "cost": 0.2
     },
     {
       "route_id": "advanced",
       "label": "Advanced retrieval",
-      "prerequisites": ["base"]
+      "prerequisites": ["base"],
+      "cost": 0.8
     }
   ]
 }

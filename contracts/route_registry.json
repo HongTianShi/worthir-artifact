@@ -1,21 +1,29 @@
 {
   "registry_id": "worthir-quickstart-routes-v1",
+  "cost_information": {
+    "availability": "known_at_commitment",
+    "mode": "fixed",
+    "route_costs_file": null
+  },
   "routes": [
     {
       "label": "Stop after BM25",
       "prerequisites": [],
-      "route_id": "bm25"
+      "route_id": "bm25",
+      "cost": 0.0
     },
     {
       "label": "Dense candidate fusion",
       "prerequisites": ["bm25"],
-      "route_id": "dense"
+      "route_id": "dense",
+      "cost": 0.2
     },
     {
       "label": "Cross-encoder rerank top 20",
       "prerequisites": ["dense"],
-      "route_id": "ce20"
+      "route_id": "ce20",
+      "cost": 0.8
     }
   ],
-  "schema_version": "worthir-route-registry-v1.1"
+  "schema_version": "worthir-route-registry-v1.2"
 }

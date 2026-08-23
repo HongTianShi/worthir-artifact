@@ -34,6 +34,7 @@
   "cost_profile": {
     "profile_id": "declared-relative-work-v1",
     "provenance": "declared",
-    "lambda": 0.08
+    "lambda": 0.08,
+    "availability": "known_at_commitment"
   }
 }
