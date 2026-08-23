@@ -11,6 +11,11 @@ import shutil
 import sys
 from pathlib import Path
 
+try:
+    from .launcher import installed_mode, launcher_command
+except ImportError:  # Direct script execution.
+    from launcher import installed_mode, launcher_command
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -437,12 +442,16 @@ def build_task(
         task_argument = output.relative_to(ROOT).as_posix()
     except ValueError:
         task_argument = "<path-to-this-task>"
+    installed_command = installed_mode(ROOT)
+    powershell_launcher = launcher_command(ROOT, "powershell")
+    posix_launcher = launcher_command(ROOT, "posix")
+    context = "From any directory" if installed_command else "From the WorthIR repository root"
     (output / "README.md").write_text(
         f"# {task_id}\n\nBuilt from standard TREC runs and qrels.\n\n"
-        f"From the WorthIR repository root, compare its routing policies with "
+        f"{context}, compare its routing policies with "
         f"the fixed routes:\n\n"
-        f"```powershell\n.\\worthir.cmd compare {task_argument}\n```\n\n"
-        f"```bash\n./worthir compare {task_argument}\n```\n\n"
+        f"```powershell\n{powershell_launcher} compare {task_argument}\n```\n\n"
+        f"```bash\n{posix_launcher} compare {task_argument}\n```\n\n"
         f"If the task directory is moved, replace `{task_argument}` with its new path.\n",
         encoding="utf-8",
     )

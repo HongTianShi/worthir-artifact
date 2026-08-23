@@ -6,8 +6,12 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
-import sys
 from pathlib import Path
+
+try:
+    from .launcher import installed_mode, launcher_command
+except ImportError:  # Direct script execution.
+    from launcher import installed_mode, launcher_command
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,9 +55,9 @@ def initialize_task(output: Path, task_id: str) -> Path:
         "Put additional WorthIR action JSON files here. `worthir compare` scores all of them.\n",
         encoding="utf-8",
     )
-    installed_command = not (ROOT / "paper_results").is_dir()
-    powershell_launcher = "worthir" if installed_command else ".\\worthir.cmd"
-    posix_launcher = "worthir" if installed_command else "./worthir"
+    installed_command = installed_mode(ROOT)
+    powershell_launcher = launcher_command(ROOT, "powershell")
+    posix_launcher = launcher_command(ROOT, "posix")
     context = "From any directory" if installed_command else "From the WorthIR repository root"
     (output / "README.md").write_text(
         f"# {task_id}\n\nThis directory is a runnable WorthIR task.\n\n"
@@ -80,12 +84,7 @@ def main() -> None:
     except ValueError as exc:
         parser.error(str(exc))
     print(f"CREATED: {output}")
-    installed_command = not (ROOT / "paper_results").is_dir()
-    launcher = (
-        "worthir"
-        if installed_command
-        else (".\\worthir.cmd" if sys.platform == "win32" else "./worthir")
-    )
+    launcher = launcher_command(ROOT)
     print(f"NEXT: {launcher} validate-task \"{output}\"")
 
 

@@ -12,6 +12,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+try:
+    from .launcher import launcher_command
+except ImportError:  # Direct script execution.
+    from launcher import launcher_command
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -464,15 +469,17 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
         cost_note = "Fixed public costs are in `contracts/route_registry.json`.\n\n"
     else:
         cost_note = "Costs are evaluator measurements made after execution.\n\n"
+    powershell_launcher = launcher_command(ROOT, "powershell")
+    posix_launcher = launcher_command(ROOT, "posix")
     (output / "README.md").write_text(
         f"# {task_id}\n\n"
         f"Cost availability: `{availability}`. {cost_note}"
         f"Validate the complete task before scoring:\n\n"
-        f"```powershell\n.\\worthir.cmd validate-task {task_argument}\n```\n\n"
-        f"```bash\n./worthir validate-task {task_argument}\n```\n\n"
+        f"```powershell\n{powershell_launcher} validate-task {task_argument}\n```\n\n"
+        f"```bash\n{posix_launcher} validate-task {task_argument}\n```\n\n"
         f"Then compare the default policy with every fixed route:\n\n"
-        f"```powershell\n.\\worthir.cmd compare {task_argument}\n```\n\n"
-        f"```bash\n./worthir compare {task_argument}\n```\n",
+        f"```powershell\n{powershell_launcher} compare {task_argument}\n```\n\n"
+        f"```bash\n{posix_launcher} compare {task_argument}\n```\n",
         encoding="utf-8",
     )
     return output
