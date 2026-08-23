@@ -1,0 +1,103 @@
+{
+  "development_queries": 6000,
+  "feature_columns": [
+    "claim_char_count",
+    "claim_token_count",
+    "claim_digit_count",
+    "claim_capitalized_token_count",
+    "bm25_top1",
+    "bm25_margin_1_2",
+    "bm25_margin_1_10",
+    "bm25_top10_mean",
+    "bm25_top10_std",
+    "bm25_top10_entropy",
+    "bm25_score_unique_10"
+  ],
+  "fixed_by_lambda": {
+    "0.0": "ce100",
+    "0.02": "ce100",
+    "0.04": "ce100",
+    "0.08": "ce100",
+    "0.16": "ce20"
+  },
+  "fixed_raw": "ce100",
+  "lambdas": [
+    0.0,
+    0.02,
+    0.04,
+    0.08,
+    0.16
+  ],
+  "model_trials": [
+    {
+      "family": "rf",
+      "min_samples_leaf": 5,
+      "oof_action_share": {
+        "bi200": 7,
+        "bm25": 532,
+        "ce100": 2275,
+        "ce20": 2911,
+        "hybrid": 275
+      },
+      "oof_utility": 0.7279335212144067
+    },
+    {
+      "family": "rf",
+      "min_samples_leaf": 20,
+      "oof_action_share": {
+        "bi200": 0,
+        "bm25": 441,
+        "ce100": 2381,
+        "ce20": 3034,
+        "hybrid": 144
+      },
+      "oof_utility": 0.7293855690913024
+    },
+    {
+      "family": "extra",
+      "min_samples_leaf": 5,
+      "oof_action_share": {
+        "bi200": 7,
+        "bm25": 530,
+        "ce100": 2270,
+        "ce20": 2913,
+        "hybrid": 280
+      },
+      "oof_utility": 0.7277058039612915
+    },
+    {
+      "family": "extra",
+      "min_samples_leaf": 20,
+      "oof_action_share": {
+        "bi200": 0,
+        "bm25": 415,
+        "ce100": 2431,
+        "ce20": 3014,
+        "hybrid": 140
+      },
+      "oof_utility": 0.7296159583229309
+    }
+  ],
+  "routes": [
+    "bm25",
+    "bi200",
+    "ce20",
+    "ce100",
+    "hybrid"
+  ],
+  "schema_version": "worthir-fever-frozen-full-policy-v1.0",
+  "seed": 20260730,
+  "selected_model": {
+    "family": "extra",
+    "min_samples_leaf": 20,
+    "oof_action_share": {
+      "bi200": 0,
+      "bm25": 415,
+      "ce100": 2431,
+      "ce20": 3014,
+      "hybrid": 140
+    },
+    "oof_utility": 0.7296159583229309
+  },
+  "test_queries": 13332
+}
