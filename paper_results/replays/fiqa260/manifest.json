@@ -1,0 +1,71 @@
+{
+  "assembly_status": "validated_submission_bundle",
+  "bundle_version": "fiqa8_intersection_260_v1",
+  "frozen_phase5_versions": {
+    "descriptor": "m2s-wsdm-view-descriptor-v1.0",
+    "legal_projection": "m2s-wsdm-legal-projection-v1.0",
+    "legal_submenus": "m2s-wsdm-legal-submenus-v1.0"
+  },
+  "join_key": "query_uid",
+  "metric": {
+    "discount": "log2(rank+1), one-indexed rank",
+    "empty_positive_handling": "query excluded upstream; denominator fallback 1.0",
+    "gain": "2^relevance-1",
+    "metric": "NDCG@10",
+    "negative_candidate_id_handling": "ignored then zero padded",
+    "normalization": "none",
+    "positive_qrels_only": true,
+    "self_match_filtering": "none"
+  },
+  "no_training_or_candidate_a_execution": true,
+  "private_evaluator_file_policy": "private_candidates.parquet is outside bundle and is not predictor state",
+  "query_count": 260,
+  "reproducibility_proof": {
+    "attestation_source": "package-level clean-room rehearsal",
+    "started_from_empty_output_directory": true
+  },
+  "schema_version": "m2s-wsdm-fiqa8-bundle-manifest-v1.0",
+  "submission_redaction": {
+    "frozen_fingerprints_changed": false,
+    "scope": "machine-local runtime paths and user labels only",
+    "substantive_execution_parameters_changed": false
+  },
+  "tables": {
+    "candidate_pool_fingerprints.parquet": {
+      "column_count": 13,
+      "role": "evaluator-side audit hashes; never predictor input",
+      "row_count": 2080
+    },
+    "execution_fingerprints.parquet": {
+      "column_count": 10,
+      "role": "audit/provenance metadata",
+      "row_count": 2080
+    },
+    "legal_state.parquet": {
+      "column_count": 28,
+      "role": "predictor-side legal purchase-time state",
+      "row_count": 260
+    },
+    "query_membership.parquet": {
+      "column_count": 12,
+      "role": "identifier/join/audit only",
+      "row_count": 260
+    },
+    "raw_quality_labels.parquet": {
+      "column_count": 9,
+      "role": "evaluator-side raw outcomes; never predictor input",
+      "row_count": 260
+    }
+  },
+  "view_count": 8,
+  "view_order": [
+    "summary",
+    "binary",
+    "pq",
+    "int8",
+    "hnsw16",
+    "hnsw64",
+    "full",
+    "ce"
+  ]
+}
