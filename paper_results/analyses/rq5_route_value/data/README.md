@@ -6,3 +6,7 @@
 
 若干字段只用于评测端诊断，不能描述为路由器输入。分析是关联性的而非因果性的；
 应采用结果表中规定的术语和取整方式。
+
+`python paper_results/run.py` 会校验这些发布摘要，并将主要可预测性和操作对照表
+复制到 `paper_results/reproduced/rqs/`。Figure 6 和 Table 6 的对应关系见
+`paper_results/PAPER_MAP.md`。
