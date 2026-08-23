@@ -1,0 +1,50 @@
+{
+  "schema_version": "worthir-route-registry-v1.0",
+  "task_id": "worthir-2wiki-structured-v2.0",
+  "tie_break_order": [
+    "summary",
+    "one_hop",
+    "two_hop",
+    "full_context",
+    "ce"
+  ],
+  "views": [
+    {
+      "cumulative_declared_cost": 0.0,
+      "index": 0,
+      "view": "summary"
+    },
+    {
+      "cumulative_declared_cost": 0.16,
+      "index": 1,
+      "parents": [
+        "summary"
+      ],
+      "view": "one_hop"
+    },
+    {
+      "cumulative_declared_cost": 0.26,
+      "index": 2,
+      "parents": [
+        "summary"
+      ],
+      "view": "two_hop"
+    },
+    {
+      "cumulative_declared_cost": 0.55,
+      "index": 3,
+      "parents": [
+        "summary"
+      ],
+      "view": "full_context"
+    },
+    {
+      "cumulative_declared_cost": 0.95,
+      "index": 4,
+      "parents": [
+        "full_context"
+      ],
+      "view": "ce"
+    }
+  ]
+}
