@@ -91,6 +91,7 @@ merely because it is publicly released.
 | --- | --- | --- |
 | `LICENSE` | License | MIT license for WorthIR-authored code. |
 | `NOTICE` | Third-party notice | Points to the data, model, and software terms that remain outside the MIT license. |
+| `pyproject.toml` | Editable install metadata | Provides the `worthir` console command for a checked-out repository. |
 | `CITATION.cff` | Citation metadata | Supplies the software release and preferred paper citation to GitHub and citation tools. |
 | `README_FOR_AI.md` | AI project map | Explains architecture, invariants, current limits, and the purpose of every tracked file. |
 | `README.md` | Human entry point | Gives the one-command setup, complete demo, own-data route, and paper-results boundary. |

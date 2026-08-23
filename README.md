@@ -22,6 +22,13 @@ dependencies.
 python setup_environment.py
 ```
 
+If you prefer a shell-wide command while working from this clone:
+
+```bash
+python -m pip install -e .
+worthir demo-custom
+```
+
 Run a non-TREC task with query-dependent costs and an external router:
 
 ```powershell
