@@ -1,0 +1,10 @@
+{
+  "lock_id": "worthir-canonical-task-prefreeze-lock-v1.0",
+  "protected_assets_writable": false,
+  "retrieval_or_model_training": false,
+  "scientific_changes_after_lock": "prohibited; require a new task version",
+  "status": "frozen_for_implementation",
+  "task_id": "worthir-trecdl-multistage-v1.0",
+  "technical_repairs_after_lock": "allowed only if disclosed, bounded, and outcome-independent",
+  "test_route_selection_or_tuning": false
+}
