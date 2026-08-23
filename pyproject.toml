@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worthir-eval"
+version = "1.1.0"
+description = "Evaluate cost-aware query-level retrieval routing"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "WorthIR authors"}]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[project.scripts]
+worthir = "worthir:main"
+
+[tool.setuptools]
+py-modules = ["worthir"]
+packages = ["worthir_eval"]
+package-dir = {worthir_eval = "src/worthir_eval"}
