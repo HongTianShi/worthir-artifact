@@ -1,0 +1,92 @@
+{
+  "common_base": "BM25 is observed before purchase, reported in raw system cost, and assigned zero incremental decision charge",
+  "confirmatory_access": "none",
+  "contract_id": "worthir-g2-final-cost-contract-v1.0",
+  "cumulative": true,
+  "parent_aware": true,
+  "primary_lambda": 0.08,
+  "primary_profile": "C_op",
+  "protocol_id": "worthir-g2-msmarco-trecdl-stage0-v1.0",
+  "routes": [
+    {
+      "cumulative": {
+        "C_lat": 0.0,
+        "C_mem": 0.0,
+        "C_op": 0.0
+      },
+      "decision_increment_semantics": "compiled-route charge above the common legal BM25 base",
+      "incremental": {
+        "C_lat": 0.0,
+        "C_mem": 0.0,
+        "C_op": 0.0
+      },
+      "raw": {
+        "median_latency_ms": 36.222605,
+        "p95_latency_ms": 59.013368,
+        "resident_memory_bytes": 2685438028,
+        "scored_pairs": 1000
+      },
+      "route_id": "stop_bm25"
+    },
+    {
+      "cumulative": {
+        "C_lat": 0.7677216091974185,
+        "C_mem": 0.9843780542823256,
+        "C_op": 0.004180423145283137
+      },
+      "decision_increment_semantics": "compiled-route charge above the common legal BM25 base",
+      "incremental": {
+        "C_lat": 0.7677216091974185,
+        "C_mem": 0.9843780542823256,
+        "C_op": 0.004180423145283137
+      },
+      "raw": {
+        "median_latency_ms": 1396.3964095546876,
+        "p95_latency_ms": 1419.1871725546873,
+        "resident_memory_bytes": 30355388231,
+        "scored_pairs": 8841823
+      },
+      "route_id": "dense_fusion"
+    },
+    {
+      "cumulative": {
+        "C_lat": 1.0,
+        "C_mem": 1.0,
+        "C_op": 1.0
+      },
+      "decision_increment_semantics": "compiled-route charge above the common legal BM25 base",
+      "incremental": {
+        "C_lat": 1.0,
+        "C_mem": 1.0,
+        "C_op": 1.0
+      },
+      "raw": {
+        "median_latency_ms": 1808.4084315546875,
+        "p95_latency_ms": 1851.5869255546875,
+        "resident_memory_bytes": 30794506574,
+        "scored_pairs": 8842023
+      },
+      "route_id": "late_interaction"
+    },
+    {
+      "cumulative": {
+        "C_lat": 0.8051220756185318,
+        "C_mem": 0.9876457769338138,
+        "C_op": 0.0874385701648912
+      },
+      "decision_increment_semantics": "compiled-route charge above the common legal BM25 base",
+      "incremental": {
+        "C_lat": 0.8051220756185318,
+        "C_mem": 0.9876457769338138,
+        "C_op": 0.0874385701648912
+      },
+      "raw": {
+        "median_latency_ms": 1464.1106830546873,
+        "p95_latency_ms": 1493.6671095546874,
+        "resident_memory_bytes": 30447240871,
+        "scored_pairs": 8841923
+      },
+      "route_id": "cross_encoder"
+    }
+  ]
+}
