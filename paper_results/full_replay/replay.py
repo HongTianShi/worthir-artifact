@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -14,6 +15,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 REPOSITORY = ROOT.parents[1]
 CARDS = json.loads((ROOT / "task_cards.json").read_text(encoding="utf-8"))
+
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+    os.environ["PYTHONIOENCODING"] = "utf-8"
+    os.environ["PYTHONUTF8"] = "1"
 
 
 def write_json(path: Path, value: object) -> None:

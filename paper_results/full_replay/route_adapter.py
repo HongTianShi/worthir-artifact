@@ -4,7 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import os
+import sys
 from pathlib import Path
+
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+    os.environ["PYTHONIOENCODING"] = "utf-8"
+    os.environ["PYTHONUTF8"] = "1"
 
 
 def main() -> None:
