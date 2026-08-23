@@ -1,0 +1,21 @@
+{
+  "registry_id": "worthir-quickstart-routes-v1",
+  "routes": [
+    {
+      "label": "Stop after BM25",
+      "parent_route_id": null,
+      "route_id": "bm25"
+    },
+    {
+      "label": "Dense candidate fusion",
+      "parent_route_id": "bm25",
+      "route_id": "dense"
+    },
+    {
+      "label": "Cross-encoder rerank top 20",
+      "parent_route_id": "dense",
+      "route_id": "ce20"
+    }
+  ],
+  "schema_version": "worthir-route-registry-v1.0"
+}
