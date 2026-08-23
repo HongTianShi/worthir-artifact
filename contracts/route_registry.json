@@ -1,0 +1,21 @@
+{
+  "registry_id": "worthir-quickstart-routes-v1",
+  "routes": [
+    {
+      "label": "在 BM25 后停止",
+      "parent_route_id": null,
+      "route_id": "bm25"
+    },
+    {
+      "label": "稠密候选融合",
+      "parent_route_id": "bm25",
+      "route_id": "dense"
+    },
+    {
+      "label": "交叉编码器重排前 20 个候选",
+      "parent_route_id": "dense",
+      "route_id": "ce20"
+    }
+  ],
+  "schema_version": "worthir-route-registry-v1.0"
+}
