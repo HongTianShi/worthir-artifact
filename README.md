@@ -22,12 +22,14 @@ dependencies.
 python setup_environment.py
 ```
 
-If you prefer a shell-wide command while working from this clone:
+Install a normal wheel from the clone:
 
 ```bash
-python -m pip install -e .
+python -m pip install .
 worthir demo-custom
 ```
+
+Use `python -m pip install -e .` instead when editing the source.
 
 Run a non-TREC task with query-dependent costs and an external router:
 
@@ -65,9 +67,11 @@ All input formats are described in [`docs/ADAPT_TO_NEW_TASK.md`](docs/ADAPT_TO_N
 
 All data and code tied to the accepted paper are isolated in
 [`paper_results/`](paper_results/). Run `python paper_results/run.py` to keep the
-rebuilt outputs under `paper_results/reproduced/`. The release
-[`v1.0.0-ipmc2026`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.0.0-ipmc2026)
-is the frozen artifact for the IP&MC 2026 paper.
+rebuilt outputs under `paper_results/reproduced/`. The
+[`v1.1.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.1.0)
+release contains the public-cost interface and complete Figure 1--7 redraw. The
+earlier `v1.0.0-ipmc2026` release remains the frozen artifact originally
+submitted with the accepted IP&MC 2026 paper.
 
 WorthIR-authored code is released under the [MIT License](LICENSE). Third-party
 data and model terms are listed in [NOTICE](NOTICE).
