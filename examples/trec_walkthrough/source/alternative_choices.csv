@@ -1,0 +1,5 @@
+query_uid,selected_route_id
+q1,prf
+q2,rerank
+q3,rerank
+q4,base
