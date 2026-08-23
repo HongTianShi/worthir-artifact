@@ -32,7 +32,7 @@ my_source/
   },
   "cost_profile": {
     "profile_id": "latency-seconds-v1",
-    "provenance": "预热后的单查询测量",
+    "provenance": "由独立校准集估计、在路线选择前可获得的预计执行时间",
     "lambda": 0.15,
     "availability": "known_at_commitment"
   },
