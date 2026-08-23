@@ -15,21 +15,24 @@
 ## 可复用评测流程
 
 1. 从仓库根目录运行 `python setup_environment.py`。
-2. 使用 `worthir demo` 验证从 qrels 到报告的完整路径。
-3. 对于标准 IR 数据，在 `routes.csv` 中定义路线和成本，然后运行
-   `worthir build-trec SOURCE TASK --task-id ID --metric ndcg@K --lambda VALUE`。
-4. 将留出查询的路线选择导出为 CSV，并使用
-   `worthir actions TASK CHOICES --policy-id ID` 绑定到任务。
-5. 运行 `worthir compare TASK`。该命令评估全部策略和全部固定路线，并写出
-   Markdown、CSV 和 JSON 报告。
-6. 对于非 TREC 指标，使用 `worthir init`，手动替换完整 ledger 后再评分或比较。
+2. 使用 `worthir demo-custom` 验证通用任务和外部路由器的完整路径。
+3. 通用任务提供 `task.json`、`queries.csv`、`routes.csv` 和 `outcomes.csv`，
+   然后运行 `worthir build-custom SOURCE TASK`。
+4. 评分前运行 `worthir validate-task TASK`。
+5. 将留出查询的路线选择导出为 CSV，并运行
+   `worthir evaluate TASK CHOICES --policy-id ID`。
+6. `worthir compare TASK` 会评估全部策略和全部固定路线，并写出 Markdown、CSV
+   和 JSON 报告。
+7. qrels 和 TREC run 可使用 `worthir build-trec` 快捷适配器。
 
 ## 信息边界与科学不变量
 
 - 策略只能使用所选路线执行前已经可用的信息。
 - 相关性标注、未选路线结果、效用、Oracle 动作和遗憾只对评测端可见。
 - ledger 必须包含查询与路线的完整笛卡尔积。
-- 路线成本为累计成本；子路线成本不得低于父路线。
+- 路线成本为累计成本；任一路线成本不得低于其前置路线。
+- 通用输入既可直接提供累计成本，也可提供增量组件成本；构建器会对传递前置闭包
+  求和，并且每个组件只计一次。
 - 效用为 `effectiveness - lambda * cumulative_cost`。原始效用由任务定义，
   不得跨任务比较。
 - Oracle 和遗憾只在已注册路线集合内定义。
@@ -37,8 +40,8 @@
 
 ## 公共接口与限制
 
-- 内置适配器读取 qrels 和六列 TREC run 并计算 NDCG@K。其他有效性指标需要预先
-  计算 ledger。
+- 通用适配器接受任意命名、具有明确范围且越高越好的标量有效性指标。TREC 适配器
+  根据 qrels 和六列 run 文件计算 NDCG@K。
 - 固定路线成本写入 `routes.csv`；完整的 `costs.csv` 可以用随查询变化的延迟或
   工作量覆盖它们。
 - 契约只公开通用评分器实际使用的选项。有效性越高越好、路线集合完整、累计成本非负
@@ -63,7 +66,7 @@
 - 修改论文结果后，如果依赖可用，还要运行
   `python paper_results/run.py --use-current-python`。
 
-## 完整受跟踪文件审计（328 个文件）
+## 完整受跟踪文件审计
 
 每个受跟踪路径只列出一次。评测数据不会仅仅因为已经公开，就变成合法的策略输入。
 
@@ -72,6 +75,8 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `LICENSE` | 许可证 | WorthIR 自有代码的 MIT 许可证。 |
+| `NOTICE` | 第三方声明 | 指向不受 MIT 许可证覆盖的数据、模型和软件条款。 |
+| `CITATION.cff` | 引用元数据 | 向 GitHub 和引用工具提供软件发布版与论文引用信息。 |
 | `README_FOR_AI.md` | AI 项目地图 | 说明架构、不变量、当前限制以及每个受跟踪文件的用途。 |
 | `README.md` | 人类入口 | 提供一键配置、完整演示、自有数据流程和论文结果边界。 |
 | `run.py` | 框架验证器 | 运行无依赖的框架验证套件。 |
@@ -85,7 +90,7 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `.gitattributes` | 仓库配置 | 统一文本换行符，并标记二进制研究资产，避免 Git 改写。 |
-| `.github/workflows/validate.yml` | 持续集成 | 在 Windows 和 Linux 上验证框架，并单独复现论文结果。 |
+| `.github/workflows/validate.yml` | 持续集成 | 在 Windows、Linux 和 macOS 上验证框架，并单独复现论文结果。 |
 | `.gitignore` | 仓库配置 | 排除生成输出、环境、缓存、编辑器状态和构建产物。 |
 
 ### 可复用契约
@@ -94,13 +99,13 @@
 | --- | --- | --- |
 | `contracts/quickstart_contract.json` | 任务契约 | 定义合成任务、动作模式、指标范围、成本偏好和标识符。 |
 | `contracts/README.md` | 契约指南 | 说明共享的快速入门任务契约和路线注册表。 |
-| `contracts/route_registry.json` | 路线注册表 | 注册合成快速入门路线及其父子关系。 |
+| `contracts/route_registry.json` | 路线注册表 | 注册合成快速入门路线及其前置关系。 |
 
 ### 可复用说明文档
 
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
-| `docs/ADAPT_TO_NEW_TASK.md` | 适配指南 | 说明将可运行模板变成新任务的人工步骤。 |
+| `docs/ADAPT_TO_NEW_TASK.md` | 适配指南 | 定义通用任务表、路线依赖、成本模式、TREC 快捷路径和路由器流程。 |
 | `docs/COST_AND_LAMBDA.md` | 成本指南 | 说明累计成本选择、归一化、lambda 选择和敏感性。 |
 | `docs/OUTPUTS.md` | 输出指南 | 定义比较字段、固定参照、Pareto 归属和描述性范围。 |
 
@@ -113,10 +118,23 @@
 | `examples/trec_walkthrough/source/policy_choices.csv` | 策略选择 | 提供任务构建时使用的默认自适应选择。 |
 | `examples/trec_walkthrough/source/qrels.tsv` | TREC qrels | 定义小型示例任务的分级相关性。 |
 | `examples/trec_walkthrough/source/queries.csv` | 参与者状态 | 提供可读查询文本和一个合法的路线选择前特征。 |
-| `examples/trec_walkthrough/source/routes.csv` | 路线定义 | 将路线 ID 映射到 TREC run、父依赖、成本和开发集选定固定路线。 |
+| `examples/trec_walkthrough/source/routes.csv` | 路线定义 | 将路线 ID 映射到 TREC run、前置关系、成本和开发集选定固定路线。 |
 | `examples/trec_walkthrough/source/runs/base.trec` | TREC run | 提供示例的基础路线排名。 |
 | `examples/trec_walkthrough/source/runs/prf.trec` | TREC run | 提供示例的查询扩展排名。 |
 | `examples/trec_walkthrough/source/runs/rerank.trec` | TREC run | 提供示例的交叉编码器排名。 |
+
+### 通用非 TREC 示例
+
+| 路径 | 文件类型 | 用途 |
+| --- | --- | --- |
+| `examples/custom_task/README.md` | 通用任务指南 | 说明四个源文件以及累计和增量成本模式。 |
+| `examples/custom_task/source/task.json` | 任务定义 | 声明非 TREC 有效性指标、成本配置和固定参考路线。 |
+| `examples/custom_task/source/queries.csv` | 参与方状态 | 仅提供示例路由器决策时可用的字段。 |
+| `examples/custom_task/source/routes.csv` | 路线定义 | 演示具有两个前置路线的路线和增量组件成本。 |
+| `examples/custom_task/source/outcomes.csv` | 评价方结果 | 提供完整 answer-coverage 和逐查询成本结果。 |
+| `examples/custom_router/README.md` | 路由器指南 | 说明如何执行和替换外部示例路由器。 |
+| `examples/custom_router/router.py` | 示例路由器 | 读取合法状态、执行可替换规则并生成路线选择 CSV，不打开评价方数据。 |
+| `examples/custom_router/run.py` | 路由器流程 | 构建通用任务、运行路由器、绑定选择并写出比较结果。 |
 
 ### 合成快速入门任务
 
@@ -134,6 +152,7 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `scripts/actions_from_csv.py` | 动作转换器 | 验证可读查询--路线选择并写出绑定契约的动作 JSON。 |
+| `scripts/build_custom_task.py` | 通用任务适配器 | 根据通用源表构建契约、参与方状态和完整台账。 |
 | `scripts/build_trec_task.py` | TREC 适配器 | 根据 qrels 和 run 计算 NDCG@K，并构建完整可复用任务。 |
 | `scripts/compare_policies.py` | 比较报告器 | 评估全部策略和固定路线，并写出 Markdown、CSV、JSON 和 Pareto 输出。 |
 | `scripts/init_task.py` | 任务初始化器 | 复制可运行模板并替换任务、契约和注册表标识符。 |
@@ -141,6 +160,7 @@
 | `scripts/run_integrity_tests.py` | 完整性测试 | 检查无效输入、算术不变量、累计成本、并列情况和示例信息边界。 |
 | `scripts/run_smoke_test.py` | 冒烟测试 | 评估六查询快速入门任务并写出汇总结果。 |
 | `scripts/score_actions.py` | 评分 CLI | 解析任务输入、调用核心评分器并写出汇总 JSON。 |
+| `scripts/validate_task.py` | 任务校验器 | 评分前报告任务覆盖范围、依赖边、成本模式和契约问题。 |
 | `scripts/validate_framework.py` | 框架验证器 | 运行冒烟测试、完整性测试、任务初始化、TREC 构建、动作转换和比较检查。 |
 
 ### 可复用 Python 源码
@@ -148,8 +168,8 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `src/README.md` | 源码指南 | 说明无依赖源码布局。 |
-| `src/worthir_eval/__init__.py` | Python API | 导出受支持的评分函数和错误类型。 |
-| `src/worthir_eval/core.py` | 评分实现 | 验证路线、动作、ledger 和累计成本，再计算有效性、成本、效用、Oracle 一致率和遗憾。 |
+| `src/worthir_eval/__init__.py` | Python API | 导出任务检查、评分函数和公共错误类型。 |
+| `src/worthir_eval/core.py` | 评分实现 | 验证依赖图、动作、ledger 和累计成本，再计算有效性、成本、效用、Oracle 一致率和遗憾。 |
 | `src/worthir_eval/README.md` | 软件包指南 | 概述评分器 API 及参与者--评测者边界。 |
 
 ### 新任务模板
@@ -169,6 +189,7 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `paper_results/README.md` | 论文结果入口 | 说明如何复现和验证全部已发布论文输出。 |
+| `paper_results/PAPER_MAP.md` | 论文结果索引 | 将正文图表映射到输入、命令、输出和复现层级。 |
 | `paper_results/requirements.txt` | 依赖规范 | 仅供论文结果复现使用的固定版本软件包。 |
 | `paper_results/run.py` | 论文结果入口 | 创建论文专用环境并启动已发布结果验证。 |
 
