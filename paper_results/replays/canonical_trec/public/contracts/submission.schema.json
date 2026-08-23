@@ -1,0 +1,57 @@
+{
+  "$id": "worthir-canonical-submission-schema-v1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "decisions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "query_uid": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "selected_route_id": {
+            "enum": [
+              "stop_bm25",
+              "dense_fusion",
+              "late_interaction",
+              "cross_encoder"
+            ]
+          }
+        },
+        "required": [
+          "query_uid",
+          "selected_route_id"
+        ],
+        "type": "object"
+      },
+      "maxItems": 97,
+      "minItems": 97,
+      "type": "array"
+    },
+    "description": {
+      "maxLength": 1000,
+      "type": "string"
+    },
+    "policy_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_id": {
+      "const": "worthir-canonical-submission-v1.0"
+    },
+    "task_id": {
+      "const": "worthir-trecdl-multistage-v1.0"
+    }
+  },
+  "required": [
+    "schema_id",
+    "task_id",
+    "policy_id",
+    "decisions"
+  ],
+  "title": "WorthIR TREC-DL Multi-Stage Submission",
+  "type": "object"
+}
