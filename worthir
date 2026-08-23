@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+if [ ! -x "$ROOT/.venv/bin/python" ]; then
+  python3 "$ROOT/setup_environment.py"
+fi
+exec "$ROOT/.venv/bin/python" "$ROOT/worthir.py" "$@"
