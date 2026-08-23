@@ -152,7 +152,7 @@ def main() -> None:
             lambda: load_and_score(
                 temp / "contract.json", base_ledger_path, action_path
             ),
-            "unregistered selected routes",
+            "选择了未注册路线",
         )
 
         mutated = copy.deepcopy(base_actions)
@@ -163,7 +163,7 @@ def main() -> None:
             lambda: load_and_score(
                 temp / "contract.json", base_ledger_path, action_path
             ),
-            "action count mismatch",
+            "动作数不匹配",
         )
 
         mutated = copy.deepcopy(base_actions)
@@ -174,7 +174,7 @@ def main() -> None:
             lambda: load_and_score(
                 temp / "contract.json", base_ledger_path, action_path
             ),
-            "duplicate query_uid",
+            "存在重复 query_uid",
         )
 
         mutated = copy.deepcopy(base_actions)
@@ -185,7 +185,7 @@ def main() -> None:
             lambda: load_and_score(
                 temp / "contract.json", base_ledger_path, action_path
             ),
-            "field mismatch",
+            "字段不匹配",
         )
 
         mutated = copy.deepcopy(base_actions)
@@ -198,7 +198,7 @@ def main() -> None:
             lambda: load_and_score(
                 temp / "contract.json", base_ledger_path, action_path
             ),
-            "action contract_id mismatch",
+            "contract_id 不匹配",
         )
 
         reversed_actions = copy.deepcopy(base_actions)
@@ -229,7 +229,7 @@ def main() -> None:
         expect_rejection(
             "I10_INCOMPLETE_ROUTE_SET_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "incomplete route set",
+            "路线集合不完整",
         )
 
         duplicate_rows = base_rows + [copy.deepcopy(base_rows[0])]
@@ -237,7 +237,7 @@ def main() -> None:
         expect_rejection(
             "I11_DUPLICATE_LEDGER_KEY_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "duplicate ledger key",
+            "台账键重复",
         )
 
         mutated_rows = copy.deepcopy(base_rows)
@@ -246,7 +246,7 @@ def main() -> None:
         expect_rejection(
             "I12_NONFINITE_LEDGER_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "non-finite",
+            "非有限数值",
         )
 
         mutated_rows = copy.deepcopy(base_rows)
@@ -255,7 +255,7 @@ def main() -> None:
         expect_rejection(
             "I13_NEGATIVE_COST_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "negative cost",
+            "成本为负数",
         )
 
         mutated_rows = copy.deepcopy(base_rows)
@@ -264,30 +264,30 @@ def main() -> None:
         expect_rejection(
             "I14_BROKEN_CUMULATIVE_COST_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "noncumulative cost",
+            "成本并非累计成本",
         )
 
         broken_registry = copy.deepcopy(base_registry)
-        broken_registry["routes"][1]["parent_route_id"] = "__missing__"
+        broken_registry["routes"][1]["prerequisites"] = ["__missing__"]
         contract_path, action_path, _ = bind(
             temp, base_contract, broken_registry, base_actions
         )
         write_csv(ledger_path, base_rows)
         expect_rejection(
-            "I15_MISSING_PARENT_REJECTED",
+            "I15_MISSING_PREREQUISITE_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "missing parent",
+            "未知前置路线",
         )
 
         cyclic_registry = copy.deepcopy(base_registry)
-        cyclic_registry["routes"][0]["parent_route_id"] = "ce20"
+        cyclic_registry["routes"][0]["prerequisites"] = ["ce20"]
         contract_path, action_path, _ = bind(
             temp, base_contract, cyclic_registry, base_actions
         )
         expect_rejection(
-            "I16_PARENT_CYCLE_REJECTED",
+            "I16_PREREQUISITE_CYCLE_REJECTED",
             lambda: load_and_score(contract_path, ledger_path, action_path),
-            "parent cycle",
+            "前置关系存在环",
         )
 
         dominated_registry = copy.deepcopy(base_registry)
@@ -295,7 +295,7 @@ def main() -> None:
             {
                 "route_id": "dominated",
                 "label": "Dominated injected route",
-                "parent_route_id": "ce20",
+                "prerequisites": ["ce20"],
             }
         )
         dominated_rows = copy.deepcopy(base_rows)
@@ -339,7 +339,7 @@ def main() -> None:
             {
                 "route_id": "dense_copy",
                 "label": "Redundant dense route",
-                "parent_route_id": "dense",
+                "prerequisites": ["dense"],
             }
         )
         duplicate_view_rows = copy.deepcopy(base_rows)

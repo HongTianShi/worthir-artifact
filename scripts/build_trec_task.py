@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class BuildError(RuntimeError):
-    """Raised when source retrieval files cannot define a valid task."""
+    """源检索文件不能定义有效任务时抛出。"""
 
 
 def _write_json(path: Path, payload: dict) -> None:
@@ -68,15 +68,15 @@ def _read_run(path: Path) -> dict[str, list[str]]:
         fields = line.split()
         if len(fields) != 6:
             raise BuildError(
-                f"{path.name} line {line_number} must be a six-column TREC run row"
+                f"{path.name} 第 {line_number} 行必须是六列 TREC run"
             )
         query_uid, _, doc_id, rank_text, _, _ = fields
         try:
             rank = int(rank_text)
         except ValueError as exc:
-            raise BuildError(f"{path.name} line {line_number} has invalid rank") from exc
+            raise BuildError(f"{path.name} 第 {line_number} 行的 rank 无效") from exc
         if rank < 1:
-            raise BuildError(f"{path.name} line {line_number} has nonpositive rank")
+            raise BuildError(f"{path.name} 第 {line_number} 行的 rank 必须为正数")
         ranked.setdefault(query_uid, []).append((rank, line_number, doc_id))
     result: dict[str, list[str]] = {}
     for query_uid, rows in ranked.items():
@@ -108,7 +108,7 @@ def _read_routes(source: Path) -> list[dict[str, str]]:
     required = [
         "route_id",
         "label",
-        "parent_route_id",
+        "prerequisites",
         "run_file",
         "cost",
         "development_selected",
@@ -134,9 +134,18 @@ def _read_routes(source: Path) -> list[dict[str, str]]:
     if len(selected) != 1:
         raise BuildError("routes.csv 必须且只能标记一条 development_selected 路线")
     for row in routes:
-        parent = row["parent_route_id"].strip()
-        if parent and parent not in route_ids:
-            raise BuildError(f"未知父路线：{parent}")
+        prerequisites = [
+            value.strip()
+            for value in row["prerequisites"].split(";")
+            if value.strip()
+        ]
+        unknown = sorted(set(prerequisites) - set(route_ids))
+        if row["route_id"].strip() in prerequisites:
+            raise BuildError(f"路线 {row['route_id']} 不能依赖自身")
+        if len(prerequisites) != len(set(prerequisites)):
+            raise BuildError(f"路线 {row['route_id']} 重复声明了前置路线")
+        if unknown:
+            raise BuildError(f"路线 {row['route_id']} 含有未知前置路线：{unknown}")
         run_path = (source / row["run_file"]).resolve()
         if not run_path.is_file():
             raise BuildError(f"缺少 run 文件：{row['run_file']}")
@@ -202,29 +211,43 @@ def _validate_route_graph_and_costs(
     query_ids: list[str],
     overrides: dict[tuple[str, str], float],
 ) -> None:
-    parents = {
-        row["route_id"].strip(): row["parent_route_id"].strip() or None
+    prerequisites = {
+        row["route_id"].strip(): [
+            value.strip()
+            for value in row["prerequisites"].split(";")
+            if value.strip()
+        ]
         for row in routes
     }
     constants = {row["route_id"].strip(): float(row["cost"]) for row in routes}
-    for route_id in parents:
-        seen = {route_id}
-        cursor = parents[route_id]
-        while cursor is not None:
-            if cursor in seen:
-                raise BuildError("路线的父子关系中存在环")
-            seen.add(cursor)
-            cursor = parents[cursor]
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(route_id: str) -> None:
+        if route_id in visiting:
+            raise BuildError("路线前置关系中存在环")
+        if route_id in visited:
+            return
+        visiting.add(route_id)
+        for prerequisite in prerequisites[route_id]:
+            visit(prerequisite)
+        visiting.remove(route_id)
+        visited.add(route_id)
+
+    for route_id in prerequisites:
+        visit(route_id)
     for query_uid in query_ids:
-        for route_id, parent in parents.items():
-            if parent is None:
-                continue
+        for route_id, required_routes in prerequisites.items():
             child_cost = overrides.get((query_uid, route_id), constants[route_id])
-            parent_cost = overrides.get((query_uid, parent), constants[parent])
-            if child_cost < parent_cost:
-                raise BuildError(
-                    f"查询 {query_uid} 的路线 {route_id} 成本低于父路线 {parent}"
+            for prerequisite in required_routes:
+                prerequisite_cost = overrides.get(
+                    (query_uid, prerequisite), constants[prerequisite]
                 )
+                if child_cost < prerequisite_cost:
+                    raise BuildError(
+                        f"查询 {query_uid} 的路线 {route_id} 成本低于"
+                        f"前置路线 {prerequisite}"
+                    )
 
 
 def _read_policy(
@@ -316,13 +339,17 @@ def build_task(
         writer.writerows(legal_rows)
 
     registry = {
-        "schema_version": "worthir-route-registry-v1.0",
+        "schema_version": "worthir-route-registry-v1.1",
         "registry_id": f"{task_id}-routes-v1",
         "routes": [
             {
                 "route_id": row["route_id"].strip(),
                 "label": row["label"].strip() or row["route_id"].strip(),
-                "parent_route_id": row["parent_route_id"].strip() or None,
+                "prerequisites": [
+                    value.strip()
+                    for value in row["prerequisites"].split(";")
+                    if value.strip()
+                ],
             }
             for row in routes
         ],
