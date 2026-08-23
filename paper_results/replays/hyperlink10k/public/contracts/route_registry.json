@@ -1,0 +1,54 @@
+{
+  "descriptor_schema_version": "m2s-wsdm-view-descriptor-v1.0",
+  "menu_id": "2wiki-hyperlink-v1",
+  "schema_version": "worthir-route-registry-v1.0",
+  "task_id": "worthir-2wiki-hyperlink10k-v1.0",
+  "tie_break_order": [
+    "summary",
+    "provided_context",
+    "hyperlink_1hop",
+    "hyperlink_2hop",
+    "full_local_pool"
+  ],
+  "views": [
+    {
+      "cumulative_declared_cost": 0.0,
+      "index": 0,
+      "view": "summary"
+    },
+    {
+      "cumulative_declared_cost": 0.08,
+      "index": 1,
+      "parents": [
+        "summary"
+      ],
+      "view": "provided_context"
+    },
+    {
+      "cumulative_declared_cost": 0.2,
+      "index": 2,
+      "parents": [
+        "summary"
+      ],
+      "view": "hyperlink_1hop"
+    },
+    {
+      "cumulative_declared_cost": 0.34,
+      "index": 3,
+      "parents": [
+        "summary"
+      ],
+      "view": "hyperlink_2hop"
+    },
+    {
+      "cumulative_declared_cost": 0.55,
+      "index": 4,
+      "parents": [
+        "provided_context",
+        "hyperlink_1hop",
+        "hyperlink_2hop"
+      ],
+      "view": "full_local_pool"
+    }
+  ]
+}
