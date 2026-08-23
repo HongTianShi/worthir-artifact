@@ -1,0 +1,11 @@
+{
+  "schema_version": "worthir-action-file-v1.0",
+  "contract_id": "example-task-contract-v1",
+  "policy_id": "example-policy-v1",
+  "decisions": [
+    {
+      "query_uid": "q001",
+      "selected_route_id": "base"
+    }
+  ]
+}
