@@ -38,7 +38,7 @@ def main() -> None:
     subprocess.run([str(python), str(ROOT / "worthir.py"), "doctor"], cwd=ROOT, check=True)
     launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
     print("READY")
-    print(f"Next: {launcher} demo")
+    print(f"Next: {launcher} demo-custom")
 
 
 if __name__ == "__main__":
