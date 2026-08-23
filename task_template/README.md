@@ -4,5 +4,6 @@
 participant-visible state, actions, and complete evaluator ledger, then run
 `worthir compare TASK_DIR` from the repository root.
 
-For standard qrels and TREC runs, `worthir build-trec` is faster and less error
-prone than editing this template manually.
+For most tasks, `worthir build-custom` is faster and less error prone than
+editing this template manually. Standard qrels and TREC runs can use
+`worthir build-trec`.
