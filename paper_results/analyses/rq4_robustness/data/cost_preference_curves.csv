@@ -1,0 +1,167 @@
+task,cost_profile,mode,lambda,delta,low,high,source,runtime_seconds,adaptive_utility,fixed_utility,adaptive_cost,fixed_cost,selected_families,fixed_routes,fixed_route
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.0,-0.0009120959413673,-0.002348907570988172,0.00047852397476480437,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.005,-0.0002883803048182,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.01,-5.9837292023208976e-05,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.015,0.0005782859034938,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.02,0.0010595214836121,-0.00039235320366578136,0.002496001174443837,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.025,0.0015839203396414,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.03,0.0025231869061946,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.035,0.0032616162789258,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.04,0.0037473007711428,0.0023482817926979292,0.00511259137372476,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.045,0.0045293100112249,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.05,0.0056638173470921,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.055,0.0064269790330846,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.06,0.0074559727532412,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.065,0.0086014075909288,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.07,0.0095872638699858,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.075,0.0100958588123202,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.08,0.0111413721401767,0.009775767792215145,0.012543452023245404,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.085,0.0120261058476802,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.09,0.0131991861240507,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.095,0.0142561312056632,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.1,0.0152647474552741,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.105,0.0163725994298109,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.11,0.0173105988232896,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.115,0.0182882572812948,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.12,0.0191953812433076,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.125,0.020281064278107,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.13,0.021366860836199,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.135,0.0224875174991753,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.14,0.0236499482996974,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.145,0.0246855318434095,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.15,0.0256844490534119,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.155,0.0190578226606584,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.16,0.0185544042861441,0.015884688980130585,0.021315509316187174,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.165,0.0180004810743504,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.17,0.0176208694109563,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.175,0.0175724999715472,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.18,0.0173044604763373,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.185,0.0170805507358642,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.19,0.0169190872411164,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.195,0.016561848013056,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.2,0.0162339612256826,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.205,0.0160006967352799,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.21,0.0156409972960514,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.215,0.0155228943228238,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.22,0.0154986410225689,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.225,0.0150561783816261,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.23,0.0148457647310233,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.235,0.0145782097311166,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.24,0.0144213613203033,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.245,0.0143034631688039,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.25,0.01414806643104,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.255,0.0138819879970377,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.26,0.0136734387627701,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.265,0.0135309906475744,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.27,0.0133165182661011,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.275,0.0130241196411945,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.28,0.0131023563291509,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.285,0.0130313836782586,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.29,0.0125855680291668,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.295,0.0125780034092413,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.3,0.0124475272815127,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.305,0.012374450292108,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.31,0.0121728097447657,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.315,0.0118614372937255,,,,,,,,,,,
+FEVER,query-relative operator work,same predictor; actions and fixed route recomputed,0.32,0.0119335621228918,,,,,,,,,,,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.0,0.0172889164862177,0.012114335606390523,0.022829554774199293,existing full-refit anchor,0.0,,,,,,,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.01,0.0200250117474828,,,new full-refit dense-grid run,33.09083962440491,0.937126624241739,0.917101612494256,0.2175899999999999,0.2599999999999999,tree ensemble:5,two_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.02,0.0197211443415853,,,new full-refit dense-grid run,30.083043575286865,0.9342227568358414,0.914501612494256,0.200795,0.2599999999999999,tree ensemble:5,two_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.03,0.0216156474241396,,,new full-refit dense-grid run,30.260589838027958,0.9335172599183956,0.9119016124942562,0.188385,0.2599999999999999,tree ensemble:5,two_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.04,0.0210684783845693,,,new full-refit dense-grid run,29.735610961914062,0.9303700908788256,0.909301612494256,0.1762949999999999,0.2599999999999999,tree ensemble:5,two_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.05,0.0238701876566695,,,new full-refit dense-grid run,29.20715069770813,0.92979056678763,0.9059203791309604,0.1659,0.2399999999999999,tree ensemble:5,one_hop:1;two_hop:4,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.06,0.0239972612480307,,,new full-refit dense-grid run,29.33774495124817,0.9275176403789912,0.9035203791309608,0.158965,0.2399999999999999,tree ensemble:5,one_hop:1;two_hop:4,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.07,0.02535915281197,,,new full-refit dense-grid run,29.56385326385498,0.9264795319429304,0.9011203791309604,0.154125,0.2399999999999999,tree ensemble:5,one_hop:1;two_hop:4,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.08,0.0265665731274056,0.02169689588954045,0.03153968646518472,existing full-refit anchor,0.0,,,,,,,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.09,0.0278440406001779,,,new full-refit dense-grid run,35.206448793411255,0.9245952259099676,0.8967511853097897,0.14732,0.18,tree ensemble:5,one_hop:4;two_hop:1,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.1,0.0277394120155793,,,new full-refit dense-grid run,35.589762687683105,0.9238101780310336,0.8960707660154543,0.14277,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.11,0.028593470181333,,,new full-refit dense-grid run,30.59576654434204,0.9230642361967876,0.8944707660154543,0.1427999999999999,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.12,0.0288527244048004,,,new full-refit dense-grid run,29.660043239593502,0.9217234904202548,0.8928707660154545,0.13941,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.13,0.0292282221552798,,,new full-refit dense-grid run,28.683066606521606,0.9204989881707344,0.8912707660154543,0.135285,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.14,0.0278294016981464,,,new full-refit dense-grid run,28.740081310272217,0.9175001677136008,0.8896707660154546,0.132295,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.15,0.0281975736795123,,,new full-refit dense-grid run,28.691798448562626,0.9162683396949668,0.8880707660154542,0.13178,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.16,0.0288748044447407,,,new full-refit dense-grid run,29.341628074646,0.9153455704601948,0.8864707660154542,0.130805,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.17,0.0292316375808786,,,new full-refit dense-grid run,29.199414014816284,0.9141024035963328,0.8848707660154543,0.128665,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.18,0.0294327521820567,,,new full-refit dense-grid run,34.35006165504456,0.9127035181975108,0.8832707660154542,0.12675,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.19,0.0286594280046362,,,new full-refit dense-grid run,35.316426515579224,0.9103301940200904,0.8816707660154544,0.1240849999999999,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.2,0.0309184152539719,,,new full-refit dense-grid run,35.38348746299744,0.9109891812694264,0.8800707660154543,0.121955,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.21,0.0309994402676638,,,new full-refit dense-grid run,37.18649291992188,0.909470206283118,0.8784707660154543,0.119165,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.22,0.0311682968486514,,,new full-refit dense-grid run,36.59368896484375,0.908039062864106,0.8768707660154543,0.11663,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.23,0.0312550630684377,,,new full-refit dense-grid run,36.13432192802429,0.9065258290838922,0.8752707660154545,0.1169049999999999,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.24,0.0321598841414102,,,new full-refit dense-grid run,36.34981417655945,0.9058306501568646,0.8736707660154546,0.1163999999999999,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.25,0.0332884271505418,,,new full-refit dense-grid run,35.86550307273865,0.9053591931659962,0.8720707660154544,0.113125,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.26,0.0337812187288381,,,new full-refit dense-grid run,35.41186714172363,0.9042519847442924,0.870470766015454,0.1124149999999999,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.27,0.0344727653455874,,,new full-refit dense-grid run,35.14209055900574,0.9033435313610416,0.8688707660154541,0.11215,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.28,0.0357591064436734,,,new full-refit dense-grid run,35.19290280342102,0.9030298724591278,0.8672707660154543,0.1094449999999999,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.29,0.034954385362088,,,new full-refit dense-grid run,36.85905647277832,0.9006251513775424,0.8656707660154543,0.10855,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.3,0.0354025664561023,,,new full-refit dense-grid run,34.753955364227295,0.8994733324715567,0.8640707660154543,0.10894,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.31,0.036273211820356,,,new full-refit dense-grid run,36.51896095275879,0.8987439778358105,0.8624707660154542,0.108595,0.16,tree ensemble:5,one_hop:5,
+2Wiki-Structured,declared within-task schedule,full refit and route reselection,0.32,0.0370944007977385,0.0322036338484984,0.04223508658339658,existing full-refit anchor,0.0,,,,,,,
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.0,0.004946448451698,-0.0026009904025402295,0.012403219553869905,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.01,0.0060743937308139,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.02,0.0072023390099297,-0.00035561836473118247,0.014632615231026526,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.03,0.0083302842890455,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.04,0.0094582295681613,0.0019185297272703613,0.01691881867670762,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.05,0.0105861748472772,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.06,0.011714120126393,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.07,0.0128420654055088,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.08,0.0139700106846247,0.006425285801896747,0.02146065819755154,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.09,0.0150979559637405,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.1,0.0162259012428563,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.11,0.0173538465219721,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.12,0.018481791801088,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.13,0.0196097370802038,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.14,0.0207376823593196,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.15,0.0218656276384354,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.16,0.0229935729175513,0.01540481425411035,0.030550394603954877,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.17,0.0241215181966671,,,,,,,,,,,V2
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.18,0.0168489330557348,,,,,,,,,,,V1
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.19,0.0154589702808099,,,,,,,,,,,V1
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.2,0.014069007505885,,,,,,,,,,,V1
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.21,0.0126790447309601,,,,,,,,,,,V1
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.22,0.012674175949469,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.23,0.0110271588828218,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.24,0.0093801418161746,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.25,0.0077331247495273,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.26,0.0060861076828801,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.27,0.0044390906162329,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.28,0.0027920735495857,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.29,0.0011450564829384,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.3,-0.0005019605837087,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.31,-0.0021489776503559,,,,,,,,,,,V0
+MuSiQue,query-relative token/scoring work,primary actions fixed; fixed route reselected,0.32,-0.0037959947170031,-0.013326338916505672,0.005627926963005715,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.0,0.001741085321192,-0.005586675377933121,0.009106651778542509,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.01,0.0028772993983604,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.02,0.0040135134755289,-0.0034432432191246858,0.011490579676373206,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.03,0.0051497275526973,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.04,0.0062859416298658,-0.0009798897705546223,0.013677893305667184,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.05,0.0074221557070342,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.06,0.0085583697842026,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.07,0.0096945838613711,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.08,0.0108307979385395,0.003551634175265327,0.018131658433680406,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.09,0.011967012015708,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.1,0.0131032260928764,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.11,0.0142394401700449,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.12,0.0153756542472133,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.13,0.0165118683243818,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.14,0.0176480824015502,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.15,0.0187842964787186,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.16,0.0199205105558871,0.01268598724041872,0.027366047293546854,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.17,0.0210567246330555,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.18,0.022192938710224,,,,,,,,,,,V2
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.19,0.0091286576466425,,,,,,,,,,,V1
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.2,0.0075742238452091,,,,,,,,,,,V1
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.21,0.0060197900437757,,,,,,,,,,,V1
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.22,0.0044653562423423,,,,,,,,,,,V1
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.23,0.0036347614647856,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.24,0.0018056994291153,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.25,-2.3362606554893142e-05,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.26,-0.0018524246422251,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.27,-0.0036814866778954,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.28,-0.0055105487135657,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.29,-0.0073396107492359,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.3,-0.0091686727849062,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.31,-0.0109977348205765,,,,,,,,,,,V0
+MuSiQue,development-normalized additive work,primary actions fixed; fixed route reselected,0.32,-0.0128267968562468,-0.02233676166410509,-0.0033584089523378594,,,,,,,,,V0
+
+

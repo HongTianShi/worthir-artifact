@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild Figures 1--3 and Tables 2--4 from frozen released inputs."""
+"""Rebuild Figures 1--7 and Tables 2--4 from frozen released inputs."""
 
 from __future__ import annotations
 
@@ -614,6 +614,17 @@ def reproduce_figures(output: Path, steps: list[dict[str, Any]]) -> None:
             "figure3",
             [sys.executable, str(work / "make_recoverability_bridge.py")],
         ),
+        (
+            "figures4-7",
+            [
+                sys.executable,
+                str(source / "make_figures_4_7.py"),
+                "--data-root",
+                str(ROOT),
+                "--output-dir",
+                str(work),
+            ],
+        ),
     ]
     for step_id, command in commands:
         result = run(command, work)
@@ -624,6 +635,10 @@ def reproduce_figures(output: Path, steps: list[dict[str, Any]]) -> None:
         "figure1.pdf",
         "cost_quality_final.pdf",
         "recoverability_bridge.pdf",
+        "figure4.pdf",
+        "figure5.pdf",
+        "figure6.pdf",
+        "figure7.pdf",
     )
     missing = [name for name in required if not (work / name).is_file()]
     if missing:
