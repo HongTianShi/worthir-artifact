@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+"""构建自定义任务、运行示例路由器并比较效用。"""
+
+from __future__ import annotations
+
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[2]
+DESTINATION = ROOT / "reproduced" / "custom_task"
+CHOICES = ROOT / "reproduced" / "custom_router_choices.csv"
+
+
+def run(*arguments: str) -> None:
+    completed = subprocess.run([sys.executable, str(ROOT / "worthir.py"), *arguments])
+    if completed.returncode:
+        raise SystemExit(completed.returncode)
+
+
+def main() -> None:
+    if DESTINATION.exists():
+        shutil.rmtree(DESTINATION)
+    run(
+        "build-custom",
+        str(ROOT / "examples" / "custom_task" / "source"),
+        str(DESTINATION),
+    )
+    subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).with_name("router.py")),
+            str(DESTINATION / "participant" / "legal_state.csv"),
+            str(CHOICES),
+        ],
+        check=True,
+    )
+    run(
+        "evaluate",
+        str(DESTINATION),
+        str(CHOICES),
+        "--policy-id",
+        "example-rule-router",
+    )
+    print(f"请打开：{DESTINATION / 'comparison.md'}")
+
+
+if __name__ == "__main__":
+    main()
