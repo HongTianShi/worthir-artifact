@@ -29,7 +29,11 @@ def initialize_task(output: Path, task_id: str) -> Path:
     output = output.resolve()
     if output.exists():
         raise ValueError(f"输出目录已经存在：{output}")
-    shutil.copytree(TEMPLATE, output)
+    shutil.copytree(
+        TEMPLATE,
+        output,
+        ignore=shutil.ignore_patterns("__init__.py", "__pycache__", "*.pyc"),
+    )
     contract_path = output / "contracts" / "task_contract.json"
     action_path = output / "participant" / "actions.json"
     registry_path = output / "contracts" / "route_registry.json"
@@ -50,13 +54,17 @@ def initialize_task(output: Path, task_id: str) -> Path:
         "请将其他 WorthIR 动作 JSON 文件放在这里。`worthir compare` 会评估全部文件。\n",
         encoding="utf-8",
     )
+    installed_command = not (ROOT / "paper_results").is_dir()
+    powershell_launcher = "worthir" if installed_command else ".\\worthir.cmd"
+    posix_launcher = "worthir" if installed_command else "./worthir"
+    context = "可从任意目录运行" if installed_command else "请从 WorthIR 仓库根目录运行"
     (output / "README.md").write_text(
         f"# {task_id}\n\n该目录是一个可运行的 WorthIR 任务。\n\n"
-        "从 WorthIR 仓库根目录运行：\n\n"
-        f"```powershell\n.\\worthir.cmd validate-task \"{output}\"\n"
-        f".\\worthir.cmd compare \"{output}\"\n```\n\n"
-        f"```bash\n./worthir validate-task \"{output}\"\n"
-        f"./worthir compare \"{output}\"\n```\n",
+        f"{context}：\n\n"
+        f"```powershell\n{powershell_launcher} validate-task \"{output}\"\n"
+        f"{powershell_launcher} compare \"{output}\"\n```\n\n"
+        f"```bash\n{posix_launcher} validate-task \"{output}\"\n"
+        f"{posix_launcher} compare \"{output}\"\n```\n",
         encoding="utf-8",
     )
     return output
@@ -75,7 +83,12 @@ def main() -> None:
     except ValueError as exc:
         parser.error(str(exc))
     print(f"已创建：{output}")
-    launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
+    installed_command = not (ROOT / "paper_results").is_dir()
+    launcher = (
+        "worthir"
+        if installed_command
+        else (".\\worthir.cmd" if sys.platform == "win32" else "./worthir")
+    )
     print(f"下一步：{launcher} validate-task \"{output}\"")
 
 
