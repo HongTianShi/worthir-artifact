@@ -73,6 +73,12 @@ def main() -> None:
         default="provided-policy",
         help="提供 policy_choices.csv 时为该策略指定名称",
     )
+    build.add_argument(
+        "--cost-availability",
+        choices=["known_at_commitment", "measured_after_execution"],
+        default="known_at_commitment",
+        help="路线成本在何时对路由策略可见",
+    )
 
     actions = subparsers.add_parser(
         "actions", help="将 CSV 中的查询--路线选择转换为动作 JSON"
@@ -146,6 +152,8 @@ def main() -> None:
                 str(args.lam),
                 "--policy-id",
                 args.policy_id,
+                "--cost-availability",
+                args.cost_availability,
             ],
         )
         launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"

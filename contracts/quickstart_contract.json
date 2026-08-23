@@ -34,6 +34,7 @@
   "cost_profile": {
     "profile_id": "synthetic_declared_schedule-v1",
     "provenance": "declared",
-    "lambda": 0.08
+    "lambda": 0.08,
+    "availability": "known_at_commitment"
   }
 }

@@ -33,7 +33,8 @@ my_source/
   "cost_profile": {
     "profile_id": "latency-seconds-v1",
     "provenance": "预热后的单查询测量",
-    "lambda": 0.15
+    "lambda": 0.15,
+    "availability": "known_at_commitment"
   },
   "development_selected_fixed_route": "standard"
 }
@@ -91,6 +92,11 @@ WorthIR 会对传递前置闭包求和，并且每个组件只计一次。若成
 `outcomes.csv` 中加入同名的 `cost` 或 `incremental_cost` 列，并为每个组合
 提供数值。两种成本模式不能混用。
 
+当 `availability` 为 `known_at_commitment` 时，构建器会把固定成本写入
+`contracts/route_registry.json`，或把逐查询累计成本写入
+`participant/route_costs.csv`。若路由器在路线执行前无法知道成本，则使用
+`measured_after_execution`；这类成本只留在评价方。
+
 ### 4. 构建并校验
 
 ```powershell
@@ -103,12 +109,13 @@ WorthIR 会对传递前置闭包求和，并且每个组件只计一次。若成
 ./worthir validate-task my_task
 ```
 
-校验结果会汇总查询数、路线数、缺失组合、依赖问题、累计成本问题，以及成本是否
-随查询变化。
+校验结果会汇总查询数、路线数、缺失组合、依赖问题、累计成本问题、成本何时可见，
+并检查每个公开成本是否与评价方 ledger 一致。
 
 ### 5. 运行并比较路由器
 
-路由器读取 `my_task/participant/legal_state.csv`，并输出：
+路由器读取任务契约、公开路线注册表、`my_task/participant/legal_state.csv` 和所有
+公开成本，并输出：
 
 ```csv
 query_uid,selected_route_id
@@ -138,6 +145,8 @@ q2,extended
 ```
 
 可选的 TREC `costs.csv` 使用 `query_uid,route_id,cost` 三列提供逐查询累计成本。
+只有当这些成本在路线选择时尚不可知，才添加
+`--cost-availability measured_after_execution`。
 
 ## 输出
 

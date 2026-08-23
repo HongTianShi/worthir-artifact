@@ -24,3 +24,7 @@
 
 已有累计成本时使用 `cost`；需要工具对传递前置闭包求和时使用
 `incremental_cost`。在 `outcomes.csv` 中加入同名列即可提供逐查询成本。
+将 `cost_profile.availability` 设为 `known_at_commitment`，表示路由器可在选择路线前
+使用成本；构建器会把固定成本写入路线注册表，或把逐查询成本写入
+`participant/route_costs.csv`。若成本只能在执行后测量，则使用
+`measured_after_execution`。

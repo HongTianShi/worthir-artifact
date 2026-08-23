@@ -9,6 +9,12 @@ utility = effectiveness - lambda * cumulative_cost
 成本单位和 lambda 都属于任务定义。效用只在该任务及其成本设定内有意义，不能作为
 跨数据集分数使用。
 
+必须明确设置 `cost_profile.availability`。`known_at_commitment` 表示路由器可以在
+选择路线前使用成本：固定成本公开在 `route_registry.json` 中，逐查询成本公开在
+`participant/route_costs.csv` 中。`measured_after_execution` 表示成本只写在评价方
+ledger 中，不作为路由器输入。`validate-task` 会检查每个公开成本是否与评分所用
+成本相同。
+
 ## 选择成本表达方式
 
 应当使用能够回答部署问题的最简单表达方式：

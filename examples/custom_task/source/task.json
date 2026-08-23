@@ -9,7 +9,8 @@
   "cost_profile": {
     "profile_id": "measured-seconds-v1",
     "provenance": "预热后的单查询执行时间",
-    "lambda": 0.15
+    "lambda": 0.15,
+    "availability": "known_at_commitment"
   },
   "development_selected_fixed_route": "semantic_search"
 }

@@ -32,7 +32,7 @@ def main() -> None:
         [
             sys.executable,
             str(Path(__file__).with_name("router.py")),
-            str(DESTINATION / "participant" / "legal_state.csv"),
+            str(DESTINATION),
             str(CHOICES),
         ],
         check=True,

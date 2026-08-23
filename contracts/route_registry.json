@@ -1,21 +1,29 @@
 {
   "registry_id": "worthir-quickstart-routes-v1",
+  "cost_information": {
+    "availability": "known_at_commitment",
+    "mode": "fixed",
+    "route_costs_file": null
+  },
   "routes": [
     {
       "label": "在 BM25 后停止",
       "prerequisites": [],
-      "route_id": "bm25"
+      "route_id": "bm25",
+      "cost": 0.0
     },
     {
       "label": "稠密候选融合",
       "prerequisites": ["bm25"],
-      "route_id": "dense"
+      "route_id": "dense",
+      "cost": 0.2
     },
     {
       "label": "交叉编码器重排前 20 个候选",
       "prerequisites": ["dense"],
-      "route_id": "ce20"
+      "route_id": "ce20",
+      "cost": 0.8
     }
   ],
-  "schema_version": "worthir-route-registry-v1.1"
+  "schema_version": "worthir-route-registry-v1.2"
 }
