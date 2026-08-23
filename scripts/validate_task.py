@@ -51,6 +51,8 @@ def main() -> None:
         f"  查询--路线结果数：{summary['query_route_rows']}\n"
         f"  有效性指标：{metric}\n"
         f"  成本模式：{cost_mode}\n"
+        f"  成本可见时点：{summary['cost_availability']}\n"
+        f"  公开成本来源：{summary['public_cost_source']}\n"
         f"  前置关系边数：{summary['prerequisite_edges']}\n"
         f"  固定参考路线：{summary['development_selected_fixed_route']}"
     )

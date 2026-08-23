@@ -33,7 +33,7 @@ def _exact_fields(obj: dict[str, Any], fields: list[str], where: str) -> None:
 
 def _load_registry(
     contract_path: Path, contract: dict[str, Any]
-) -> tuple[str, list[dict[str, Any]]]:
+) -> tuple[str, list[dict[str, Any]], dict[str, Any] | None]:
     registry_name = contract.get("route_registry")
     if not isinstance(registry_name, str) or not registry_name:
         raise ScoreError("契约中的 route_registry 路径格式错误")
@@ -54,10 +54,12 @@ def _load_registry(
         if not isinstance(route, dict):
             raise ScoreError(f"路线 {index} 的结构无效")
         fields = set(route)
-        if fields == {"route_id", "label", "parent_route_id"}:
+        route_cost = route.get("cost")
+        structural_fields = fields - {"cost"}
+        if structural_fields == {"route_id", "label", "parent_route_id"}:
             parent = route["parent_route_id"]
             route_prerequisites = [] if parent is None else [parent]
-        elif fields == {"route_id", "label", "prerequisites"}:
+        elif structural_fields == {"route_id", "label", "prerequisites"}:
             route_prerequisites = route["prerequisites"]
             if not isinstance(route_prerequisites, list) or any(
                 not isinstance(value, str) or not value
@@ -70,6 +72,12 @@ def _load_registry(
                 raise ScoreError(f"路线 {index} 重复声明了前置路线")
         else:
             raise ScoreError(f"路线 {index} 的结构无效")
+        if "cost" in fields:
+            if not isinstance(route_cost, (int, float)) or isinstance(route_cost, bool):
+                raise ScoreError(f"路线 {index} 的公开成本不是数值")
+            route_cost = float(route_cost)
+            if not math.isfinite(route_cost) or route_cost < 0:
+                raise ScoreError(f"路线 {index} 的公开成本无效")
         route_id = route["route_id"]
         if not isinstance(route_id, str) or not route_id:
             raise ScoreError(f"路线 {index} 的 route_id 无效")
@@ -84,6 +92,7 @@ def _load_registry(
                 "route_id": route_id,
                 "label": route["label"],
                 "prerequisites": list(route_prerequisites),
+                "cost": route_cost if "cost" in fields else None,
             }
         )
     route_set = set(route_ids)
@@ -110,7 +119,118 @@ def _load_registry(
 
     for route_id in route_ids:
         visit(route_id)
-    return registry_id, normalized
+
+    cost_information = registry.get("cost_information")
+    if cost_information is not None:
+        if not isinstance(cost_information, dict):
+            raise ScoreError("路线注册表的 cost_information 必须是对象")
+        expected = {"availability", "mode", "route_costs_file"}
+        if set(cost_information) != expected:
+            raise ScoreError(
+                "路线注册表的 cost_information 必须包含 availability、"
+                "mode 和 route_costs_file"
+            )
+        if cost_information["availability"] not in {
+            "known_at_commitment",
+            "measured_after_execution",
+        }:
+            raise ScoreError("未知的成本可见时点")
+        if cost_information["mode"] not in {"fixed", "query_dependent"}:
+            raise ScoreError("未知的公开成本模式")
+        route_costs_file = cost_information["route_costs_file"]
+        if route_costs_file is not None and (
+            not isinstance(route_costs_file, str) or not route_costs_file
+        ):
+            raise ScoreError("route_costs_file 必须为空或非空路径")
+    return registry_id, normalized, cost_information
+
+
+def _validate_public_costs(
+    contract_path: Path,
+    routes: list[dict[str, Any]],
+    cost_information: dict[str, Any] | None,
+    matrix: dict[str, dict[str, tuple[float, float]]],
+) -> tuple[str, str]:
+    """核对参与者可见成本与评价方实际评分成本。"""
+
+    if cost_information is None:
+        return "unspecified", "旧版注册表未声明"
+    availability = cost_information["availability"]
+    mode = cost_information["mode"]
+    route_costs_file = cost_information["route_costs_file"]
+    route_ids = [route["route_id"] for route in routes]
+    actual_mode = "query_dependent" if any(
+        len({matrix[query_uid][route_id][1] for query_uid in matrix}) > 1
+        for route_id in route_ids
+    ) else "fixed"
+    if mode != actual_mode:
+        raise ScoreError(
+            f"声明的成本模式为 {mode}，但评价方成本实际为 {actual_mode}"
+        )
+    public_route_costs = [route["cost"] for route in routes]
+    if availability == "measured_after_execution":
+        if any(value is not None for value in public_route_costs) or route_costs_file:
+            raise ScoreError("执行后测量的成本不能作为决策时公开成本")
+        return availability, "仅评价方台账"
+    if mode == "fixed":
+        if route_costs_file is not None or any(
+            value is None for value in public_route_costs
+        ):
+            raise ScoreError("决策时已知的固定成本必须写入每条注册路线")
+        for route in routes:
+            public_cost = float(route["cost"])
+            for query_uid in matrix:
+                ledger_cost = matrix[query_uid][route["route_id"]][1]
+                if not math.isclose(
+                    public_cost, ledger_cost, rel_tol=0.0, abs_tol=1e-12
+                ):
+                    raise ScoreError(
+                        f"公开成本不一致：{query_uid}/{route['route_id']}"
+                    )
+        return availability, "路线注册表"
+    if any(value is not None for value in public_route_costs):
+        raise ScoreError("逐查询决策时成本必须写入 route_costs.csv")
+    if route_costs_file is None:
+        raise ScoreError("逐查询决策时成本必须声明 route_costs_file")
+    path = (contract_path.parent / route_costs_file).resolve()
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            reader = csv.DictReader(stream)
+            if reader.fieldnames != ["query_uid", "route_id", "cost"]:
+                raise ScoreError(
+                    "参与者 route_costs.csv 的列必须为 query_uid、route_id、cost"
+                )
+            rows = list(reader)
+    except OSError as exc:
+        raise ScoreError(f"无法读取参与者路线成本：{exc}") from exc
+    observed: dict[tuple[str, str], float] = {}
+    for index, row in enumerate(rows, 2):
+        key = (row["query_uid"], row["route_id"])
+        if key in observed or key[0] not in matrix or key[1] not in route_ids:
+            raise ScoreError(f"参与者 route_costs.csv 第 {index} 行的键无效")
+        try:
+            value = float(row["cost"])
+        except ValueError as exc:
+            raise ScoreError(f"参与者 route_costs.csv 第 {index} 行成本不是数值") from exc
+        if not math.isfinite(value) or value < 0:
+            raise ScoreError(f"参与者 route_costs.csv 第 {index} 行成本无效")
+        observed[key] = value
+    expected = {
+        (query_uid, route_id) for query_uid in matrix for route_id in route_ids
+    }
+    if set(observed) != expected:
+        missing = len(expected - set(observed))
+        extra = len(set(observed) - expected)
+        raise ScoreError(f"参与者路线成本不完整；缺少={missing}，多余={extra}")
+    for key, public_cost in observed.items():
+        if not math.isclose(
+            public_cost,
+            matrix[key[0]][key[1]][1],
+            rel_tol=0.0,
+            abs_tol=1e-12,
+        ):
+            raise ScoreError(f"公开成本不一致：{key[0]}/{key[1]}")
+    return availability, str(path)
 
 
 def _load_actions(
@@ -233,10 +353,13 @@ def inspect_task(
     contract_path = contract_path.resolve()
     ledger_path = ledger_path.resolve()
     contract = read_json(contract_path)
-    registry_id, routes = _load_registry(contract_path, contract)
+    registry_id, routes, cost_information = _load_registry(contract_path, contract)
     route_ids = [route["route_id"] for route in routes]
     matrix = _load_ledger(ledger_path, contract, route_ids)
     _validate_cumulative_costs(matrix, routes)
+    cost_availability, public_cost_source = _validate_public_costs(
+        contract_path, routes, cost_information, matrix
+    )
     expected_count = int(contract["expected_query_count"])
     if len(matrix) != expected_count:
         raise ScoreError(
@@ -280,6 +403,8 @@ def inspect_task(
         "route_ids": route_ids,
         "prerequisite_edges": prerequisite_edges,
         "query_dependent_cost": any(len(values) > 1 for values in costs_by_route.values()),
+        "cost_availability": cost_availability,
+        "public_cost_source": public_cost_source,
         "metric": contract["metric"],
         "cost_profile": contract["cost_profile"],
         "development_selected_fixed_route": contract["development_selected_fixed_route"],
@@ -296,7 +421,7 @@ def load_and_score(
     ledger_path = ledger_path.resolve()
     action_path = action_path.resolve()
     contract = read_json(contract_path)
-    registry_id, routes = _load_registry(contract_path, contract)
+    registry_id, routes, cost_information = _load_registry(contract_path, contract)
     route_ids = [route["route_id"] for route in routes]
     route_rank = {route_id: index for index, route_id in enumerate(route_ids)}
     fixed_reference = contract.get("development_selected_fixed_route")
@@ -307,6 +432,7 @@ def load_and_score(
     policy_id, decisions = _load_actions(action_path, contract_path, contract)
     matrix = _load_ledger(ledger_path, contract, route_ids)
     _validate_cumulative_costs(matrix, routes)
+    _validate_public_costs(contract_path, routes, cost_information, matrix)
 
     expected_count = int(contract["expected_query_count"])
     if len(matrix) != expected_count:
