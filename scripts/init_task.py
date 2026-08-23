@@ -26,7 +26,11 @@ def initialize_task(output: Path, task_id: str) -> Path:
     output = output.resolve()
     if output.exists():
         raise ValueError(f"output already exists: {output}")
-    shutil.copytree(TEMPLATE, output)
+    shutil.copytree(
+        TEMPLATE,
+        output,
+        ignore=shutil.ignore_patterns("__init__.py", "__pycache__", "*.pyc"),
+    )
     contract_path = output / "contracts" / "task_contract.json"
     action_path = output / "participant" / "actions.json"
     registry_path = output / "contracts" / "route_registry.json"
@@ -47,13 +51,17 @@ def initialize_task(output: Path, task_id: str) -> Path:
         "Put additional WorthIR action JSON files here. `worthir compare` scores all of them.\n",
         encoding="utf-8",
     )
+    installed_command = not (ROOT / "paper_results").is_dir()
+    powershell_launcher = "worthir" if installed_command else ".\\worthir.cmd"
+    posix_launcher = "worthir" if installed_command else "./worthir"
+    context = "From any directory" if installed_command else "From the WorthIR repository root"
     (output / "README.md").write_text(
         f"# {task_id}\n\nThis directory is a runnable WorthIR task.\n\n"
-        "From the WorthIR repository root:\n\n"
-        f"```powershell\n.\\worthir.cmd validate-task \"{output}\"\n"
-        f".\\worthir.cmd compare \"{output}\"\n```\n\n"
-        f"```bash\n./worthir validate-task \"{output}\"\n"
-        f"./worthir compare \"{output}\"\n```\n",
+        f"{context}:\n\n"
+        f"```powershell\n{powershell_launcher} validate-task \"{output}\"\n"
+        f"{powershell_launcher} compare \"{output}\"\n```\n\n"
+        f"```bash\n{posix_launcher} validate-task \"{output}\"\n"
+        f"{posix_launcher} compare \"{output}\"\n```\n",
         encoding="utf-8",
     )
     return output
@@ -72,7 +80,12 @@ def main() -> None:
     except ValueError as exc:
         parser.error(str(exc))
     print(f"CREATED: {output}")
-    launcher = ".\\worthir.cmd" if sys.platform == "win32" else "./worthir"
+    installed_command = not (ROOT / "paper_results").is_dir()
+    launcher = (
+        "worthir"
+        if installed_command
+        else (".\\worthir.cmd" if sys.platform == "win32" else "./worthir")
+    )
     print(f"NEXT: {launcher} validate-task \"{output}\"")
 
 
