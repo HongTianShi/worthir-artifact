@@ -20,14 +20,14 @@ for human users; this document is deliberately detailed.
 
 1. Run `python setup_environment.py` from the repository root.
 2. Use `worthir demo` to verify the complete qrels-to-report path.
-3. For standard IR data, define routes and costs in `routes.csv`, then run
-   `worthir build-trec SOURCE TASK --task-id ID --metric ndcg@K --lambda VALUE`.
-4. Export held-out query-route choices as CSV and bind them with
-   `worthir actions TASK CHOICES --policy-id ID`.
-5. Run `worthir compare TASK`. The command scores every supplied policy and
+3. For a generic task, provide `task.json`, `queries.csv`, `routes.csv`, and
+   `outcomes.csv`, then run `worthir build-custom SOURCE TASK`.
+4. Run `worthir validate-task TASK` before scoring any policy.
+5. Export held-out query-route choices as CSV and run
+   `worthir evaluate TASK CHOICES --policy-id ID`.
+6. `worthir compare TASK` scores every supplied policy and
    every fixed route and writes Markdown, CSV, and JSON reports.
-6. For a non-TREC metric, use `worthir init` and replace the complete ledger
-   manually before scoring or comparing.
+7. `worthir build-trec` is a convenience adapter for qrels and TREC runs.
 
 ## Information boundary and scientific invariants
 
@@ -35,7 +35,9 @@ for human users; this document is deliberately detailed.
 - Relevance judgments, unselected-route outcomes, utilities, oracle actions, and
   regret are evaluator-only.
 - The ledger must contain the complete Cartesian product of queries and routes.
-- Route costs are cumulative; a child cannot cost less than its parent.
+- Route costs are cumulative. A route cannot cost less than any prerequisite.
+- Generic sources may provide cumulative cost directly or incremental component
+  cost; the builder computes the transitive prerequisite closure once.
 - Utility is `effectiveness - lambda * cumulative_cost`. Raw utilities are
   task-specific and must not be compared across tasks.
 - Oracle and regret are defined only within the registered route set.
@@ -44,8 +46,9 @@ for human users; this document is deliberately detailed.
 
 ## Public interface and limits
 
-- The built-in adapter reads qrels and six-column TREC runs and computes
-  NDCG@K. Other effectiveness measures require a precomputed ledger.
+- The generic adapter accepts any named higher-is-better scalar effectiveness
+  measure with declared bounds. The TREC adapter computes NDCG@K from qrels and
+  six-column run files.
 - Constant route costs belong in `routes.csv`; a complete `costs.csv` overrides
   them for query-dependent latency or work.
 - The contract exposes only choices that the generic scorer uses. Higher
@@ -73,7 +76,7 @@ for human users; this document is deliberately detailed.
 - After paper-result changes, also run
   `python paper_results/run.py --use-current-python` when dependencies are present.
 
-## Complete tracked-file audit (328 files)
+## Complete tracked-file audit
 
 Every tracked path is listed once. Evaluator data must not become policy input
 merely because it is publicly released.
@@ -83,6 +86,8 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `LICENSE` | License | MIT license for WorthIR-authored code. |
+| `NOTICE` | Third-party notice | Points to the data, model, and software terms that remain outside the MIT license. |
+| `CITATION.cff` | Citation metadata | Supplies the software release and preferred paper citation to GitHub and citation tools. |
 | `README_FOR_AI.md` | AI project map | Explains architecture, invariants, current limits, and the purpose of every tracked file. |
 | `README.md` | Human entry point | Gives the one-command setup, complete demo, own-data route, and paper-results boundary. |
 | `run.py` | Framework validator | Runs the dependency-free framework validation suite. |
@@ -96,7 +101,7 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `.gitattributes` | Repository configuration | Normalizes text line endings and marks binary research artifacts so Git does not rewrite them. |
-| `.github/workflows/validate.yml` | Continuous integration | Validates the framework on Windows and Linux and separately reproduces the paper results. |
+| `.github/workflows/validate.yml` | Continuous integration | Validates the framework on Windows, Linux, and macOS and separately reproduces the paper results. |
 | `.gitignore` | Repository configuration | Excludes generated outputs, environments, caches, editor state, and build products. |
 
 ### Reusable contracts
@@ -105,13 +110,13 @@ merely because it is publicly released.
 | --- | --- | --- |
 | `contracts/quickstart_contract.json` | Task contract | Defines the synthetic task, action schema, metric range, cost preference, and identifiers. |
 | `contracts/README.md` | Contract guide | Explains the shared quickstart task contract and route registry. |
-| `contracts/route_registry.json` | Route registry | Registers the synthetic quickstart routes and their parent relationships. |
+| `contracts/route_registry.json` | Route registry | Registers the synthetic quickstart routes and their prerequisites. |
 
 ### Reusable documentation
 
 | Path | What it is | What it is for |
 | --- | --- | --- |
-| `docs/ADAPT_TO_NEW_TASK.md` | Adaptation guide | Describes the manual steps for turning the runnable template into a new task. |
+| `docs/ADAPT_TO_NEW_TASK.md` | Adaptation guide | Defines the generic task tables, route dependencies, cost modes, TREC shortcut, and router workflow. |
 | `docs/COST_AND_LAMBDA.md` | Cost guide | Explains cumulative cost choices, normalization, lambda selection, and sensitivity. |
 | `docs/OUTPUTS.md` | Output guide | Defines comparison fields, fixed references, Pareto membership, and descriptive scope. |
 
@@ -124,10 +129,23 @@ merely because it is publicly released.
 | `examples/trec_walkthrough/source/policy_choices.csv` | Policy choices | Supplies the default adaptive choices consumed during task construction. |
 | `examples/trec_walkthrough/source/qrels.tsv` | TREC qrels | Defines graded relevance for the small walkthrough task. |
 | `examples/trec_walkthrough/source/queries.csv` | Participant state | Provides human-readable query text and one legal pre-route feature. |
-| `examples/trec_walkthrough/source/routes.csv` | Route definition | Maps route IDs to TREC runs, parent dependencies, costs, and the development-selected fixed route. |
+| `examples/trec_walkthrough/source/routes.csv` | Route definition | Maps route IDs to TREC runs, prerequisites, costs, and the development-selected fixed route. |
 | `examples/trec_walkthrough/source/runs/base.trec` | TREC run | Supplies base-route rankings for the walkthrough. |
 | `examples/trec_walkthrough/source/runs/prf.trec` | TREC run | Supplies query-expansion rankings for the walkthrough. |
 | `examples/trec_walkthrough/source/runs/rerank.trec` | TREC run | Supplies cross-encoder rankings for the walkthrough. |
+
+### Generic non-TREC example
+
+| Path | What it is | What it is for |
+| --- | --- | --- |
+| `examples/custom_task/README.md` | Generic task guide | Explains the four source files and the cumulative/incremental cost modes. |
+| `examples/custom_task/source/task.json` | Task definition | Declares the non-TREC effectiveness measure, cost profile, and fixed reference. |
+| `examples/custom_task/source/queries.csv` | Participant state | Supplies only the fields available to the example router. |
+| `examples/custom_task/source/routes.csv` | Route definition | Demonstrates a multi-prerequisite route and incremental component costs. |
+| `examples/custom_task/source/outcomes.csv` | Evaluator outcomes | Supplies complete answer-coverage and query-dependent cost outcomes. |
+| `examples/custom_router/README.md` | Router guide | Shows how to execute and replace the external example router. |
+| `examples/custom_router/router.py` | Example router | Reads legal state, applies a replaceable rule, and writes a choice CSV without opening evaluator data. |
+| `examples/custom_router/run.py` | Router walkthrough | Builds the generic task, runs the router, binds its choices, and writes the comparison. |
 
 ### Synthetic quickstart
 
@@ -145,6 +163,7 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `scripts/actions_from_csv.py` | Action converter | Validates human-readable query-route choices and writes contract-bound action JSON. |
+| `scripts/build_custom_task.py` | Generic task adapter | Builds contracts, participant state, and a complete ledger from generic source tables. |
 | `scripts/build_trec_task.py` | TREC adapter | Computes NDCG@K from qrels and runs and builds a complete reusable task. |
 | `scripts/compare_policies.py` | Comparison reporter | Scores all supplied policies and fixed routes and writes Markdown, CSV, JSON, and Pareto outputs. |
 | `scripts/init_task.py` | Task initializer | Copies the runnable template and replaces task, contract, and registry identifiers. |
@@ -152,6 +171,7 @@ merely because it is publicly released.
 | `scripts/run_integrity_tests.py` | Integrity tests | Checks invalid inputs, arithmetic invariants, cumulative costs, ties, and the example information boundary. |
 | `scripts/run_smoke_test.py` | Smoke test | Scores the six-query quickstart and writes aggregate results. |
 | `scripts/score_actions.py` | Scoring CLI | Resolves task inputs, invokes the core scorer, and writes aggregate JSON. |
+| `scripts/validate_task.py` | Task validator | Reports task coverage, dependency edges, cost mode, and contract problems before scoring. |
 | `scripts/validate_framework.py` | Framework validator | Runs smoke, integrity, task initialization, TREC construction, action conversion, and comparison checks. |
 
 ### Reusable Python source
@@ -159,8 +179,8 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `src/README.md` | Source guide | Explains the dependency-free source layout. |
-| `src/worthir_eval/__init__.py` | Python API | Exports the supported scorer function and error type. |
-| `src/worthir_eval/core.py` | Scoring implementation | Validates routes, actions, ledgers, and cumulative costs, then computes effectiveness, cost, utility, oracle agreement, and regret. |
+| `src/worthir_eval/__init__.py` | Python API | Exports task inspection, scoring, and the public error type. |
+| `src/worthir_eval/core.py` | Scoring implementation | Validates dependency graphs, actions, ledgers, and cumulative costs, then computes effectiveness, cost, utility, oracle agreement, and regret. |
 | `src/worthir_eval/README.md` | Package guide | Summarizes the scorer API and participant-evaluator boundary. |
 
 ### New-task template
@@ -168,7 +188,7 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `task_template/.gitignore` | Template configuration | Excludes generated task scores and comparison reports. |
-| `task_template/contracts/route_registry.json` | Template route registry | Runnable two-route example to replace for a new task. |
+| `task_template/contracts/route_registry.json` | Template route registry | Runnable two-route prerequisite example to replace for a new task. |
 | `task_template/contracts/task_contract.json` | Template task contract | Runnable one-query task, metric, cost, and schema example. |
 | `task_template/evaluator/ledger.csv` | Template evaluator data | Complete one-query, two-route effectiveness and cost ledger. |
 | `task_template/participant/actions.json` | Template action file | One-row example selecting a registered route. |
@@ -180,6 +200,7 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `paper_results/README.md` | Paper-results entry point | Explains how to reproduce and validate all released paper outputs. |
+| `paper_results/PAPER_MAP.md` | Paper result index | Maps each main-paper figure and table to source data, commands, outputs, and reproduction level. |
 | `paper_results/requirements.txt` | Dependency specification | Pinned packages used only by paper-result reproduction. |
 | `paper_results/run.py` | Paper-results entry point | Creates the paper-local environment and launches released-results validation. |
 
