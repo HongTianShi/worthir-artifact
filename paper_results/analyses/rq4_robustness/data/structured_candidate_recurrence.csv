@@ -1,0 +1,6 @@
+removed_top_candidate_fraction,retained_queries,excluded_queries,utility_gain,bootstrap_ci_low,bootstrap_ci_high,configurations_positive,configurations_ci_positive,total_configurations,learner_families_with_positive_configuration,total_learner_families
+0.0000,2000,0,0.0265665731,0.0218743300,0.0315045600,16,15,16,8,8
+0.0025,1301,699,0.0307436600,0.0242710400,0.0375368200,15,14,16,8,8
+0.0050,1279,721,0.0309787900,0.0244479500,0.0378907900,15,14,16,8,8
+0.0100,1274,726,0.0313306700,0.0246484800,0.0384204100,15,14,16,8,8
+0.0200,1199,801,0.0331943600,0.0262553300,0.0405006000,16,14,16,8,8
