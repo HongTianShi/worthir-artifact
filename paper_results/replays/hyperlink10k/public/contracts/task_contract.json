@@ -1,0 +1,20 @@
+{
+  "decision": "one registered evidence view per query before outcomes",
+  "evaluation_seeds": [
+    17,
+    23,
+    31,
+    43,
+    59
+  ],
+  "metric_cutoff": 4,
+  "population": 10000,
+  "privacy_boundary": "Public IDs/questions remain joinable to public 2Wiki. The contract enforces evaluator timing and direct field separation, not cryptographic secrecy.",
+  "raw_quality": "binary support-title NDCG@4",
+  "schema_version": "worthir-task-contract-v1.0",
+  "submission_schema_id": "worthir-hyperlink10k-submission-v1.0",
+  "surface_id": "worthir-hyperlink10k-scoring-surface-v1.0",
+  "task_id": "worthir-2wiki-hyperlink10k-v1.0",
+  "test_queries_per_seed": 2001,
+  "training_provenance": "Action-vector scoring does not certify supervised split isolation; ordinary submissions are marked training_provenance_unverified."
+}
