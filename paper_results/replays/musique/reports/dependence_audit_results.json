@@ -1,0 +1,76 @@
+{
+  "analysis_id": "musique-worthir-dependence-unit-audit-v1.0",
+  "created_utc": "2026-07-30T04:36:42.882411+00:00",
+  "population": "2,417 answerable official-validation queries",
+  "point_estimate": 0.013970010684624702,
+  "component_definitions": {
+    "support_title": "exact normalized gold support title",
+    "support_paragraph_text": "normalized gold support paragraph text",
+    "decomposition_question": "exact normalized released decomposition question",
+    "union": "transitive closure over all three key families"
+  },
+  "component_stats": {
+    "support_title": {
+      "components": 415,
+      "largest_component": 690,
+      "median_component": 1.0,
+      "components_larger_than_one": 203,
+      "queries_in_shared_components": 2205,
+      "share_queries_in_shared_components": 0.9122879602813405,
+      "repeated_key_links": 3959
+    },
+    "support_paragraph_text": {
+      "components": 528,
+      "largest_component": 84,
+      "median_component": 2.0,
+      "components_larger_than_one": 293,
+      "queries_in_shared_components": 2182,
+      "share_queries_in_shared_components": 0.9027720314439388,
+      "repeated_key_links": 3780
+    },
+    "decomposition_question": {
+      "components": 321,
+      "largest_component": 433,
+      "median_component": 4.0,
+      "components_larger_than_one": 242,
+      "queries_in_shared_components": 2338,
+      "share_queries_in_shared_components": 0.9673148531237071,
+      "repeated_key_links": 3829
+    },
+    "union": {
+      "components": 179,
+      "largest_component": 1437,
+      "median_component": 4.0,
+      "components_larger_than_one": 139,
+      "queries_in_shared_components": 2377,
+      "share_queries_in_shared_components": 0.9834505585436492,
+      "repeated_key_links": 11568
+    }
+  },
+  "intervals": {
+    "query_bootstrap": [
+      0.006425285801896747,
+      0.02146065819755154
+    ],
+    "cluster_bootstrap_decomposition_question": [
+      0.0009499970364045099,
+      0.02626586462179509
+    ],
+    "cluster_bootstrap_support_paragraph_text": [
+      0.0017618257441246105,
+      0.026013841680323852
+    ],
+    "cluster_bootstrap_support_title": [
+      0.003976131171328032,
+      0.029115989995857978
+    ],
+    "cluster_bootstrap_union": [
+      0.0076502975060824775,
+      0.03309062854993469
+    ]
+  },
+  "interpretation": "All intervals are conditional resampling diagnostics over the fixed official-validation ledger; none is a task-population coverage guarantee.",
+  "outputs": {
+    "component_membership": "assets/official_validation_components.parquet"
+  }
+}
