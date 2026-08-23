@@ -1,133 +1,146 @@
-# 将 WorthIR 用于一个检索任务
+# 将 WorthIR 用于新任务
 
-最短路径从标准 qrels 和 TREC run 文件开始。以下命令均应从仓库根目录运行。
+以下命令均在仓库根目录运行。除非数据已经是 qrels 和 TREC run，否则优先使用
+通用适配器。
 
-## 1. 创建源文件夹
+## 通用任务
+
+创建一个源目录：
 
 ```text
 my_source/
-  qrels.tsv
+  task.json
+  queries.csv
   routes.csv
-  queries.csv              可选
-  costs.csv                可选
+  outcomes.csv
   policy_choices.csv       可选
-  runs/
-    base.trec
-    advanced.trec
 ```
 
-`qrels.tsv` 接受常见的四列 TREC 格式：
+### 1. 声明指标和成本配置
 
-```text
-query_id 0 document_id relevance
+`task.json` 声明一个“越高越好”的有效性指标，以及效用公式
+`utility = effectiveness - lambda * cost` 中的成本偏好：
+
+```json
+{
+  "task_id": "my-task-v1",
+  "metric": {
+    "name": "answer_coverage",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "higher_is_better": true
+  },
+  "cost_profile": {
+    "profile_id": "latency-seconds-v1",
+    "provenance": "预热后的单查询测量",
+    "lambda": 0.15
+  },
+  "development_selected_fixed_route": "standard"
+}
 ```
 
-也接受三列的 `query_id document_id relevance` 记录。
+指标不必是 NDCG 或其他 TREC 指标。WorthIR 直接使用每个查询--路线组合对应的
+数值结果。
 
-每个 run 文件均采用六列 TREC run 格式：
+### 2. 分离路由器输入与评价方结果
 
-```text
-query_id Q0 document_id rank score run_name
-```
-
-`routes.csv` 必须包含以下各列：
+`queries.csv` 只能包含路由决策发生时已经可用的字段，第一列必须是
+`query_uid`：
 
 ```csv
-route_id,label,parent_route_id,run_file,cost,development_selected
-base,BM25,,runs/base.trec,0.00,false
-advanced,Cross-encoder,base,runs/advanced.trec,0.75,true
+query_uid,question_length,domain
+q1,12,sports
+q2,31,science
 ```
 
-必须且只能将一条路线标记为 `development_selected`。它是在不使用评测结果的
-前提下选出的强固定参照。`parent_route_id` 记录执行该路线前必须完成的工作。
-成本是累计成本，因此子路线的成本不得低于其父路线。
-
-如果一条路线对所有查询的成本都相同，使用 `cost` 列即可。如果延迟或工作量随
-查询变化，则添加 `costs.csv`，并为每个“查询--路线”组合提供一行：
+`outcomes.csv` 只供评价方使用，并且必须包含每个查询--路线组合：
 
 ```csv
-query_uid,route_id,cost
-q1,base,12.4
-q1,advanced,48.7
+query_uid,route_id,effectiveness
+q1,standard,0.81
+q1,extended,0.89
+q2,standard,0.64
+q2,extended,0.91
 ```
 
-提供 `costs.csv` 后，其中的数值将取代固定路线成本。选择成本尺度和 lambda 前，
-请阅读 [`COST_AND_LAMBDA.md`](COST_AND_LAMBDA.md)。
+除非任务的数据划分明确将这些行定义为开发数据，否则不得用此文件训练或执行
+留出集上的路由器。
 
-`queries.csv` 是参与者可见的状态。第一列必须是 `query_uid`，并且 qrels 中的
-每个查询都必须恰好出现一次。该文件只能包含路线选择前已经可用的信息。如果省略，
-WorthIR 会写出只含查询编号的一列。
+### 3. 定义路线和成本
 
-`policy_choices.csv` 为可选文件，包含两列：
+多个前置路线以分号分隔。必须且只能有一条在开发数据上选出的固定参考路线。
+
+如果已经有累计成本：
+
+```csv
+route_id,label,prerequisites,cost,development_selected
+standard,标准路线,,0.10,true
+extended,扩展路线,standard,0.40,false
+```
+
+如果路线由依赖图中的多个组件组成，则使用 `incremental_cost`：
+
+```csv
+route_id,label,prerequisites,incremental_cost,development_selected
+lexical,词法检索,,0.03,false
+semantic,语义检索,,0.12,true
+combined,联合复核,lexical;semantic,0.08,false
+```
+
+WorthIR 会对传递前置闭包求和，并且每个组件只计一次。若成本随查询变化，可在
+`outcomes.csv` 中加入同名的 `cost` 或 `incremental_cost` 列，并为每个组合
+提供数值。两种成本模式不能混用。
+
+### 4. 构建并校验
+
+```powershell
+.\worthir.cmd build-custom my_source my_task
+.\worthir.cmd validate-task my_task
+```
+
+```bash
+./worthir build-custom my_source my_task
+./worthir validate-task my_task
+```
+
+校验结果会汇总查询数、路线数、缺失组合、依赖问题、累计成本问题，以及成本是否
+随查询变化。
+
+### 5. 运行并比较路由器
+
+路由器读取 `my_task/participant/legal_state.csv`，并输出：
 
 ```csv
 query_uid,selected_route_id
-q1,base
-q2,advanced
+q1,standard
+q2,extended
 ```
 
-如果省略该文件，生成的默认策略会对每个查询选择开发集选定的固定路线。如果提供
-该文件，请在构建任务时使用 `--policy-id` 为策略指定一个有意义的名称。
-
-## 2. 构建并检查任务
+一条命令完成绑定和比较：
 
 ```powershell
-.\worthir.cmd build-trec my_source my_task --task-id my-retrieval-task-v1 --metric ndcg@10 --lambda 0.08 --policy-id my-router
+.\worthir.cmd evaluate my_task choices.csv --policy-id my-router
 ```
 
-在 macOS 或 Linux 上使用 `./worthir`。构建后的任务包含：
+[`examples/custom_router/`](../examples/custom_router/) 给出了一个从不读取
+评价方台账的完整示例。
 
-```text
-my_task/
-  contracts/task_contract.json
-  contracts/route_registry.json
-  participant/legal_state.csv
-  participant/actions.json
-  participant/policies/
-  evaluator/ledger.csv
-```
+## TREC 适配器
 
-适配器会为 qrels 中的每个查询和每个已注册 run 计算 NDCG@K。继续前请抽查
-若干 ledger 记录。相关性标注和 ledger 属于评测端数据，路由策略不得使用它们。
-
-## 3. 添加路由策略
-
-将每个策略在留出数据上的选择导出为包含 `query_uid` 和
-`selected_route_id` 的 CSV，然后将其绑定到任务：
+如果使用 qrels 和六列 TREC run，请参照
+[`examples/trec_walkthrough/`](../examples/trec_walkthrough/)。其
+`routes.csv` 额外包含 `run_file` 列，`build-trec` 会先计算 NDCG@K，再生成
+同样的任务结构：
 
 ```powershell
-.\worthir.cmd actions my_task choices.csv --policy-id my-router
+.\worthir.cmd build-trec my_source my_task --task-id my-task-v1 --metric ndcg@10 --lambda 0.08
+.\worthir.cmd validate-task my_task
 ```
 
-生成的 JSON 位于 `my_task/participant/policies/my-router.json`。如果缺少查询、
-查询重复或选择了未知路线，命令会拒绝该输入。
+可选的 TREC `costs.csv` 使用 `query_uid,route_id,cost` 三列提供逐查询累计成本。
 
-## 4. 比较策略
+## 输出
 
-```powershell
-.\worthir.cmd compare my_task
-```
-
-该命令会评估默认动作文件、`participant/policies/` 中的每个 JSON 文件以及每条
-已注册的固定路线，并写出：
-
-- `comparison.md`：便于阅读的任务摘要；
-- `comparison.csv`：各策略和固定路线的均值；
-- `fixed_routes.csv`：固定路线点及其是否属于 Pareto 曲线；
-- `comparison.json`：完整的机器可读输出。
-
-结果解释见 [`OUTPUTS.md`](OUTPUTS.md)。这些文件报告描述性查询均值。统计区间
-需要使用与任务相匹配的重采样设计，通用工具不会凭空生成统计区间。
-
-## 手动构建
-
-对于不采用 TREC 有效性指标的任务，可以创建一个可编辑任务，再将示例 ledger
-替换为完整的“查询--路线”矩阵：
-
-```powershell
-.\worthir.cmd init my_task --task-id my-task-v1
-.\worthir.cmd score my_task
-```
-
-ledger 的列为 `query_uid,route_id,effectiveness,cost`。有效性指标必须是越高越好，
-并且位于任务契约声明的范围内。
+`compare` 和 `evaluate` 会生成可读的 `comparison.md`、机器可读的 CSV 和
+JSON，以及带 Pareto 成员标记的 `fixed_routes.csv`。这些结果是描述性查询均值。
+统计区间需要与任务相适应的重采样设计，通用工具不会自行生成。
