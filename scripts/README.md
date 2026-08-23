@@ -1,0 +1,11 @@
+# Internal commands
+
+Most users should call `worthir.py` through `worthir.cmd` or `./worthir`.
+
+- `build_trec_task.py`: convert qrels, TREC runs, and costs into a task.
+- `actions_from_csv.py`: bind a query--route choice CSV to a task.
+- `compare_policies.py`: score policies and fixed routes and write reports.
+- `score_actions.py`: score one action file.
+- `init_task.py`: copy the editable task template.
+- `run_smoke_test.py`, `run_integrity_tests.py`, and `validate_framework.py`:
+  framework checks used by `worthir doctor`.
