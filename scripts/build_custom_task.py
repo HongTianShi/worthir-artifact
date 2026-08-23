@@ -311,10 +311,16 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
         raise BuildError("cost_profile.lambda must be nonnegative")
     profile_id = cost_profile.get("profile_id")
     provenance = cost_profile.get("provenance")
+    availability = cost_profile.get("availability", "known_at_commitment")
     if not isinstance(profile_id, str) or not profile_id.strip():
         raise BuildError("cost_profile.profile_id must be nonempty")
     if not isinstance(provenance, str) or not provenance.strip():
         raise BuildError("cost_profile.provenance must be nonempty")
+    if availability not in {"known_at_commitment", "measured_after_execution"}:
+        raise BuildError(
+            "cost_profile.availability must be known_at_commitment or "
+            "measured_after_execution"
+        )
 
     legal_fields, legal_rows, query_ids = _read_queries(source)
     routes, prerequisites, fixed_route = _read_routes(source)
@@ -325,6 +331,19 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
         )
     ledger_rows = _read_outcomes(
         source, query_ids, routes, prerequisites, minimum, maximum
+    )
+    costs_by_route = {
+        route["route_id"]: {
+            float(row["cost"])
+            for row in ledger_rows
+            if row["route_id"] == route["route_id"]
+        }
+        for route in routes
+    }
+    cost_mode = (
+        "query_dependent"
+        if any(len(values) > 1 for values in costs_by_route.values())
+        else "fixed"
     )
     policy_id, decisions = _read_choices(
         source, query_ids, {route["route_id"] for route in routes}, fixed_route, policy_id
@@ -350,14 +369,29 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
         writer.writerows(ledger_rows)
 
     registry_id = f"{task_id}-routes-v1"
+    route_costs_file = (
+        "../participant/route_costs.csv"
+        if availability == "known_at_commitment" and cost_mode == "query_dependent"
+        else None
+    )
     registry = {
-        "schema_version": "worthir-route-registry-v1.1",
+        "schema_version": "worthir-route-registry-v1.2",
         "registry_id": registry_id,
+        "cost_information": {
+            "availability": availability,
+            "mode": cost_mode,
+            "route_costs_file": route_costs_file,
+        },
         "routes": [
             {
                 "route_id": route["route_id"],
                 "label": route["label"],
                 "prerequisites": route["prerequisites"],
+                **(
+                    {"cost": next(iter(costs_by_route[route["route_id"]]))}
+                    if availability == "known_at_commitment" and cost_mode == "fixed"
+                    else {}
+                ),
             }
             for route in routes
         ],
@@ -383,10 +417,27 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
             "profile_id": profile_id,
             "provenance": provenance,
             "lambda": lam,
+            "availability": availability,
         },
     }
     _write_json(output / "contracts" / "route_registry.json", registry)
     _write_json(output / "contracts" / "task_contract.json", contract)
+    if route_costs_file is not None:
+        with (output / "participant" / "route_costs.csv").open(
+            "w", encoding="utf-8", newline=""
+        ) as stream:
+            writer = csv.DictWriter(
+                stream, fieldnames=["query_uid", "route_id", "cost"]
+            )
+            writer.writeheader()
+            writer.writerows(
+                {
+                    "query_uid": row["query_uid"],
+                    "route_id": row["route_id"],
+                    "cost": row["cost"],
+                }
+                for row in ledger_rows
+            )
     _write_json(
         output / "participant" / "actions.json",
         {
@@ -404,8 +455,18 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
         task_argument = output.relative_to(ROOT).as_posix()
     except ValueError:
         task_argument = "<path-to-this-task>"
+    if route_costs_file is not None:
+        cost_note = (
+            "Query-dependent public costs are in "
+            "`participant/route_costs.csv`.\n\n"
+        )
+    elif availability == "known_at_commitment":
+        cost_note = "Fixed public costs are in `contracts/route_registry.json`.\n\n"
+    else:
+        cost_note = "Costs are evaluator measurements made after execution.\n\n"
     (output / "README.md").write_text(
         f"# {task_id}\n\n"
+        f"Cost availability: `{availability}`. {cost_note}"
         f"Validate the complete task before scoring:\n\n"
         f"```powershell\n.\\worthir.cmd validate-task {task_argument}\n```\n\n"
         f"```bash\n./worthir validate-task {task_argument}\n```\n\n"

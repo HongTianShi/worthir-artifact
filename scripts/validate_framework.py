@@ -131,6 +131,11 @@ def main() -> None:
             ],
             [
                 sys.executable,
+                str(root / "scripts" / "validate_task.py"),
+                str(work / "trec_task"),
+            ],
+            [
+                sys.executable,
                 str(root / "scripts" / "compare_policies.py"),
                 str(work / "trec_task"),
             ],
@@ -148,7 +153,7 @@ def main() -> None:
             [
                 sys.executable,
                 str(root / "examples" / "custom_router" / "router.py"),
-                str(work / "custom_task" / "participant" / "legal_state.csv"),
+                str(work / "custom_task"),
                 str(work / "custom_choices.csv"),
             ],
             [
@@ -177,7 +182,7 @@ def main() -> None:
 
     status = (
         "PASS"
-        if len(results) == 12
+        if len(results) == 13
         and all(result["returncode"] == 0 for result in results)
         else "FAIL"
     )

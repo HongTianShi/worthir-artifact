@@ -279,6 +279,7 @@ def build_task(
     metric: str,
     lam: float,
     policy_id: str = "provided-policy",
+    cost_availability: str = "known_at_commitment",
 ) -> Path:
     source = source.resolve()
     output = output.resolve()
@@ -292,6 +293,11 @@ def build_task(
         raise BuildError(f"source directory does not exist: {source}")
     if not math.isfinite(lam) or lam < 0:
         raise BuildError("lambda must be a nonnegative number")
+    if cost_availability not in {
+        "known_at_commitment",
+        "measured_after_execution",
+    }:
+        raise BuildError("unknown cost availability")
     metric_text = metric.strip().lower()
     if not metric_text.startswith("ndcg@"):
         raise BuildError("the built-in TREC adapter currently supports ndcg@K")
@@ -335,9 +341,20 @@ def build_task(
         writer.writeheader()
         writer.writerows(legal_rows)
 
+    cost_mode = "query_dependent" if overrides else "fixed"
+    route_costs_file = (
+        "../participant/route_costs.csv"
+        if cost_availability == "known_at_commitment" and overrides
+        else None
+    )
     registry = {
-        "schema_version": "worthir-route-registry-v1.1",
+        "schema_version": "worthir-route-registry-v1.2",
         "registry_id": f"{task_id}-routes-v1",
+        "cost_information": {
+            "availability": cost_availability,
+            "mode": cost_mode,
+            "route_costs_file": route_costs_file,
+        },
         "routes": [
             {
                 "route_id": row["route_id"].strip(),
@@ -347,6 +364,11 @@ def build_task(
                     for value in row["prerequisites"].split(";")
                     if value.strip()
                 ],
+                **(
+                    {"cost": float(row["cost"])}
+                    if cost_availability == "known_at_commitment" and not overrides
+                    else {}
+                ),
             }
             for row in routes
         ],
@@ -372,10 +394,23 @@ def build_task(
             "profile_id": f"{task_id}-cost-v1",
             "provenance": "per-query costs.csv" if overrides else "declared route costs",
             "lambda": lam,
+            "availability": cost_availability,
         },
     }
     _write_json(output / "contracts" / "route_registry.json", registry)
     _write_json(output / "contracts" / "task_contract.json", contract)
+    if route_costs_file is not None:
+        with (output / "participant" / "route_costs.csv").open(
+            "w", encoding="utf-8", newline=""
+        ) as stream:
+            writer = csv.writer(stream)
+            writer.writerow(["query_uid", "route_id", "cost"])
+            for query_uid in query_ids:
+                for row in routes:
+                    route_id = row["route_id"].strip()
+                    writer.writerow(
+                        [query_uid, route_id, f"{overrides[(query_uid, route_id)]:.12g}"]
+                    )
 
     with (output / "evaluator" / "ledger.csv").open("w", encoding="utf-8", newline="") as stream:
         writer = csv.writer(stream)
@@ -422,6 +457,12 @@ def main() -> None:
     parser.add_argument("--metric", default="ndcg@10")
     parser.add_argument("--lambda", dest="lam", type=float, default=0.08)
     parser.add_argument(
+        "--cost-availability",
+        choices=["known_at_commitment", "measured_after_execution"],
+        default="known_at_commitment",
+        help="when route costs become visible to the routing policy",
+    )
+    parser.add_argument(
         "--policy-id",
         default="provided-policy",
         help="name for policy_choices.csv when that file is present",
@@ -435,6 +476,7 @@ def main() -> None:
             args.metric,
             args.lam,
             args.policy_id.strip(),
+            args.cost_availability,
         )
     except BuildError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
