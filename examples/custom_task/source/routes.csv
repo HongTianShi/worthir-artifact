@@ -1,0 +1,4 @@
+route_id,label,prerequisites,incremental_cost,development_selected
+keyword_search,Keyword search,,0.03,false
+semantic_search,Semantic search,,0.12,true
+combined_review,Combined evidence review,keyword_search;semantic_search,0.08,false
