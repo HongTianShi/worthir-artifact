@@ -1,0 +1,147 @@
+{
+  "analysis_id": "musique-worthir-common-denominator-cost-v1.0",
+  "cost_definition": {
+    "common_denominator": "mean V3 raw work on development split",
+    "decomposition_questions": "released conditional state; their route-specific scoring work is charged, their upstream annotation is not",
+    "development_denominator": 5829.98996990973,
+    "query_conditioned": true,
+    "raw_work": {
+      "V0": "0",
+      "V1": "d*T",
+      "V2": "P",
+      "V3": "d*T + (1+d)*P"
+    },
+    "unit": "development-mean V3 token-scoring work",
+    "visible_before_commitment": true
+  },
+  "created_utc": "2026-07-30T04:37:50.987826+00:00",
+  "outputs": {
+    "actions": "assets/common_denominator_actions.parquet"
+  },
+  "rows": [
+    {
+      "F_dev": "V2",
+      "delta_common_operator_cost": -0.11362140771684438,
+      "delta_raw_operator_work": -662.4116673562268,
+      "delta_raw_quality": 0.0017410853211920316,
+      "delta_utility": 0.0017410853211920316,
+      "delta_utility_query_bootstrap_ci95": [
+        -0.005586675377933121,
+        0.009106651778542509
+      ],
+      "fixed_to_oracle_headroom": 0.11608107906663649,
+      "kappa": 0.014998872643082162,
+      "lambda": 0.0
+    },
+    {
+      "F_dev": "V2",
+      "delta_common_operator_cost": -0.11362140771684438,
+      "delta_raw_operator_work": -662.4116673562268,
+      "delta_raw_quality": 0.0017410853211920316,
+      "delta_utility": 0.004013513475528918,
+      "delta_utility_query_bootstrap_ci95": [
+        -0.0034432432191246858,
+        0.011490579676373206
+      ],
+      "fixed_to_oracle_headroom": 0.11766338660180096,
+      "kappa": 0.034110130529486964,
+      "lambda": 0.02
+    },
+    {
+      "F_dev": "V2",
+      "delta_common_operator_cost": -0.11362140771684438,
+      "delta_raw_operator_work": -662.4116673562268,
+      "delta_raw_quality": 0.0017410853211920316,
+      "delta_utility": 0.006285941629865806,
+      "delta_utility_query_bootstrap_ci95": [
+        -0.0009798897705546223,
+        0.013677893305667184
+      ],
+      "fixed_to_oracle_headroom": 0.11944035101819317,
+      "kappa": 0.05262829166424947,
+      "lambda": 0.04
+    },
+    {
+      "F_dev": "V2",
+      "delta_common_operator_cost": -0.11362140771684438,
+      "delta_raw_operator_work": -662.4116673562268,
+      "delta_raw_quality": 0.0017410853211920316,
+      "delta_utility": 0.010830797938539583,
+      "delta_utility_query_bootstrap_ci95": [
+        0.003551634175265327,
+        0.018131658433680406
+      ],
+      "fixed_to_oracle_headroom": 0.12352591705459333,
+      "kappa": 0.08768036859627457,
+      "lambda": 0.08
+    },
+    {
+      "F_dev": "V2",
+      "delta_common_operator_cost": -0.11362140771684438,
+      "delta_raw_operator_work": -662.4116673562268,
+      "delta_raw_quality": 0.0017410853211920316,
+      "delta_utility": 0.019920510555887134,
+      "delta_utility_query_bootstrap_ci95": [
+        0.01268598724041872,
+        0.027366047293546854
+      ],
+      "fixed_to_oracle_headroom": 0.1333232430069035,
+      "kappa": 0.14941513652541175,
+      "lambda": 0.16
+    },
+    {
+      "F_dev": "V0",
+      "delta_common_operator_cost": 0.18290620356702744,
+      "delta_raw_operator_work": 1066.3413322300373,
+      "delta_raw_quality": 0.04570318828520197,
+      "delta_utility": -0.012826796856246818,
+      "delta_utility_query_bootstrap_ci95": [
+        -0.02233676166410509,
+        -0.0033584089523378594
+      ],
+      "fixed_to_oracle_headroom": 0.10773126769012843,
+      "kappa": -0.11906289725598537,
+      "lambda": 0.32
+    }
+  ],
+  "selection": {
+    "F_dev": "V2",
+    "candidate_models": [
+      {
+        "dev_mean_utility": 0.5847325506407175,
+        "dev_route_share": {
+          "V0": 0.2587763289869609,
+          "V1": 0.24648946840521566,
+          "V2": 0.45987963891675027,
+          "V3": 0.03485456369107322
+        },
+        "model": "extra_trees"
+      },
+      {
+        "dev_mean_utility": 0.5825823206803186,
+        "dev_route_share": {
+          "V0": 0.29914744232698093,
+          "V1": 0.23319959879638916,
+          "V2": 0.4247743229689067,
+          "V3": 0.04287863590772317
+        },
+        "model": "random_forest"
+      },
+      {
+        "dev_mean_utility": 0.5719199346677151,
+        "dev_route_share": {
+          "V0": 0.41198595787362086,
+          "V1": 0.11534603811434303,
+          "V2": 0.46439317953861586,
+          "V3": 0.008274824473420261
+        },
+        "model": "hist_gradient_boosting"
+      }
+    ],
+    "lambda": 0.08,
+    "official_validation_outcomes_loaded_before_freeze": false,
+    "selected_model": "extra_trees",
+    "sklearn_version": "1.6.1"
+  },
+  "status": "post-gate robustness; registered result unchanged"
+}
