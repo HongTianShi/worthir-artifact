@@ -19,7 +19,7 @@ from worthir_eval import ScoreError, load_and_score  # noqa: E402
 
 
 class CompareError(RuntimeError):
-    """Raised when a task cannot be compared."""
+    """任务无法比较时抛出。"""
 
 
 def _fixed_action(contract: dict[str, Any], policy_id: str, route_id: str, query_ids: list[str]) -> dict[str, Any]:
