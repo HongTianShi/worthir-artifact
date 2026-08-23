@@ -36,3 +36,33 @@ jobs:
           cache-dependency-path: paper_results/requirements.txt
       - run: python -m pip install --disable-pip-version-check -r paper_results/requirements.txt
       - run: python paper_results/run.py --use-current-python
+
+  installed-wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: 测试源码包启动器
+        run: |
+          mkdir -p "$RUNNER_TEMP/source-archive"
+          git archive --format=zip --prefix=worthir-source/ HEAD > "$RUNNER_TEMP/source.zip"
+          unzip -q "$RUNNER_TEMP/source.zip" -d "$RUNNER_TEMP/source-archive"
+          cd "$RUNNER_TEMP/source-archive/worthir-source"
+          ./worthir demo-custom
+      - name: 构建并安装 wheel
+        run: |
+          python -m pip wheel . --no-deps --wheel-dir "$RUNNER_TEMP/wheelhouse"
+          python -m venv "$RUNNER_TEMP/worthir-wheel-env"
+          "$RUNNER_TEMP/worthir-wheel-env/bin/python" -m pip install --no-deps "$RUNNER_TEMP"/wheelhouse/*.whl
+      - name: 在仓库外运行安装命令
+        run: |
+          mkdir -p "$RUNNER_TEMP/installed-work"
+          cd "$RUNNER_TEMP/installed-work"
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" doctor
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" demo-custom
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" init initialized-task --task-id installed-task-v1
+          test ! -e initialized-task/__init__.py
+          test ! -d initialized-task/__pycache__
+          grep -q '^worthir validate-task' initialized-task/README.md
