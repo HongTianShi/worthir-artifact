@@ -34,6 +34,8 @@ my_source/
     "profile_id": "latency-seconds-v1",
     "provenance": "由独立校准集估计、在路线选择前可获得的预计执行时间",
     "lambda": 0.15,
+    "lambda_grid": [0.0, 0.05, 0.15, 0.30],
+    "budget_grid": [0.10, 0.25, 0.50],
     "availability": "known_at_commitment"
   },
   "development_selected_fixed_route": "standard"
@@ -131,6 +133,21 @@ q2,extended
 
 [`examples/custom_router/`](../examples/custom_router/) 给出了一个从不读取
 评价方台账的完整示例。
+
+### 6. 运行组织者专用诊断
+
+动作文件冻结后，任务组织者可以将其与 evaluator ledger 连接：
+
+```bash
+worthir analyze my_task
+worthir sensitivity my_task
+worthir budget my_task
+worthir plot my_task
+```
+
+这些命令默认写入 `my_task/organizer_private/`，其中包含 evaluator 专用字段，
+并拒绝写入 `participant/`。Lambda 与预算命令使用 `task.json` 中声明的网格；
+确切语义见 [`OUTPUTS.md`](OUTPUTS.md)。
 
 ## TREC 适配器
 
