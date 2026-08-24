@@ -7,5 +7,9 @@
 `contracts/route_registry.json` 的路线记录和评价方 ledger 中。两处不一致时，
 `validate-task` 会拒绝任务。
 
+契约还声明了示例 lambda 与硬预算网格。动作冻结后，`worthir analyze`、
+`worthir sensitivity`、`worthir budget` 和 `worthir plot` 会把 evaluator 专用
+诊断写入 `organizer_private/`。
+
 大多数任务使用 `worthir build-custom` 比手动编辑该模板更快，也更不容易出错。
 标准 qrels 和 TREC run 可使用 `worthir build-trec`。
