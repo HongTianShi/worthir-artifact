@@ -67,6 +67,8 @@ python paper_results/run.py
 
 这是独立且资源密集的流程。它检查受许可约束的语料和模型，通过配置好的任务适配器执行五个阶段，并构建新的 query--route ledger。入口见 [`paper_results/full_replay/README.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/full_replay/README.md) 及其中的资源估计。仓库不包含原始语料、索引和模型权重。
 
+FiQA-Compression260 可直接从官方公开语料和模型运行；具体命令见 [FiQA260 路线重建说明](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/full_replay/FIQA260.md)。
+
 [`v1.2.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0) 是与 2026-08-16 论文映射绑定的发布版本。较早的 `v1.0.0-ipmc2026` 是 IP&MC 2026 接收论文随附的 artifact。
 
 WorthIR 自有代码采用 [MIT License](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/LICENSE)。第三方数据和模型条款见 [NOTICE](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/NOTICE)。

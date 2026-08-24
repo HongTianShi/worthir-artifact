@@ -27,6 +27,8 @@ jobs:
           python worthir.py demo-custom
           python examples/python_api/example.py reproduced/custom_task
           python paper_results/full_replay/replay.py --help
+          python -m py_compile paper_results/full_replay/fiqa260/adapter.py
+          python paper_results/full_replay/replay.py fiqa260 prepare --workspace ci-fiqa260-prepare
 
   paper-results:
     runs-on: ubuntu-latest

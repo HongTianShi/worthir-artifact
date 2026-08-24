@@ -210,12 +210,18 @@
 
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
-| `paper_results/full_replay/CANONICAL_TREC.md` | Full-replay specification | Documents canonical TREC-DL reconstruction. |
-| `paper_results/full_replay/FEVER.md` | Full-replay specification | Documents FEVER reconstruction. |
-| `paper_results/full_replay/MUSIQUE.md` | Full-replay specification | Documents MuSiQue reconstruction. |
-| `paper_results/full_replay/README.md` | Full-replay guide | Explains what is required to rebuild retrieval outputs. |
-| `paper_results/full_replay/RESOURCE_REQUIREMENTS.md` | Resource guide | Summarizes software, storage, model, and compute needs. |
-| `paper_results/full_replay/STRUCTURED_AND_DIAGNOSTIC.md` | Full-replay specification | Documents structured and diagnostic reconstructions. |
+| `paper_results/full_replay/CANONICAL_TREC.md` | 完整回放说明 | 说明标准 TREC-DL 路线的重建方式。 |
+| `paper_results/full_replay/FEVER.md` | 完整回放说明 | 说明 FEVER 路线的重建方式。 |
+| `paper_results/full_replay/FIQA260.md` | 可运行回放指南 | 给出重建八条 FiQA-Compression260 路线的命令、输出与解释边界。 |
+| `paper_results/full_replay/MUSIQUE.md` | 完整回放说明 | 说明 MuSiQue 路线的重建方式。 |
+| `paper_results/full_replay/README.md` | 完整回放入口 | 说明从原始材料重建检索输出所需的流程。 |
+| `paper_results/full_replay/RESOURCE_REQUIREMENTS.md` | 资源说明 | 汇总软件、存储、模型与计算资源需求。 |
+| `paper_results/full_replay/STRUCTURED_AND_DIAGNOSTIC.md` | 完整回放说明 | 说明结构化任务与诊断任务的重建边界。 |
+| `paper_results/full_replay/fiqa260/adapter.py` | FiQA 路线运行程序 | 下载官方 FiQA 数据，重建论文中的八条路线，计算 NDCG@10，并写出通用 WorthIR 源表。 |
+| `paper_results/full_replay/fiqa260/requirements.txt` | FiQA 回放环境 | 固定 dense 检索、压缩和 cross-encoder 重排直接使用的软件包。 |
+| `paper_results/full_replay/replay.py` | 回放编排程序 | 执行准备、20 查询 smoke、完整路线运行、ledger 构建和验证。 |
+| `paper_results/full_replay/route_adapter.py` | 适配器模板 | 定义尚未提供内置路线运行程序的任务应输出哪些文件。 |
+| `paper_results/full_replay/task_cards.json` | 回放任务注册表 | 登记外部输入、内置适配器、输出规模、指南和资源估计。 |
 
 ### 论文分析：概览
 

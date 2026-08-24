@@ -50,16 +50,13 @@
     "resources": {"磁盘": "10--20 GB", "RAM": "16 GB", "VRAM": "建议 8 GB", "smoke": "10--30 分钟", "完整运行": "1--4 GPU 小时"}
   },
   "fiqa260": {
-    "name": "FiQA-Compression260 / Systems260",
-    "guide": "STRUCTURED_AND_DIAGNOSTIC.md",
-    "required_inputs": {
-      "dataset": "冻结的 260 查询 FiQA 诊断快照",
-      "indexes": "已注册的压缩与完整 dense 索引",
-      "checkpoints": "dense 与 cross-encoder 模型"
-    },
+    "name": "FiQA-Compression260",
+    "guide": "FIQA260.md",
+    "adapter": "fiqa260/adapter.py",
+    "required_inputs": {},
     "expected_queries": [260],
     "expected_routes": [8],
-    "resources": {"磁盘": "50--120 GB", "RAM": "32 GB", "VRAM": "建议 12 GB", "smoke": "15--45 分钟", "完整运行": "3--12 GPU 小时"}
+    "resources": {"磁盘": "约 0.2 GB 任务缓存，另加模型缓存", "RAM": "8 GB", "VRAM": "不需要", "smoke": "首次 CPU 运行约 10--15 分钟", "完整运行": "首次约 3 分钟，之后 20--60 秒"}
   },
   "dense_standard": {
     "name": "Dense-standard",
