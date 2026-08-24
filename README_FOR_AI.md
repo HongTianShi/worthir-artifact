@@ -62,7 +62,7 @@
 - 论文专用依赖必须位于 `paper_results/requirements.txt`。
 - 可复用 API 使用 `effectiveness`、`available routes` 和 `route set`。
 - 绝不能向路由策略代码公开评测 ledger。
-- 不要添加哈希、校验和文件、发布清单或维护过程叙述。
+- 不要添加独立校验和文件、发布清单或维护过程叙述。已注册的 FiQA 压缩包摘要仅用于决定是否可以解压。
 - 除非有证据支持用户要求的修正，否则保留已发布科学数值。
 - 修改框架后运行 `python run.py`；入口或适配器变化后还要测试一键配置和
   `worthir demo`。
@@ -94,6 +94,8 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `.gitattributes` | 仓库配置 | 统一文本换行符，并标记二进制研究资产，避免 Git 改写。 |
+| `.github/workflows/fiqa260-smoke.yml` | 定期路线检查 | 每周或手动请求时，从公开语料和模型重建 20 个 FiQA 查询。 |
+| `.github/workflows/publish.yml` | 软件包发布 | 构建发布文件，通过 PyPI Trusted Publishing 发布，并对公开软件包执行 smoke test。 |
 | `.github/workflows/validate.yml` | 持续集成 | 在 Windows、Linux 和 macOS 上验证框架，并单独复现论文结果。 |
 | `.gitignore` | 仓库配置 | 排除生成输出、环境、缓存、编辑器状态和构建产物。 |
 
@@ -218,7 +220,8 @@
 | `paper_results/full_replay/RESOURCE_REQUIREMENTS.md` | 资源说明 | 汇总软件、存储、模型与计算资源需求。 |
 | `paper_results/full_replay/STRUCTURED_AND_DIAGNOSTIC.md` | 完整回放说明 | 说明结构化任务与诊断任务的重建边界。 |
 | `paper_results/full_replay/fiqa260/adapter.py` | FiQA 路线运行程序 | 下载官方 FiQA 数据，重建论文中的八条路线，计算 NDCG@10，并写出通用 WorthIR 源表。 |
-| `paper_results/full_replay/fiqa260/requirements.txt` | FiQA 回放环境 | 固定 dense 检索、压缩和 cross-encoder 重排直接使用的软件包。 |
+| `paper_results/full_replay/fiqa260/install_cpu.py` | FiQA CPU 安装程序 | 先安装官方 CPU-only PyTorch wheel，再安装其余回放依赖。 |
+| `paper_results/full_replay/fiqa260/requirements.txt` | FiQA 回放环境 | 固定 dense 检索、压缩和 cross-encoder 重排使用的非 PyTorch 软件包。 |
 | `paper_results/full_replay/replay.py` | 回放编排程序 | 执行准备、20 查询 smoke、完整路线运行、ledger 构建和验证。 |
 | `paper_results/full_replay/route_adapter.py` | 适配器模板 | 定义尚未提供内置路线运行程序的任务应输出哪些文件。 |
 | `paper_results/full_replay/task_cards.json` | 回放任务注册表 | 登记外部输入、内置适配器、输出规模、指南和资源估计。 |

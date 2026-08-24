@@ -4,7 +4,7 @@
 
 **论文版本：** 2026-08-16 submission
 
-**发布 artifact：** [v1.2.0](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0)
+**发布 artifact：** [v1.2.1](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.1)
 
 运行：
 

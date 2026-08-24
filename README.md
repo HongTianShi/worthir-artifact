@@ -27,7 +27,7 @@ WorthIR 在明确的效果指标和成本配置下，对比逐查询路由策略
 **PyPI：**安装正式发布的软件包，然后使用全局命令。
 
 ```bash
-python -m pip install worthir-eval==1.2.0
+python -m pip install worthir-eval==1.2.1
 worthir demo-custom
 ```
 
@@ -69,6 +69,6 @@ python paper_results/run.py
 
 FiQA-Compression260 可直接从官方公开语料和模型运行；具体命令见 [FiQA260 路线重建说明](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/full_replay/FIQA260.md)。
 
-[`v1.2.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0) 是与 2026-08-16 论文映射绑定的发布版本。较早的 `v1.0.0-ipmc2026` 是 IP&MC 2026 接收论文随附的 artifact。
+[`v1.2.1`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.1) 是与 2026-08-16 论文映射绑定的发布版本。较早的 `v1.0.0-ipmc2026` 是 IP&MC 2026 接收论文随附的 artifact。
 
 WorthIR 自有代码采用 [MIT License](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/LICENSE)。第三方数据和模型条款见 [NOTICE](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/NOTICE)。

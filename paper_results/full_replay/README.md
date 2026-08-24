@@ -5,7 +5,7 @@
 运行 FiQA 重建：
 
 ```bash
-python -m pip install -r paper_results/full_replay/fiqa260/requirements.txt
+python paper_results/full_replay/fiqa260/install_cpu.py
 python paper_results/full_replay/replay.py fiqa260 prepare --workspace replay-work/fiqa260
 python paper_results/full_replay/replay.py fiqa260 smoke --workspace replay-work/fiqa260
 ```

@@ -6,11 +6,13 @@
 
 ## 配置环境
 
-使用 Python 3.10--3.13 环境，然后安装本次重建所需依赖：
+使用 Python 3.10--3.13 环境。CPU 机器应运行仓库内置安装程序：它会先从 PyTorch 官方 CPU wheel 索引安装 PyTorch，再安装其余固定依赖，避免默认 Linux wheel 携带的 CUDA 运行库。
 
 ```bash
-python -m pip install -r paper_results/full_replay/fiqa260/requirements.txt
+python paper_results/full_replay/fiqa260/install_cpu.py
 ```
+
+如果机器配有受支持的 CUDA 或 ROCm 加速器，请先按照 PyTorch 官方选择器安装对应版本，再运行 `python -m pip install -r paper_results/full_replay/fiqa260/requirements.txt`。
 
 准备工作目录。该命令会自动登记仓库内置的适配器：
 
@@ -41,6 +43,6 @@ python paper_results/full_replay/replay.py fiqa260 verify --workspace replay-wor
 - `replay-work/fiqa260/task/contracts/route_registry.json`：路线、前置关系和公共成本；
 - `replay-work/fiqa260/fiqa260_rebuild_summary.json`：各路线重建均值与论文数值的对照。
 
-模型文件使用已注册的 Hugging Face 版本。适配器把下载的语料、文档表示、摘要索引和 IVF--PQ 索引保留在工作目录中，后续阶段不会重复计算。
+程序会在解压前用已注册的 SHA256 检查官方 FiQA 压缩包。模型文件使用已注册的 Hugging Face 版本。适配器把下载的语料、文档表示、摘要索引和 IVF--PQ 索引保留在工作目录中，后续阶段不会重复计算。
 
 两条截断路线、int8 路线、完整 dense 路线和 cross-encoder 路线是确定性的，程序会将其均值与论文数值核对。摘要检索、二值检索和 IVF--PQ 会受到 FAISS 聚类、近似搜索或二值分数并列排序的影响，因此程序会如实并列报告重建均值与论文数值，而不会用冻结结果替换本次运行结果。

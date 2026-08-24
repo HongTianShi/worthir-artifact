@@ -4,7 +4,7 @@
 
 - **论文：** *WorthIR: An Evaluation Protocol for Cost-Aware Retrieval Routing*
 - **版本：** 2026-08-16 submission
-- **Artifact：** [v1.2.0](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0)
+- **Artifact：** [v1.2.1](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.1)
 
 `PAPER_SPEC.json` 是机器可读的唯一清单。`python run.py` 会检查下列每一项均已生成，并写出可点击的 `reproduced/INDEX.md`。
 
