@@ -94,6 +94,8 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `.gitattributes` | 仓库配置 | 统一文本换行符，并标记二进制研究资产，避免 Git 改写。 |
+| `.github/ISSUE_TEMPLATE/bug_report.yml` | 故障表单 | 收集安装、环境、命令、错误和最小复现信息，并排除私有 evaluator 数据。 |
+| `.github/ISSUE_TEMPLATE/new_task.yml` | 任务表单 | 收集新任务适配器的指标、路线、成本、数据条款和可运行命令。 |
 | `.github/workflows/fiqa260-smoke.yml` | 定期路线检查 | 每周或手动请求时，从公开语料和模型重建 20 个 FiQA 查询。 |
 | `.github/workflows/publish.yml` | 软件包发布 | 构建发布文件，通过 PyPI Trusted Publishing 发布，并对公开软件包执行 smoke test。 |
 | `.github/workflows/validate.yml` | 持续集成 | 在 Windows、Linux 和 macOS 上验证框架，并单独复现论文结果。 |
@@ -114,6 +116,7 @@
 | `docs/ADAPT_TO_NEW_TASK.md` | 适配指南 | 定义通用任务表、路线依赖、成本模式、TREC 快捷路径和路由器流程。 |
 | `docs/COST_AND_LAMBDA.md` | 成本指南 | 说明累计成本选择、归一化、lambda 选择和敏感性。 |
 | `docs/OUTPUTS.md` | 输出指南 | 定义比较字段、固定参照、Pareto 归属和描述性范围。 |
+| `docs/TROUBLESHOOTING.md` | 故障指南 | 处理 Python 选择、源码环境、包索引、模型下载、磁盘、任务校验和故障报告。 |
 
 ### 端到端 TREC 示例
 
@@ -158,14 +161,19 @@
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
 | `scripts/actions_from_csv.py` | 动作转换器 | 验证可读查询--路线选择并写出绑定契约的动作 JSON。 |
+| `scripts/analyze_task.py` | 组织者分析 | 输出隔离的逐查询已选结果、固定参照、oracle 路线、遗憾和机会分层。 |
+| `scripts/budget.py` | 预算分析 | 在预先声明的硬成本上限下报告 evaluator 专用有效性和策略可行比例。 |
 | `scripts/build_custom_task.py` | 通用任务适配器 | 根据通用源表构建契约、参与方状态和完整台账。 |
 | `scripts/build_trec_task.py` | TREC 适配器 | 根据 qrels 和 run 计算 NDCG@K，并构建完整可复用任务。 |
 | `scripts/compare_policies.py` | 比较报告器 | 评估全部策略和固定路线，并写出 Markdown、CSV、JSON 和 Pareto 输出。 |
 | `scripts/init_task.py` | 任务初始化器 | 复制可运行模板并替换任务、契约和注册表标识符。 |
+| `scripts/organizer_io.py` | 私有输出工具 | 阻止 evaluator 表格进入参与者输入，并写出 CSV、可选 Parquet 和元数据。 |
+| `scripts/plot_pareto.py` | Pareto 绘图器 | 无额外依赖地绘制固定路线与冻结策略的描述性 SVG。 |
 | `scripts/README.md` | 命令指南 | 索引可复用框架命令。 |
 | `scripts/run_integrity_tests.py` | 完整性测试 | 检查无效输入、算术不变量、累计成本、并列情况和示例信息边界。 |
 | `scripts/run_smoke_test.py` | 冒烟测试 | 评估六查询快速入门任务并写出汇总结果。 |
 | `scripts/score_actions.py` | 评分 CLI | 解析任务输入、调用核心评分器并写出汇总 JSON。 |
+| `scripts/sensitivity.py` | Lambda 分析 | 在契约或命令行网格上评价冻结动作，并标明网格是否预先声明。 |
 | `scripts/validate_task.py` | 任务校验器 | 评分前报告任务覆盖范围、依赖边、成本可见时点和公开成本一致性。 |
 | `scripts/validate_framework.py` | 框架验证器 | 运行冒烟测试、完整性测试、任务初始化、TREC 构建、动作转换和比较检查。 |
 
@@ -175,6 +183,7 @@
 | --- | --- | --- |
 | `src/README.md` | 源码指南 | 说明无依赖源码布局。 |
 | `src/worthir_eval/__init__.py` | Python API | 导出任务检查、评分函数和公共错误类型。 |
+| `src/worthir_eval/analysis.py` | 组织者 API | 计算逐查询诊断、lambda 敏感性、硬预算汇总和固定路线 Pareto 点。 |
 | `src/worthir_eval/core.py` | 评分实现 | 验证依赖图、动作、ledger、累计成本和公开成本边界，再计算有效性、成本、效用、Oracle 一致率和遗憾。 |
 | `src/worthir_eval/README.md` | 软件包指南 | 概述评分器 API 及参与者--评测者边界。 |
 
@@ -182,9 +191,9 @@
 
 | 路径 | 文件类型 | 用途 |
 | --- | --- | --- |
-| `task_template/.gitignore` | 模板配置 | 排除生成的任务分数和比较报告。 |
+| `task_template/.gitignore` | 模板配置 | 排除生成的比较结果和组织者专用输出。 |
 | `task_template/contracts/route_registry.json` | 模板路线注册表 | 可运行的双路线示例，新任务应替换其内容。 |
-| `task_template/contracts/task_contract.json` | 模板任务契约 | 可运行的单查询任务、指标、成本和模式示例。 |
+| `task_template/contracts/task_contract.json` | 模板任务契约 | 可运行的任务、指标、成本和预先声明的敏感性网格示例。 |
 | `task_template/evaluator/ledger.csv` | 模板评测器数据 | 完整的单查询、双路线有效性和成本 ledger。 |
 | `task_template/participant/actions.json` | 模板动作文件 | 选择一条已注册路线的单行示例。 |
 | `task_template/participant/legal_state.csv` | 模板参与者数据 | 单行推理时查询状态示例。 |
