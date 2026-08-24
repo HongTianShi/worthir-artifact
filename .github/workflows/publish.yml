@@ -72,4 +72,8 @@ jobs:
           cd "$RUNNER_TEMP/worthir-pypi-work"
           "$RUNNER_TEMP/worthir-pypi-env/bin/worthir" doctor
           "$RUNNER_TEMP/worthir-pypi-env/bin/worthir" demo-custom
+          "$RUNNER_TEMP/worthir-pypi-env/bin/worthir" analyze reproduced/custom_task
+          "$RUNNER_TEMP/worthir-pypi-env/bin/worthir" sensitivity reproduced/custom_task
+          "$RUNNER_TEMP/worthir-pypi-env/bin/worthir" budget reproduced/custom_task
+          "$RUNNER_TEMP/worthir-pypi-env/bin/worthir" plot reproduced/custom_task
           "$RUNNER_TEMP/worthir-pypi-env/bin/python" -m worthir doctor
