@@ -12,6 +12,14 @@ WorthIR 在明确的有效性指标、累计路线成本和成本偏好下评价
 
 如果你使用 AI 工具检索本项目，请先阅读 [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/README_FOR_AI.md)。
 
+## 选择复现范围
+
+| 目标 | 入口 | 所需材料 | 得到的结果 |
+|---|---|---|---|
+| 体验 WorthIR 或评价自定义任务 | PyPI 软件包 | 内置示例或自己的任务 CSV | 可运行的契约检查、评分、比较和组织者分析 |
+| 复算论文结果 | 固定版本源码与发布的 query--route ledger | `paper_results/` 中已有文件 | 精确闭合论文中的表格和图片 |
+| 重建原始检索路线 | 源码以及外部语料、索引和模型 | FiQA-Compression260 是完整参考实现；其他任务需要注册资源和适配器 | 重新生成 query--route outcomes，再交由 WorthIR 验证 |
+
 ## 从零开始
 
 需要 Python 3.10 或更高版本。推荐从 PyPI 安装：
