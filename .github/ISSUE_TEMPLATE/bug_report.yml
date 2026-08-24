@@ -1,0 +1,44 @@
+name: 报告可复现故障
+description: 报告命令、安装或任务校验故障
+title: "故障："
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: installation
+    attributes:
+      label: 安装方式
+      options:
+        - PyPI 包
+        - 固定标签源码
+        - 当前分支源码
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Python 与操作系统
+      description: 粘贴 `python --version`，并写明操作系统。
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: 执行命令
+      description: 粘贴触发故障的完整命令。
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: 完整错误输出
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 最小复现
+      description: 写明能够复现问题的示例或任务文件，并移除私有 evaluator 数据。
+    validations:
+      required: true
