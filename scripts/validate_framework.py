@@ -61,6 +61,10 @@ def main() -> None:
         "scripts/actions_from_csv.py",
         "scripts/compare_policies.py",
         "scripts/score_actions.py",
+        "scripts/analyze_task.py",
+        "scripts/sensitivity.py",
+        "scripts/budget.py",
+        "scripts/plot_pareto.py",
         "examples/trec_walkthrough/source/qrels.tsv",
         "examples/trec_walkthrough/source/routes.csv",
         "examples/custom_task/source/task.json",
@@ -168,6 +172,26 @@ def main() -> None:
                 str(root / "scripts" / "compare_policies.py"),
                 str(work / "custom_task"),
             ],
+            [
+                sys.executable,
+                str(root / "scripts" / "analyze_task.py"),
+                str(work / "custom_task"),
+            ],
+            [
+                sys.executable,
+                str(root / "scripts" / "sensitivity.py"),
+                str(work / "custom_task"),
+            ],
+            [
+                sys.executable,
+                str(root / "scripts" / "budget.py"),
+                str(work / "custom_task"),
+            ],
+            [
+                sys.executable,
+                str(root / "scripts" / "plot_pareto.py"),
+                str(work / "custom_task"),
+            ],
         ]
         started = time.perf_counter()
         results = []
@@ -179,7 +203,7 @@ def main() -> None:
 
     status = (
         "PASS"
-        if len(results) == 13
+        if len(results) == len(commands)
         and all(result["returncode"] == 0 for result in results)
         else "FAIL"
     )
