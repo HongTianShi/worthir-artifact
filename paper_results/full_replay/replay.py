@@ -62,15 +62,17 @@ def prepare(task: str, workspace: Path, supplied: list[str]) -> None:
         if config.get("task") != task:
             raise SystemExit(f"{workspace} is already configured for {config.get('task')}")
     else:
+        adapter = ROOT / card.get("adapter", "route_adapter.py")
         config = {
             "task": task,
             "inputs": {},
             "commands": {
-                "smoke": [sys.executable, "route_adapter.py", "--config", "{config}", "--output", "{source}", "--limit", "20"],
-                "run_routes": [sys.executable, "route_adapter.py", "--config", "{config}", "--output", "{source}"]
+                "smoke": [sys.executable, str(adapter), "--config", "{config}", "--output", "{source}", "--limit", "20"],
+                "run_routes": [sys.executable, str(adapter), "--config", "{config}", "--output", "{source}"]
             }
         }
-        shutil.copy2(ROOT / "route_adapter.py", workspace / "route_adapter.py")
+        if "adapter" not in card:
+            shutil.copy2(ROOT / "route_adapter.py", workspace / "route_adapter.py")
     unknown = sorted(set(parse_inputs(supplied)) - set(card["required_inputs"]))
     if unknown:
         raise SystemExit(f"Unknown input names for {task}: {', '.join(unknown)}")

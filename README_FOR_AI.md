@@ -224,10 +224,16 @@ merely because it is publicly released.
 | --- | --- | --- |
 | `paper_results/full_replay/CANONICAL_TREC.md` | Full-replay specification | Documents canonical TREC-DL reconstruction. |
 | `paper_results/full_replay/FEVER.md` | Full-replay specification | Documents FEVER reconstruction. |
+| `paper_results/full_replay/FIQA260.md` | Runnable replay guide | Gives the commands, outputs, and interpretation for rebuilding all eight FiQA-Compression260 routes. |
 | `paper_results/full_replay/MUSIQUE.md` | Full-replay specification | Documents MuSiQue reconstruction. |
 | `paper_results/full_replay/README.md` | Full-replay guide | Explains what is required to rebuild retrieval outputs. |
 | `paper_results/full_replay/RESOURCE_REQUIREMENTS.md` | Resource guide | Summarizes software, storage, model, and compute needs. |
 | `paper_results/full_replay/STRUCTURED_AND_DIAGNOSTIC.md` | Full-replay specification | Documents structured and diagnostic reconstructions. |
+| `paper_results/full_replay/fiqa260/adapter.py` | FiQA route runner | Downloads official FiQA data, rebuilds the eight paper routes, computes NDCG@10, and writes generic WorthIR source tables. |
+| `paper_results/full_replay/fiqa260/requirements.txt` | FiQA replay environment | Pins the direct packages used for dense retrieval, compression, and cross-encoder reranking. |
+| `paper_results/full_replay/replay.py` | Replay orchestrator | Runs prepare, 20-query smoke, full route execution, ledger construction, and validation. |
+| `paper_results/full_replay/route_adapter.py` | Adapter template | Defines the output boundary for tasks that do not yet have a bundled route runner. |
+| `paper_results/full_replay/task_cards.json` | Replay task registry | Registers external inputs, bundled adapters, output shapes, guides, and resource estimates. |
 
 ### Paper analyses: overview
 

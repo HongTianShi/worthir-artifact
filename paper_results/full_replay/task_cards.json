@@ -50,16 +50,13 @@
     "resources": {"disk": "10--20 GB", "ram": "16 GB", "vram": "8 GB recommended", "smoke": "10--30 minutes", "full": "1--4 GPU-hours"}
   },
   "fiqa260": {
-    "name": "FiQA-Compression260 / Systems260",
-    "guide": "STRUCTURED_AND_DIAGNOSTIC.md",
-    "required_inputs": {
-      "dataset": "frozen 260-query FiQA diagnostic snapshot",
-      "indexes": "registered compressed and full dense indexes",
-      "checkpoints": "dense and cross-encoder checkpoints"
-    },
+    "name": "FiQA-Compression260",
+    "guide": "FIQA260.md",
+    "adapter": "fiqa260/adapter.py",
+    "required_inputs": {},
     "expected_queries": [260],
     "expected_routes": [8],
-    "resources": {"disk": "50--120 GB", "ram": "32 GB", "vram": "12 GB recommended", "smoke": "15--45 minutes", "full": "3--12 GPU-hours"}
+    "resources": {"disk": "about 0.2 GB task cache plus model cache", "ram": "8 GB", "vram": "not required", "smoke": "10--15 minutes on the first CPU run", "full": "about 3 minutes first, then 20--60 seconds"}
   },
   "dense_standard": {
     "name": "Dense-standard",

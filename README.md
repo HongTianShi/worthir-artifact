@@ -89,6 +89,9 @@ query--route ledgers through five explicit stages. Start with
 its task-specific resource estimates. Raw corpora, indexes, and model weights
 are not included in this repository.
 
+FiQA-Compression260 is directly runnable from the official public corpus and
+models; see the [FiQA260 route-rebuild guide](https://github.com/HongTianShi/worthir-artifact/blob/_en/paper_results/full_replay/FIQA260.md).
+
 The [`v1.2.0`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0)
 release is the published artifact currently bound to the 2026-08-16 paper
 mapping. The earlier `v1.0.0-ipmc2026` release remains the artifact submitted
