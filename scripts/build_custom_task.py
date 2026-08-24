@@ -69,6 +69,18 @@ def _required_object(config: dict[str, Any], name: str) -> dict[str, Any]:
     return value
 
 
+def _optional_grid(config: dict[str, Any], name: str) -> list[float] | None:
+    value = config.get(name)
+    if value is None:
+        return None
+    if not isinstance(value, list) or not value:
+        raise BuildError(f"cost_profile.{name} 必须是非空数值列表")
+    grid = [_number(str(item), f"cost_profile.{name}") for item in value]
+    if any(item < 0 for item in grid) or len(grid) != len(set(grid)):
+        raise BuildError(f"cost_profile.{name} 必须包含互不重复的非负数值")
+    return grid
+
+
 def _read_queries(source: Path) -> tuple[list[str], list[dict[str, str]], list[str]]:
     fields, rows = _read_csv(source / "queries.csv")
     if fields[0] != "query_uid":
@@ -317,6 +329,8 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
     profile_id = cost_profile.get("profile_id")
     provenance = cost_profile.get("provenance")
     availability = cost_profile.get("availability", "known_at_commitment")
+    lambda_grid = _optional_grid(cost_profile, "lambda_grid")
+    budget_grid = _optional_grid(cost_profile, "budget_grid")
     if not isinstance(profile_id, str) or not profile_id.strip():
         raise BuildError("cost_profile.profile_id 不得为空")
     if not isinstance(provenance, str) or not provenance.strip():
@@ -423,6 +437,8 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
             "provenance": provenance,
             "lambda": lam,
             "availability": availability,
+            **({"lambda_grid": lambda_grid} if lambda_grid is not None else {}),
+            **({"budget_grid": budget_grid} if budget_grid is not None else {}),
         },
     }
     _write_json(output / "contracts" / "route_registry.json", registry)
@@ -454,7 +470,7 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
     )
     shutil.copy2(source / "task.json", output / "evaluator" / "source_task.json")
     (output / ".gitignore").write_text(
-        "score.json\ncomparison.csv\ncomparison.json\nfixed_routes.csv\n", encoding="utf-8"
+        "score.json\ncomparison.csv\ncomparison.json\nfixed_routes.csv\norganizer_private/\n", encoding="utf-8"
     )
     try:
         task_argument = output.relative_to(ROOT).as_posix()
@@ -476,7 +492,9 @@ def build_task(source: Path, output: Path, policy_id: str) -> Path:
         f"```bash\n{posix_launcher} validate-task {task_argument}\n```\n\n"
         f"然后将默认策略与每条固定路线比较：\n\n"
         f"```powershell\n{powershell_launcher} compare {task_argument}\n```\n\n"
-        f"```bash\n{posix_launcher} compare {task_argument}\n```\n",
+        f"```bash\n{posix_launcher} compare {task_argument}\n```\n\n"
+        f"任务组织者还可以运行 `analyze`、`sensitivity`、`budget` 和 `plot`；"
+        f"仅供 evaluator 使用的输出会写入 `organizer_private/`。\n",
         encoding="utf-8",
     )
     return output
