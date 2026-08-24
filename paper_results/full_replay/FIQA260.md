@@ -12,11 +12,18 @@ costs are written to the public route registry before policy selection.
 
 ## Set up
 
-Use a Python 3.10--3.13 environment, then install the replay dependencies:
+Use a Python 3.10--3.13 environment. For a CPU machine, run the bundled
+installer. It obtains PyTorch from the official CPU wheel index before
+installing the remaining fixed dependencies, avoiding the CUDA runtime packages
+carried by the default Linux wheel:
 
 ```bash
-python -m pip install -r paper_results/full_replay/fiqa260/requirements.txt
+python paper_results/full_replay/fiqa260/install_cpu.py
 ```
+
+If the machine has a supported CUDA or ROCm accelerator, install the matching
+PyTorch build using the official PyTorch selector, then run
+`python -m pip install -r paper_results/full_replay/fiqa260/requirements.txt`.
 
 Prepare a workspace. The command records the bundled adapter automatically:
 
@@ -55,9 +62,10 @@ The primary outputs are:
 - `replay-work/fiqa260/fiqa260_rebuild_summary.json`: rebuilt route means beside
   the paper values.
 
-Model files use their registered Hugging Face revisions. The adapter keeps the
-downloaded corpus, embeddings, summary index, and IVF--PQ index under the replay
-workspace so subsequent stages do not repeat them.
+The official FiQA archive is checked against its registered SHA256 before
+extraction. Model files use their registered Hugging Face revisions. The
+adapter keeps the downloaded corpus, embeddings, summary index, and IVF--PQ
+index under the replay workspace so subsequent stages do not repeat them.
 
 The two truncated routes, int8 route, full dense route, and cross-encoder route
 are deterministic and are checked against the paper means. Summary retrieval,

@@ -73,7 +73,7 @@ for human users; this document is deliberately detailed.
 - Keep paper-only dependencies inside `paper_results/requirements.txt`.
 - Use `effectiveness`, `available routes`, and `route set` in the reusable API.
 - Never expose evaluator ledgers to routing-policy code.
-- Do not add hashes, checksum files, release manifests, or maintenance narration.
+- Do not add standalone checksum files, release manifests, or maintenance narration. The registered FiQA archive digest is used only to decide whether extraction may proceed.
 - Preserve released scientific values unless a requested correction has evidence.
 - Run `python run.py` after framework changes, and test the one-click setup plus
   `worthir demo` when an entry point or adapter changes.
@@ -106,6 +106,8 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `.gitattributes` | Repository configuration | Normalizes text line endings and marks binary research artifacts so Git does not rewrite them. |
+| `.github/workflows/fiqa260-smoke.yml` | Scheduled route check | Rebuilds 20 FiQA queries from the public corpus and models every week or when manually requested. |
+| `.github/workflows/publish.yml` | Package publisher | Builds the release distributions, publishes them through PyPI Trusted Publishing, and smoke-tests the public package. |
 | `.github/workflows/validate.yml` | Continuous integration | Validates the framework on Windows, Linux, and macOS and separately reproduces the paper results. |
 | `.gitignore` | Repository configuration | Excludes generated outputs, environments, caches, editor state, and build products. |
 
@@ -230,7 +232,8 @@ merely because it is publicly released.
 | `paper_results/full_replay/RESOURCE_REQUIREMENTS.md` | Resource guide | Summarizes software, storage, model, and compute needs. |
 | `paper_results/full_replay/STRUCTURED_AND_DIAGNOSTIC.md` | Full-replay specification | Documents structured and diagnostic reconstructions. |
 | `paper_results/full_replay/fiqa260/adapter.py` | FiQA route runner | Downloads official FiQA data, rebuilds the eight paper routes, computes NDCG@10, and writes generic WorthIR source tables. |
-| `paper_results/full_replay/fiqa260/requirements.txt` | FiQA replay environment | Pins the direct packages used for dense retrieval, compression, and cross-encoder reranking. |
+| `paper_results/full_replay/fiqa260/install_cpu.py` | FiQA CPU installer | Installs the official CPU-only PyTorch wheel before the remaining replay dependencies. |
+| `paper_results/full_replay/fiqa260/requirements.txt` | FiQA replay environment | Pins the non-PyTorch packages used for dense retrieval, compression, and cross-encoder reranking. |
 | `paper_results/full_replay/replay.py` | Replay orchestrator | Runs prepare, 20-query smoke, full route execution, ledger construction, and validation. |
 | `paper_results/full_replay/route_adapter.py` | Adapter template | Defines the output boundary for tasks that do not yet have a bundled route runner. |
 | `paper_results/full_replay/task_cards.json` | Replay task registry | Registers external inputs, bundled adapters, output shapes, guides, and resource estimates. |

@@ -1,0 +1,25 @@
+name: FiQA260 smoke
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild-20-queries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Install the CPU replay environment
+        run: python paper_results/full_replay/fiqa260/install_cpu.py
+      - name: Rebuild 20 registered FiQA queries
+        run: |
+          python paper_results/full_replay/replay.py fiqa260 prepare --workspace "$RUNNER_TEMP/fiqa260"
+          python paper_results/full_replay/replay.py fiqa260 smoke --workspace "$RUNNER_TEMP/fiqa260"

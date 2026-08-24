@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import urllib.request
@@ -20,6 +21,7 @@ faiss.omp_set_num_threads(1)
 
 
 DATA_URL = "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/fiqa.zip"
+DATA_SHA256 = "32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02"
 ENCODER_ID = "sentence-transformers/all-MiniLM-L6-v2"
 ENCODER_REVISION = "c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
 CROSS_ENCODER_ID = "cross-encoder/ms-marco-MiniLM-L-6-v2"
@@ -67,6 +69,23 @@ def find_repository(start: Path) -> Path:
     )
 
 
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def check_dataset_archive(path: Path) -> None:
+    observed = sha256(path)
+    if observed != DATA_SHA256:
+        raise RuntimeError(
+            f"Unexpected SHA256 for {path}: {observed}. "
+            "Remove the archive and rerun after checking the official BEIR download."
+        )
+
+
 def download_dataset(cache: Path) -> Path:
     dataset = cache / "fiqa"
     if (dataset / "corpus.jsonl").is_file() and (dataset / "qrels" / "test.tsv").is_file():
@@ -75,7 +94,16 @@ def download_dataset(cache: Path) -> Path:
     archive = cache / "fiqa.zip"
     if not archive.is_file():
         print(f"Downloading the official BEIR FiQA archive to {archive}", flush=True)
-        urllib.request.urlretrieve(DATA_URL, archive)
+        partial = archive.with_suffix(".zip.part")
+        urllib.request.urlretrieve(DATA_URL, partial)
+        try:
+            check_dataset_archive(partial)
+        except Exception:
+            partial.unlink(missing_ok=True)
+            raise
+        partial.replace(archive)
+    else:
+        check_dataset_archive(archive)
     print(f"Extracting {archive}", flush=True)
     with zipfile.ZipFile(archive) as bundle:
         bundle.extractall(cache)

@@ -4,7 +4,7 @@ This map applies only to:
 
 - **Paper:** *WorthIR: An Evaluation Protocol for Cost-Aware Retrieval Routing*
 - **Version:** 2026-08-16 submission
-- **Artifact release:** [v1.2.0](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.0)
+- **Artifact release:** [v1.2.1](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.1)
 
 `PAPER_SPEC.json` is the machine-readable source of truth. `python run.py`
 checks that every item below is produced and writes a clickable
