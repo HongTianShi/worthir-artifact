@@ -92,10 +92,5 @@ are not included in this repository.
 FiQA-Compression260 is directly runnable from the official public corpus and
 models; see the [FiQA260 route-rebuild guide](https://github.com/HongTianShi/worthir-artifact/blob/_en/paper_results/full_replay/FIQA260.md).
 
-The [`v1.2.1`](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.1)
-release is the published artifact currently bound to the 2026-08-16 paper
-mapping. The earlier `v1.0.0-ipmc2026` release remains the artifact submitted
-with the accepted IP&MC 2026 paper.
-
 WorthIR-authored code is released under the [MIT License](https://github.com/HongTianShi/worthir-artifact/blob/_en/LICENSE). Third-party
 data and model terms are listed in [NOTICE](https://github.com/HongTianShi/worthir-artifact/blob/_en/NOTICE).
