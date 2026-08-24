@@ -50,5 +50,21 @@ Report the primary lambda and inspect several plausible alternatives. A routing
 claim that appears only at a narrow, post-hoc lambda should be described as
 sensitivity rather than a general deployment result.
 
+For reusable analyses, declare grids in `task.json`:
+
+```json
+{
+  "cost_profile": {
+    "lambda": 0.08,
+    "lambda_grid": [0.0, 0.04, 0.08, 0.16],
+    "budget_grid": [0.2, 0.5, 0.8]
+  }
+}
+```
+
+`worthir sensitivity` and `worthir budget` use these values by default and mark
+them prespecified. Supplying `--lambdas` or `--budgets` is allowed, but a grid
+that differs from the contract is labeled as command-line and non-prespecified.
+
 The example value `0.08` is illustrative. It is not a recommended default for a
 new task.
