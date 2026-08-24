@@ -8,6 +8,10 @@ Most users should call `worthir.py` through `worthir.cmd` or `./worthir`.
 - `actions_from_csv.py`: bind a query--route choice CSV to a task.
 - `compare_policies.py`: score policies and fixed routes and write reports.
 - `score_actions.py`: score one action file.
+- `analyze_task.py`: write organizer-only per-query diagnostics.
+- `sensitivity.py`: evaluate frozen actions across a lambda grid.
+- `budget.py`: summarize hard per-query cost ceilings.
+- `plot_pareto.py`: draw a dependency-free descriptive Pareto SVG.
 - `init_task.py`: copy the editable task template.
 - `run_smoke_test.py`, `run_integrity_tests.py`, and `validate_framework.py`:
   framework checks used by `worthir doctor`.
