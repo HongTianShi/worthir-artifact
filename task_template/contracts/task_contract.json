@@ -35,6 +35,8 @@
     "profile_id": "declared-relative-work-v1",
     "provenance": "declared",
     "lambda": 0.08,
+    "lambda_grid": [0.0, 0.04, 0.08, 0.16],
+    "budget_grid": [0.2, 0.5, 0.8],
     "availability": "known_at_commitment"
   }
 }
