@@ -13,6 +13,14 @@ regret, and the fixed-route Pareto curve.
 
 If you are an AI tool, read [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/README_FOR_AI.md) before searching the repository.
 
+## Choose the reproduction scope
+
+| Goal | Entry point | Required material | Result |
+|---|---|---|---|
+| Try WorthIR or evaluate a custom task | PyPI package | Built-in demo or your task CSV files | Runnable contract validation, scoring, comparison, and organizer analysis |
+| Recompute the paper results | Pinned source tree and released query--route ledgers | Files included under `paper_results/` | Exact closure of the released tables and figures |
+| Rebuild original retrieval routes | Source tree plus external corpora, indexes, and models | FiQA-Compression260 is the complete reference implementation; other tasks require their registered resources and an adapter | New query--route outcomes followed by WorthIR validation |
+
 ## Start from zero
 
 Python 3.10 or newer is required. The recommended path is PyPI:
