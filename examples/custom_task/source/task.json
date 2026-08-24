@@ -10,6 +10,8 @@
     "profile_id": "measured-seconds-v1",
     "provenance": "由独立校准集估计、在路线选择前可获得的预计执行时间",
     "lambda": 0.15,
+    "lambda_grid": [0.0, 0.05, 0.15, 0.3],
+    "budget_grid": [0.05, 0.15, 0.3],
     "availability": "known_at_commitment"
   },
   "development_selected_fixed_route": "semantic_search"
