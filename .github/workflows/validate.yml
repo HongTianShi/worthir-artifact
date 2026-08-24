@@ -32,7 +32,11 @@ jobs:
           python paper_results/full_replay/replay.py fiqa260 prepare --workspace ci-fiqa260-prepare
 
   paper-results:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -80,3 +84,16 @@ jobs:
           grep -q '^worthir validate-task' initialized-task/README.md
           grep -q '^worthir validate-task' reproduced/custom_task/README.md
           grep -q '^worthir compare' installed-trec/README.md
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" analyze reproduced/custom_task
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" sensitivity reproduced/custom_task
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" budget reproduced/custom_task
+          "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" plot reproduced/custom_task
+          if "$RUNNER_TEMP/worthir-wheel-env/bin/worthir" analyze reproduced/custom_task \
+            --organizer-output reproduced/custom_task/participant/leak.csv; then
+            exit 1
+          fi
+          test -f reproduced/custom_task/organizer_private/per_query_scores.csv
+          test -f reproduced/custom_task/organizer_private/lambda_sensitivity.csv
+          test -f reproduced/custom_task/organizer_private/hard_budgets.csv
+          test -f reproduced/custom_task/organizer_private/pareto.svg
+          test ! -e reproduced/custom_task/participant/leak.csv
