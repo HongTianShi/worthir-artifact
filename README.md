@@ -6,91 +6,141 @@
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/HongTianShi/worthir-artifact/blob/_en/LICENSE)
 
-WorthIR compares query-level routing policies with fixed retrieval strategies
-under a declared effectiveness measure and cost profile. It reports
-effectiveness, cost, utility, regret, and the fixed-route Pareto curve.
+WorthIR evaluates query-level retrieval routing under a declared effectiveness
+measure, cumulative route costs, and cost preference. It compares a frozen
+routing policy with fixed routes and reports effectiveness, cost, utility,
+regret, and the fixed-route Pareto curve.
 
-If you are an AI tool, read [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/README_FOR_AI.md) before
-searching the repository.
+If you are an AI tool, read [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/README_FOR_AI.md) before searching the repository.
 
-## 60-second demo
+## Start from zero
 
-Python 3.10 or newer is required. Choose one installation path.
-
-**Source archive or Git clone:** run the local launcher. It creates the local
-environment when first needed.
-
-```powershell
-.\worthir.cmd demo-custom
-```
+Python 3.10 or newer is required. The recommended path is PyPI:
 
 ```bash
-./worthir demo-custom
-```
-
-**PyPI:** install the released package, then use the global command.
-
-```bash
-python -m pip install worthir-eval==1.2.1
+python -m pip install worthir-eval==1.3.0
 worthir demo-custom
 ```
 
-If the `worthir` command is not on `PATH`, use the equivalent module entry:
+If `worthir` is not on `PATH`, run `python -m worthir demo-custom`.
+
+To use the pinned source tree instead:
 
 ```bash
-python -m worthir demo-custom
+git clone --branch v1.3.0 --depth 1 https://github.com/HongTianShi/worthir-artifact.git
+cd worthir-artifact
+./worthir demo-custom
 ```
 
-Do not run both setup paths. Open `reproduced/custom_task/comparison.md` after
-the command finishes. The published wheel uses English terminal messages; the
-Chinese source branch provides Chinese launchers and documentation.
+On Windows, replace the last line with `.\worthir.cmd demo-custom`. The source
+launcher creates `.venv` on first use; do not install the PyPI package as an
+additional setup step.
 
-## Use your own task
+A successful run ends with lines like these:
 
-Prepare `task.json`, `queries.csv`, `routes.csv`, and `outcomes.csv` as shown in
-[`examples/custom_task/source/`](https://github.com/HongTianShi/worthir-artifact/tree/_en/examples/custom_task/source), then run:
-
-```powershell
-.\worthir.cmd build-custom my_source my_task
-.\worthir.cmd validate-task my_task
-.\worthir.cmd evaluate my_task choices.csv --policy-id my-router
+```text
+BUILT: .../reproduced/custom_task
+WROTE: .../reproduced/custom_router_choices.csv
+OPEN: .../reproduced/custom_task/comparison.md
 ```
 
-This path accepts any named higher-is-better effectiveness measure, arbitrary
-route prerequisites, fixed or query-dependent costs, and either cumulative or
-incremental cost input. The router receives `queries.csv`, the public route
-registry, lambda, and any costs declared as known at commitment time. Evaluator
-outcomes and costs measured only after execution remain separate.
+It creates:
 
-For qrels and six-column TREC runs, use the shorter [`build-trec` walkthrough](https://github.com/HongTianShi/worthir-artifact/blob/_en/examples/trec_walkthrough/README.md).
-All input formats are described in [`docs/ADAPT_TO_NEW_TASK.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/docs/ADAPT_TO_NEW_TASK.md).
-For direct library use, see the
-[`worthir_eval` Python example](https://github.com/HongTianShi/worthir-artifact/blob/_en/examples/python_api/README.md).
+```text
+reproduced/
+├── custom_router_choices.csv
+└── custom_task/
+    ├── contracts/              route definitions and task contract
+    ├── participant/            legal router inputs and frozen actions
+    ├── evaluator/ledger.csv    organizer-only query--route outcomes
+    ├── comparison.csv
+    ├── comparison.md
+    └── fixed_routes.csv
+```
 
-## Recompute the paper results
+The report includes the router and every fixed route, for example:
 
-This uses released query--route ledgers and frozen route selections. It does
-not redownload corpora or rerun retrieval models.
+```text
+| Policy              | Effectiveness | Cost   | Utility | Delta U vs. fixed |
+| example-rule-router | 0.9000        | 0.1507 | 0.8774  | +0.0625           |
+```
+
+## Evaluate your own task
+
+Copy the four files in [`examples/custom_task/source/`](https://github.com/HongTianShi/worthir-artifact/tree/_en/examples/custom_task/source):
+
+- `task.json`: metric, lambda, declared sensitivity grids, and fixed reference;
+- `queries.csv`: one row per query with only information legal at route-selection time;
+- `routes.csv`: route labels, prerequisites, costs, and the development-selected route;
+- `outcomes.csv`: organizer-only effectiveness and cost for every query--route pair.
+
+Build and check the task:
+
+```bash
+worthir build-custom my_source my_task
+worthir validate-task my_task
+```
+
+Your router—not WorthIR—reads `my_task/participant/` and writes `choices.csv`.
+The minimum format is:
+
+```csv
+query_uid,selected_route_id
+q001,base
+q002,rerank
+```
+
+Bind those frozen choices to the task contract and compare them with all fixed
+routes:
+
+```bash
+worthir evaluate my_task choices.csv --policy-id my-router
+```
+
+The complete router example is under [`examples/custom_router/`](https://github.com/HongTianShi/worthir-artifact/tree/_en/examples/custom_router).
+For qrels and six-column TREC runs, use [`build-trec`](https://github.com/HongTianShi/worthir-artifact/blob/_en/examples/trec_walkthrough/README.md).
+All generic input formats are documented in [`docs/ADAPT_TO_NEW_TASK.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/docs/ADAPT_TO_NEW_TASK.md).
+
+## Organizer analyses
+
+These commands join frozen actions with the evaluator ledger. They default to
+`my_task/organizer_private/` and refuse to write under `participant/`:
+
+```bash
+worthir analyze my_task --organizer-output my_task/organizer_private/per_query_scores.csv
+worthir sensitivity my_task
+worthir budget my_task
+worthir plot my_task
+```
+
+`analyze` reports selected outcomes, the development-fixed reference, oracle
+route, regret, and opportunity stratum for each query. `sensitivity` and
+`budget` use the grids declared in `task.json`; a command-line grid is labeled
+non-prespecified. `plot` writes a dependency-free SVG Pareto chart. Every
+output is marked `descriptive` and `evaluator_only`. Parquet output is available
+when `pyarrow` is installed; CSV requires no extra package.
+
+See [`docs/OUTPUTS.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/docs/OUTPUTS.md) for field definitions and [`docs/TROUBLESHOOTING.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/docs/TROUBLESHOOTING.md) for installation and download failures.
+
+## Recompute the paper tables and figures
+
+This step requires a source checkout because the released query--route ledgers
+are not part of the core PyPI wheel:
 
 ```bash
 python paper_results/run.py
 ```
 
-Open `paper_results/reproduced/INDEX.md`.
-The index names the exact paper version, caption, output, and reproduction
-level for every main-paper and appendix figure or table.
+Open `paper_results/reproduced/INDEX.md`. It links every paper figure and table
+to its input, command, output, and reproduction level.
 
-## Rebuild the original retrieval routes
+## Rebuild retrieval routes
 
-This is a separate, resource-intensive workflow. It checks licensed corpora
-and checkpoints, invokes a configured task adapter, and constructs new
-query--route ledgers through five explicit stages. Start with
-[`paper_results/full_replay/README.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/paper_results/full_replay/README.md) and
-its task-specific resource estimates. Raw corpora, indexes, and model weights
-are not included in this repository.
+Raw corpora, indexes, and model weights are not distributed here. The staged
+rebuild interface and resource estimates are in
+[`paper_results/full_replay/README.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/paper_results/full_replay/README.md).
+FiQA-Compression260 has a runnable public-corpus adapter and a CPU installation
+path in [`FIQA260.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/paper_results/full_replay/FIQA260.md).
 
-FiQA-Compression260 is directly runnable from the official public corpus and
-models; see the [FiQA260 route-rebuild guide](https://github.com/HongTianShi/worthir-artifact/blob/_en/paper_results/full_replay/FIQA260.md).
-
-WorthIR-authored code is released under the [MIT License](https://github.com/HongTianShi/worthir-artifact/blob/_en/LICENSE). Third-party
-data and model terms are listed in [NOTICE](https://github.com/HongTianShi/worthir-artifact/blob/_en/NOTICE).
+WorthIR code uses the [MIT License](https://github.com/HongTianShi/worthir-artifact/blob/_en/LICENSE).
+Third-party data and model terms are listed in [NOTICE](https://github.com/HongTianShi/worthir-artifact/blob/_en/NOTICE).
