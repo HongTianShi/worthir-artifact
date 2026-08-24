@@ -1,11 +1,15 @@
 # Rebuild the original retrieval routes
 
-This workflow starts before the released WorthIR ledgers. It checks separately
-obtained corpora and checkpoints, runs a task adapter, converts its complete
-query--route outcomes into a WorthIR ledger, and validates the result. Those
-external materials are not redistributed here. FiQA-Compression260 needs no
-manually prepared index: its task adapter downloads the public corpus and
-models and builds the required representations locally.
+FiQA-Compression260 is the complete original-route reconstruction reference
+implementation in this repository. The remaining tasks use the same workflow
+and adapter interface, but this repository does not promise to download or
+redistribute their original corpora, indexes, or checkpoints automatically.
+
+The workflow starts before the released WorthIR ledgers. It checks separately
+obtained resources, runs a task adapter, converts its complete query--route
+outcomes into a WorthIR ledger, and validates the result. FiQA-Compression260
+needs no manually prepared index: its task adapter downloads the public corpus
+and models and builds the required representations locally.
 
 For the runnable FiQA reconstruction:
 
