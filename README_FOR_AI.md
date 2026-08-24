@@ -106,6 +106,8 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `.gitattributes` | Repository configuration | Normalizes text line endings and marks binary research artifacts so Git does not rewrite them. |
+| `.github/ISSUE_TEMPLATE/bug_report.yml` | Bug form | Collects installation, environment, command, error, and minimal-reproduction details without private evaluator data. |
+| `.github/ISSUE_TEMPLATE/new_task.yml` | Task form | Collects the measure, routes, costs, data terms, and runnable commands for a proposed task adapter. |
 | `.github/workflows/fiqa260-smoke.yml` | Scheduled route check | Rebuilds 20 FiQA queries from the public corpus and models every week or when manually requested. |
 | `.github/workflows/publish.yml` | Package publisher | Builds the release distributions, publishes them through PyPI Trusted Publishing, and smoke-tests the public package. |
 | `.github/workflows/validate.yml` | Continuous integration | Validates the framework on Windows, Linux, and macOS and separately reproduces the paper results. |
@@ -126,6 +128,7 @@ merely because it is publicly released.
 | `docs/ADAPT_TO_NEW_TASK.md` | Adaptation guide | Defines the generic task tables, route dependencies, cost modes, TREC shortcut, and router workflow. |
 | `docs/COST_AND_LAMBDA.md` | Cost guide | Explains cumulative cost choices, normalization, lambda selection, and sensitivity. |
 | `docs/OUTPUTS.md` | Output guide | Defines comparison fields, fixed references, Pareto membership, and descriptive scope. |
+| `docs/TROUBLESHOOTING.md` | Failure guide | Covers Python selection, source environments, package access, model downloads, disk use, task validation, and bug reports. |
 
 ### End-to-end TREC example
 
@@ -170,14 +173,19 @@ merely because it is publicly released.
 | Path | What it is | What it is for |
 | --- | --- | --- |
 | `scripts/actions_from_csv.py` | Action converter | Validates human-readable query-route choices and writes contract-bound action JSON. |
+| `scripts/analyze_task.py` | Organizer analysis | Writes isolated per-query selected outcomes, fixed references, oracle routes, regret, and opportunity strata. |
+| `scripts/budget.py` | Budget analysis | Reports evaluator-only effectiveness and policy feasibility under declared hard cost ceilings. |
 | `scripts/build_custom_task.py` | Generic task adapter | Builds contracts, participant state, and a complete ledger from generic source tables. |
 | `scripts/build_trec_task.py` | TREC adapter | Computes NDCG@K from qrels and runs and builds a complete reusable task. |
 | `scripts/compare_policies.py` | Comparison reporter | Scores all supplied policies and fixed routes and writes Markdown, CSV, JSON, and Pareto outputs. |
 | `scripts/init_task.py` | Task initializer | Copies the runnable template and replaces task, contract, and registry identifiers. |
+| `scripts/organizer_io.py` | Private-output helper | Keeps evaluator-only tables outside participant inputs and writes CSV, optional Parquet, and metadata. |
+| `scripts/plot_pareto.py` | Pareto plotter | Draws a dependency-free descriptive SVG for fixed routes and the frozen policy. |
 | `scripts/README.md` | Command guide | Indexes the reusable framework commands. |
 | `scripts/run_integrity_tests.py` | Integrity tests | Checks invalid inputs, arithmetic invariants, cumulative costs, ties, and the example information boundary. |
 | `scripts/run_smoke_test.py` | Smoke test | Scores the six-query quickstart and writes aggregate results. |
 | `scripts/score_actions.py` | Scoring CLI | Resolves task inputs, invokes the core scorer, and writes aggregate JSON. |
+| `scripts/sensitivity.py` | Lambda analysis | Evaluates frozen actions over a declared or supplied lambda grid and labels whether the grid was prespecified. |
 | `scripts/validate_task.py` | Task validator | Reports task coverage, dependency edges, cost availability, and public-to-evaluator cost agreement before scoring. |
 | `scripts/validate_framework.py` | Framework validator | Runs smoke, integrity, task initialization, TREC construction, action conversion, and comparison checks. |
 
@@ -187,6 +195,7 @@ merely because it is publicly released.
 | --- | --- | --- |
 | `src/README.md` | Source guide | Explains the dependency-free source layout. |
 | `src/worthir_eval/__init__.py` | Python API | Exports task inspection, scoring, and the public error type. |
+| `src/worthir_eval/analysis.py` | Organizer API | Computes per-query diagnostics, lambda sensitivity, hard-budget summaries, and fixed-route Pareto points. |
 | `src/worthir_eval/core.py` | Scoring implementation | Validates dependency graphs, actions, ledgers, cumulative costs, and the public cost boundary, then computes effectiveness, cost, utility, oracle agreement, and regret. |
 | `src/worthir_eval/README.md` | Package guide | Summarizes the scorer API and participant-evaluator boundary. |
 
@@ -194,9 +203,9 @@ merely because it is publicly released.
 
 | Path | What it is | What it is for |
 | --- | --- | --- |
-| `task_template/.gitignore` | Template configuration | Excludes generated task scores and comparison reports. |
+| `task_template/.gitignore` | Template configuration | Excludes generated comparisons and organizer-only outputs. |
 | `task_template/contracts/route_registry.json` | Template route registry | Runnable two-route prerequisite example to replace for a new task. |
-| `task_template/contracts/task_contract.json` | Template task contract | Runnable one-query task, metric, cost, and schema example. |
+| `task_template/contracts/task_contract.json` | Template task contract | Runnable task, metric, cost, and prespecified sensitivity-grid example. |
 | `task_template/evaluator/ledger.csv` | Template evaluator data | Complete one-query, two-route effectiveness and cost ledger. |
 | `task_template/participant/actions.json` | Template action file | One-row example selecting a registered route. |
 | `task_template/participant/legal_state.csv` | Template participant data | One-row example of inference-time query state. |
