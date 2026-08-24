@@ -5,7 +5,8 @@ This example is not a TREC ranking task. Its effectiveness measure is
 
 The four source files are the complete generic adapter interface:
 
-- `task.json` names the effectiveness measure and cost profile.
+- `task.json` names the effectiveness measure, cost profile, and optional
+  lambda and hard-budget grids.
 - `queries.csv` contains only information a router may use.
 - `routes.csv` defines available routes, prerequisites, and route costs.
 - `outcomes.csv` contains evaluator-only effectiveness and cost outcomes for
@@ -30,3 +31,7 @@ Set `cost_profile.availability` to `known_at_commitment` when the router may use
 the cost before choosing a route. The builder then publishes fixed costs in the
 route registry or query-dependent costs in `participant/route_costs.csv`. Use
 `measured_after_execution` when cost is evaluator-only.
+
+After evaluation, task organizers can run `worthir analyze`, `worthir
+sensitivity`, `worthir budget`, and `worthir plot`. These commands write under
+`organizer_private/`; their query-level and oracle fields are not router inputs.
