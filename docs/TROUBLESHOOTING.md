@@ -48,8 +48,10 @@ python -m pip install --index-url https://pypi.org/simple worthir-eval==1.3.0
 ```
 
 On a managed network, use the proxy or package index approved by the local
-administrator. The source launcher still needs access to PyPI when it creates
-`.venv`.
+administrator for PyPI installation. Creating `.venv` with the source launcher
+does not contact PyPI: it creates the environment locally and points it at the
+checked-out source tree. Network access is needed only when installing from
+PyPI or when a raw-route reconstruction downloads corpora or models.
 
 ## Hugging Face or dataset downloads fail
 
