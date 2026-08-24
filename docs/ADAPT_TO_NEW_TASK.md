@@ -34,6 +34,8 @@ preference used in `utility = effectiveness - lambda * cost`:
     "profile_id": "latency-seconds-v1",
     "provenance": "expected execution time estimated on an independent calibration set",
     "lambda": 0.15,
+    "lambda_grid": [0.0, 0.05, 0.15, 0.30],
+    "budget_grid": [0.10, 0.25, 0.50],
     "availability": "known_at_commitment"
   },
   "development_selected_fixed_route": "standard"
@@ -132,6 +134,23 @@ Bind and compare those decisions in one command:
 
 See [`examples/custom_router/`](../examples/custom_router/) for a complete
 router that never reads the evaluator ledger.
+
+### 6. Run organizer-only diagnostics
+
+After the action file is frozen, the task organizer may join it with the
+evaluator ledger:
+
+```bash
+worthir analyze my_task
+worthir sensitivity my_task
+worthir budget my_task
+worthir plot my_task
+```
+
+These commands default to `my_task/organizer_private/`, include evaluator-only
+fields, and refuse to write under `participant/`. The lambda and budget commands
+use the grids declared in `task.json`; see [`OUTPUTS.md`](OUTPUTS.md) for exact
+semantics.
 
 ## TREC adapter
 
