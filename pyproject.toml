@@ -10,11 +10,22 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [{name = "WorthIR authors"}]
+authors = [
+  {name = "Renjie Bai"},
+  {name = "SzeWing Chan"},
+  {name = "Xiao Wang"},
+  {name = "Juanxiu Liu"},
+]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
 ]
+
+[project.urls]
+Repository = "https://github.com/HongTianShi/worthir-artifact"
+Documentation = "https://github.com/HongTianShi/worthir-artifact/tree/zh-cn/docs"
+Issues = "https://github.com/HongTianShi/worthir-artifact/issues"
+"Paper results" = "https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/PAPER_MAP.md"
 
 [project.scripts]
 worthir = "worthir:main"
