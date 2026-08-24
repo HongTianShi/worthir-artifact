@@ -40,8 +40,9 @@ rm -rf .venv
 python -m pip install --index-url https://pypi.org/simple worthir-eval==1.3.0
 ```
 
-受管理网络应使用本地管理员批准的代理或包索引。源码启动器首次创建 `.venv` 时
-同样需要访问 PyPI。
+受管理网络通过 PyPI 安装时，应使用本地管理员批准的代理或包索引。源码启动器
+在本地创建 `.venv` 并指向当前源码，本身不访问 PyPI。只有通过 PyPI 安装，或执行
+需要下载语料、模型的原始路线重建时，才需要相应的网络访问。
 
 ## Hugging Face 或数据下载失败
 
