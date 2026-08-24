@@ -132,6 +132,42 @@ def main() -> None:
     evaluate.add_argument("--policy-id", required=True, help="路由器标识符")
     evaluate.add_argument("--output-dir", type=Path, help="报告输出目录")
 
+    analyze = subparsers.add_parser(
+        "analyze", help="生成与参与者输入隔离的组织者逐查询诊断"
+    )
+    analyze.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    analyze.add_argument("--actions", type=Path, help="冻结的动作 JSON")
+    analyze.add_argument(
+        "--organizer-output", type=Path, help="组织者私有 CSV 或 Parquet 输出"
+    )
+
+    sensitivity = subparsers.add_parser(
+        "sensitivity", help="在 lambda 网格上评估冻结动作"
+    )
+    sensitivity.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    sensitivity.add_argument("--actions", type=Path, help="冻结的动作 JSON")
+    sensitivity.add_argument(
+        "--lambdas", help="逗号分隔的网格；默认读取任务契约"
+    )
+    sensitivity.add_argument("--output", type=Path, help="组织者私有表格输出")
+
+    budget = subparsers.add_parser(
+        "budget", help="评估逐查询硬成本上限"
+    )
+    budget.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    budget.add_argument("--actions", type=Path, help="冻结的动作 JSON")
+    budget.add_argument(
+        "--budgets", help="逗号分隔的成本上限；默认读取任务契约"
+    )
+    budget.add_argument("--output", type=Path, help="组织者私有表格输出")
+
+    plot = subparsers.add_parser(
+        "plot", help="绘制描述性的有效性—成本 Pareto 图"
+    )
+    plot.add_argument("task_dir", type=Path, help="WorthIR 任务目录")
+    plot.add_argument("--actions", type=Path, help="冻结的动作 JSON")
+    plot.add_argument("--output", type=Path, help="组织者私有 SVG 输出")
+
     subparsers.add_parser(
         "demo", help="运行从 qrels 到报告的完整示例"
     )
@@ -228,6 +264,38 @@ def main() -> None:
         if args.output_dir:
             command.extend(["--output-dir", str(args.output_dir)])
         _run("scripts/compare_policies.py", command)
+    elif args.command == "analyze":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.organizer_output:
+            command.extend(["--organizer-output", str(args.organizer_output)])
+        _run("scripts/analyze_task.py", command)
+    elif args.command == "sensitivity":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.lambdas:
+            command.extend(["--lambdas", args.lambdas])
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/sensitivity.py", command)
+    elif args.command == "budget":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.budgets:
+            command.extend(["--budgets", args.budgets])
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/budget.py", command)
+    elif args.command == "plot":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/plot_pareto.py", command)
     elif args.command == "demo":
         destination = OUTPUT_ROOT / "reproduced" / "trec_walkthrough"
         reproduced_root = (OUTPUT_ROOT / "reproduced").resolve()
