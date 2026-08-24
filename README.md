@@ -6,67 +6,136 @@
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/LICENSE)
 
-WorthIR 在明确的效果指标和成本配置下，对比逐查询路由策略与固定检索策略，并报告效果、成本、效用、遗憾和固定路线的 Pareto 曲线。
+WorthIR 在明确的有效性指标、累计路线成本和成本偏好下评价逐查询检索路由。
+它将冻结的路由策略与固定路线进行比较，并报告有效性、成本、效用、遗憾和
+固定路线 Pareto 曲线。
 
-如果你正在使用 AI 工具检索本仓库，请先读 [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/README_FOR_AI.md)。
+如果你使用 AI 工具检索本项目，请先阅读 [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/README_FOR_AI.md)。
 
-## 60 秒体验
+## 从零开始
 
-需要 Python 3.10 或更高版本。下面两种安装方式二选一。
-
-**源码包或 Git 克隆：**直接运行本地启动器；首次运行时会自动初始化本地环境。
-
-```powershell
-.\worthir.cmd demo-custom
-```
+需要 Python 3.10 或更高版本。推荐从 PyPI 安装：
 
 ```bash
-./worthir demo-custom
-```
-
-**PyPI：**安装正式发布的软件包，然后使用全局命令。
-
-```bash
-python -m pip install worthir-eval==1.2.1
+python -m pip install worthir-eval==1.3.0
 worthir demo-custom
 ```
 
-如果系统找不到 `worthir` 命令，可使用等价的模块入口：
+如果 `worthir` 不在 `PATH` 中，请运行 `python -m worthir demo-custom`。
+PyPI wheel 的终端提示为英文；中文命令行请使用下方源码版本。
+
+固定到不可变中文源码：
 
 ```bash
-python -m worthir demo-custom
+git clone --branch v1.3.0-zh-cn --depth 1 https://github.com/HongTianShi/worthir-artifact.git
+cd worthir-artifact
+./worthir demo-custom
 ```
 
-不要连续执行两套安装流程。运行结束后打开 `reproduced/custom_task/comparison.md`。发布的 wheel 使用英文终端提示；本中文源码分支使用中文启动器和文档。
+Windows 将最后一行换成 `.\worthir.cmd demo-custom`。源码启动器会在首次运行时
+创建 `.venv`，无需再执行 PyPI 安装。
 
-## 接入自己的任务
+成功运行后，终端末尾会出现：
 
-按照 [`examples/custom_task/source/`](https://github.com/HongTianShi/worthir-artifact/tree/zh-cn/examples/custom_task/source) 准备 `task.json`、`queries.csv`、`routes.csv` 和 `outcomes.csv`，然后运行：
-
-```powershell
-.\worthir.cmd build-custom my_source my_task
-.\worthir.cmd validate-task my_task
-.\worthir.cmd evaluate my_task choices.csv --policy-id my-router
+```text
+已构建：.../reproduced/custom_task
+已写入：.../reproduced/custom_router_choices.csv
+请打开：.../reproduced/custom_task/comparison.md
 ```
 
-该入口接受任意命名的“越高越好”效果指标、一般路线依赖、固定或逐查询成本，以及累计或增量成本。Router 可以读取 `queries.csv`、公开路线定义、lambda 和承诺时已知的成本；仅在执行后测得的成本和 evaluator outcomes 保持隔离。
+生成目录如下：
 
-如果输入是 qrels 和六列 TREC run，可使用更短的 [`build-trec` 示例](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/examples/trec_walkthrough/README.md)。所有输入格式见 [`docs/ADAPT_TO_NEW_TASK.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/docs/ADAPT_TO_NEW_TASK.md)，直接调用库的示例见 [`worthir_eval` Python API](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/examples/python_api/README.md)。
+```text
+reproduced/
+├── custom_router_choices.csv
+└── custom_task/
+    ├── contracts/              路线定义和任务契约
+    ├── participant/            路由器可见输入与冻结动作
+    ├── evaluator/ledger.csv    组织者专用的查询—路线结果
+    ├── comparison.csv
+    ├── comparison.md
+    └── fixed_routes.csv
+```
 
-## 复算论文结果
+报告同时列出路由器与所有固定路线，例如：
 
-该流程使用已发布的 query--route ledgers 和冻结路线选择，不会重新下载语料或运行检索模型。
+```text
+| 策略                | 有效性 | 成本   | 效用   | 相对固定策略的 Delta U |
+| example-rule-router | 0.9000 | 0.1507 | 0.8774 | +0.0625                |
+```
+
+## 评价自己的任务
+
+复制 [`examples/custom_task/source/`](https://github.com/HongTianShi/worthir-artifact/tree/zh-cn/examples/custom_task/source) 中的四个文件：
+
+- `task.json`：指标、lambda、预先声明的敏感性网格和固定参照；
+- `queries.csv`：每个查询一行，只含路线选择时允许使用的信息；
+- `routes.csv`：路线名称、前置依赖、成本和开发集选定路线；
+- `outcomes.csv`：每个查询—路线对的组织者专用有效性与成本。
+
+构建并检查任务：
+
+```bash
+worthir build-custom my_source my_task
+worthir validate-task my_task
+```
+
+你的路由器而不是 WorthIR 读取 `my_task/participant/`，并生成 `choices.csv`。
+最小格式为：
+
+```csv
+query_uid,selected_route_id
+q001,base
+q002,rerank
+```
+
+将冻结选择绑定到任务契约，并与所有固定路线比较：
+
+```bash
+worthir evaluate my_task choices.csv --policy-id my-router
+```
+
+完整路由器示例位于 [`examples/custom_router/`](https://github.com/HongTianShi/worthir-artifact/tree/zh-cn/examples/custom_router)。
+若输入是 qrels 和六列 TREC run，请使用 [`build-trec`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/examples/trec_walkthrough/README.md)。
+通用输入格式见 [`docs/ADAPT_TO_NEW_TASK.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/docs/ADAPT_TO_NEW_TASK.md)。
+
+## 组织者分析
+
+下列命令会将冻结动作与 evaluator ledger 连接。默认输出到
+`my_task/organizer_private/`，并拒绝写入 `participant/`：
+
+```bash
+worthir analyze my_task --organizer-output my_task/organizer_private/per_query_scores.csv
+worthir sensitivity my_task
+worthir budget my_task
+worthir plot my_task
+```
+
+`analyze` 报告逐查询的已选结果、开发集固定参照、oracle 路线、遗憾和机会分层。
+`sensitivity` 与 `budget` 默认读取 `task.json` 中的网格；临时命令行网格会标为
+非预注册。`plot` 直接输出无需额外绘图库的 SVG Pareto 图。所有结果都标明
+`descriptive` 和 `evaluator_only`。CSV 无需额外依赖；安装 `pyarrow` 后也可输出
+Parquet。
+
+字段定义见 [`docs/OUTPUTS.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/docs/OUTPUTS.md)，安装和下载故障见 [`docs/TROUBLESHOOTING.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/docs/TROUBLESHOOTING.md)。
+
+## 复算论文图表
+
+该步骤需要源码，因为发布的查询—路线 ledger 不包含在核心 PyPI wheel 中：
 
 ```bash
 python paper_results/run.py
 ```
 
-完成后打开 `paper_results/reproduced/INDEX.md`。其中逐项列出当前论文版本、caption、输出文件和复现层级。
+打开 `paper_results/reproduced/INDEX.md`。其中逐项链接论文图表的输入、命令、
+输出和复现层级。
 
 ## 重建原始检索路线
 
-这是独立且资源密集的流程。它检查受许可约束的语料和模型，通过配置好的任务适配器执行五个阶段，并构建新的 query--route ledger。入口见 [`paper_results/full_replay/README.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/full_replay/README.md) 及其中的资源估计。仓库不包含原始语料、索引和模型权重。
+本仓库不分发原始语料、索引和模型权重。分阶段重建入口与资源估计见
+[`paper_results/full_replay/README.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/full_replay/README.md)。
+FiQA-Compression260 提供公开语料适配器和 CPU 安装流程，见
+[`FIQA260.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/full_replay/FIQA260.md)。
 
-FiQA-Compression260 可直接从官方公开语料和模型运行；具体命令见 [FiQA260 路线重建说明](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/paper_results/full_replay/FIQA260.md)。
-
-WorthIR 自有代码采用 [MIT License](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/LICENSE)。第三方数据和模型条款见 [NOTICE](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/NOTICE)。
+WorthIR 代码采用 [MIT License](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/LICENSE)。
+第三方数据和模型条款见 [NOTICE](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/NOTICE)。
