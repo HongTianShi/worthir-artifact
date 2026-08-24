@@ -106,6 +106,42 @@ def main() -> None:
     evaluate.add_argument("--policy-id", required=True, help="identifier for the router")
     evaluate.add_argument("--output-dir", type=Path, help="report destination")
 
+    analyze = subparsers.add_parser(
+        "analyze", help="write isolated organizer-only per-query diagnostics"
+    )
+    analyze.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    analyze.add_argument("--actions", type=Path, help="frozen action JSON")
+    analyze.add_argument(
+        "--organizer-output", type=Path, help="private CSV or Parquet destination"
+    )
+
+    sensitivity = subparsers.add_parser(
+        "sensitivity", help="evaluate frozen actions over a lambda grid"
+    )
+    sensitivity.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    sensitivity.add_argument("--actions", type=Path, help="frozen action JSON")
+    sensitivity.add_argument(
+        "--lambdas", help="comma-separated grid; defaults to the task contract"
+    )
+    sensitivity.add_argument("--output", type=Path, help="private table destination")
+
+    budget = subparsers.add_parser(
+        "budget", help="evaluate hard per-query cost ceilings"
+    )
+    budget.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    budget.add_argument("--actions", type=Path, help="frozen action JSON")
+    budget.add_argument(
+        "--budgets", help="comma-separated ceilings; defaults to the task contract"
+    )
+    budget.add_argument("--output", type=Path, help="private table destination")
+
+    plot = subparsers.add_parser(
+        "plot", help="draw the descriptive effectiveness--cost Pareto chart"
+    )
+    plot.add_argument("task_dir", type=Path, help="WorthIR task directory")
+    plot.add_argument("--actions", type=Path, help="frozen action JSON")
+    plot.add_argument("--output", type=Path, help="private SVG destination")
+
     subparsers.add_parser(
         "demo", help="run the complete qrels-to-report walkthrough"
     )
@@ -202,6 +238,38 @@ def main() -> None:
         if args.output_dir:
             command.extend(["--output-dir", str(args.output_dir)])
         _run("scripts/compare_policies.py", command)
+    elif args.command == "analyze":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.organizer_output:
+            command.extend(["--organizer-output", str(args.organizer_output)])
+        _run("scripts/analyze_task.py", command)
+    elif args.command == "sensitivity":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.lambdas:
+            command.extend(["--lambdas", args.lambdas])
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/sensitivity.py", command)
+    elif args.command == "budget":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.budgets:
+            command.extend(["--budgets", args.budgets])
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/budget.py", command)
+    elif args.command == "plot":
+        command = [str(args.task_dir)]
+        if args.actions:
+            command.extend(["--actions", str(args.actions)])
+        if args.output:
+            command.extend(["--output", str(args.output)])
+        _run("scripts/plot_pareto.py", command)
     elif args.command == "demo":
         destination = OUTPUT_ROOT / "reproduced" / "trec_walkthrough"
         reproduced_root = (OUTPUT_ROOT / "reproduced").resolve()
