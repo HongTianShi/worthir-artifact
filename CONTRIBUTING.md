@@ -1,6 +1,8 @@
 # Contributing
 
-Bug fixes, clearer task adapters, and new runnable examples are welcome.
+Contributions should make a task easier to define, a router easier to evaluate,
+or a released result easier to verify. Bug fixes, clearer task adapters, and
+small runnable examples are welcome.
 
 Before opening a pull request:
 
