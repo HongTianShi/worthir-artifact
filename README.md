@@ -26,7 +26,7 @@ If you are an AI tool, read [`README_FOR_AI.md`](https://github.com/HongTianShi/
 Python 3.10 or newer is required. The recommended path is PyPI:
 
 ```bash
-python -m pip install worthir-eval==1.3.0
+python -m pip install worthir-eval==1.3.1
 worthir demo-custom
 ```
 
@@ -35,7 +35,7 @@ If `worthir` is not on `PATH`, run `python -m worthir demo-custom`.
 To use the pinned source tree instead:
 
 ```bash
-git clone --branch v1.3.0 --depth 1 https://github.com/HongTianShi/worthir-artifact.git
+git clone --branch v1.3.1 --depth 1 https://github.com/HongTianShi/worthir-artifact.git
 cd worthir-artifact
 ./worthir demo-custom
 ```
