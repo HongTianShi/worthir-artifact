@@ -1,6 +1,8 @@
-# Internal commands
+# CLI command reference
 
-Most users should call `worthir.py` through `worthir.cmd` or `./worthir`.
+Most users should call `worthir` after installing from PyPI, or use
+`worthir.cmd`/`./worthir` from a source checkout. The files below implement
+those public commands.
 
 - `build_trec_task.py`: convert qrels, TREC runs, and costs into a task.
 - `build_custom_task.py`: build a task from generic query, route, outcome, and cost tables.
