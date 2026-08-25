@@ -1,3 +1,4 @@
+# 确保源码包中的 POSIX 启动器可执行，并让 Windows 文件保持可读。
 * text=auto
 
 *.csv text eol=lf
