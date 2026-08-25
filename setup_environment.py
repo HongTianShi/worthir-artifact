@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""创建并验证 WorthIR 的本地 Python 环境。"""
+"""离线创建 WorthIR 源码环境，并检查框架是否可以运行。"""
 
 from __future__ import annotations
 
