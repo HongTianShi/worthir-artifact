@@ -30,14 +30,14 @@ rm -rf .venv
 
 ## Windows 启动了错误的 Python
 
-运行 `py -3.13 -m pip install worthir-eval==1.3.0` 和
+运行 `py -3.13 -m pip install worthir-eval==1.3.1` 和
 `py -3.13 -m worthir doctor`，也可将 `3.13` 换成已安装版本。若 Microsoft Store
 别名拦截 `python`，可在“管理应用执行别名”中关闭该别名。
 
 ## PyPI 安装无法连接包索引
 
 ```bash
-python -m pip install --index-url https://pypi.org/simple worthir-eval==1.3.0
+python -m pip install --index-url https://pypi.org/simple worthir-eval==1.3.1
 ```
 
 受管理网络通过 PyPI 安装时，应使用本地管理员批准的代理或包索引。源码启动器
