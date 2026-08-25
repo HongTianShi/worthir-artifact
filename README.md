@@ -6,10 +6,9 @@
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/HongTianShi/worthir-artifact/blob/_en/LICENSE)
 
-WorthIR evaluates query-level retrieval routing under a declared effectiveness
-measure, cumulative route costs, and cost preference. It compares a frozen
-routing policy with fixed routes and reports effectiveness, cost, utility,
-regret, and the fixed-route Pareto curve.
+Use WorthIR to register a retrieval task, validate what a router may see,
+compare frozen query-level choices with fixed routes, and compute effectiveness,
+cost, utility, regret, and the fixed-route Pareto curve.
 
 If you are an AI tool, read [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/_en/README_FOR_AI.md) before searching the repository.
 
