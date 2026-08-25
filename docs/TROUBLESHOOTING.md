@@ -34,7 +34,7 @@ delete it for an evaluator validation error; fix the task files instead.
 
 ## Windows opens the wrong Python
 
-Use `py -3.13 -m pip install worthir-eval==1.3.0` and
+Use `py -3.13 -m pip install worthir-eval==1.3.1` and
 `py -3.13 -m worthir doctor`, replacing `3.13` with an installed Python version.
 The Microsoft Store alias can be disabled under **Manage app execution
 aliases** if it intercepts `python`.
@@ -44,7 +44,7 @@ aliases** if it intercepts `python`.
 Check that the same interpreter can reach PyPI:
 
 ```bash
-python -m pip install --index-url https://pypi.org/simple worthir-eval==1.3.0
+python -m pip install --index-url https://pypi.org/simple worthir-eval==1.3.1
 ```
 
 On a managed network, use the proxy or package index approved by the local
