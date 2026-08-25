@@ -72,7 +72,7 @@ reproduced/
 | example-rule-router | 0.9000 | 0.1507 | 0.8774 | +0.0625                |
 ```
 
-## 评价自己的任务
+## 评测自己的任务
 
 复制 [`examples/custom_task/source/`](https://github.com/HongTianShi/worthir-artifact/tree/zh-cn/examples/custom_task/source) 中的四个文件：
 
