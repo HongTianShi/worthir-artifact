@@ -6,9 +6,8 @@
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/LICENSE)
 
-WorthIR 在明确的有效性指标、累计路线成本和成本偏好下评价逐查询检索路由。
-它将冻结的路由策略与固定路线进行比较，并报告有效性、成本、效用、遗憾和
-固定路线 Pareto 曲线。
+使用 WorthIR 可以登记检索任务、检查 Router 能看到哪些信息、比较冻结的逐查询
+选择与固定路线，并计算有效性、成本、效用、遗憾和固定路线 Pareto 曲线。
 
 如果你使用 AI 工具检索本项目，请先阅读 [`README_FOR_AI.md`](https://github.com/HongTianShi/worthir-artifact/blob/zh-cn/README_FOR_AI.md)。
 
