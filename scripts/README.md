@@ -1,6 +1,7 @@
-# 内部命令
+# CLI 命令索引
 
-大多数用户应通过 `worthir.cmd` 或 `./worthir` 调用 `worthir.py`。
+通过 PyPI 安装的用户通常直接运行 `worthir`；源码用户使用 `worthir.cmd` 或
+`./worthir`。下列文件实现这些公开命令。
 
 - `build_trec_task.py`：将 qrels、TREC run 和成本转换为任务。
 - `build_custom_task.py`：根据通用查询、路线、结果和成本表构建任务。
