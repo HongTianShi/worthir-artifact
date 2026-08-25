@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create WorthIR's local Python environment and verify it in one command."""
+"""Create WorthIR's no-download source environment and verify the framework."""
 
 from __future__ import annotations
 
