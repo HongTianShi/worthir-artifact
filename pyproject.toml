@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "worthir-eval"
 version = "1.3.1"
 description = "Evaluate cost-aware query-level retrieval routing"
+keywords = ["information retrieval", "retrieval routing", "cost-aware evaluation", "reproducibility"]
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
