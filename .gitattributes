@@ -1,3 +1,4 @@
+# Keep source archives executable on POSIX systems and readable on Windows.
 * text=auto
 
 *.csv text eol=lf
