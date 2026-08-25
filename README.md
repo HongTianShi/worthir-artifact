@@ -25,7 +25,7 @@ WorthIR 在明确的有效性指标、累计路线成本和成本偏好下评价
 需要 Python 3.10 或更高版本。推荐从 PyPI 安装：
 
 ```bash
-python -m pip install worthir-eval==1.3.0
+python -m pip install worthir-eval==1.3.1
 worthir demo-custom
 ```
 
@@ -35,7 +35,7 @@ PyPI wheel 的终端提示为英文；中文命令行请使用下方源码版本
 固定到不可变中文源码：
 
 ```bash
-git clone --branch v1.3.0-zh-cn --depth 1 https://github.com/HongTianShi/worthir-artifact.git
+git clone --branch v1.3.1-zh-cn --depth 1 https://github.com/HongTianShi/worthir-artifact.git
 cd worthir-artifact
 ./worthir demo-custom
 ```
