@@ -4,7 +4,7 @@
 
 **Paper version:** 2026-08-16 submission
 
-**Released artifact:** [v1.2.1](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.2.1)
+**Released artifact:** [v1.3.1](https://github.com/HongTianShi/worthir-artifact/releases/tag/v1.3.1)
 
 Run:
 
